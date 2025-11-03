@@ -1,73 +1,96 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
     android:width="100dp"
     android:height="1000dp"
     android:viewportWidth="100"
     android:viewportHeight="1000">
 
     <!-- Left rail -->
-    <path
-        android:fillColor="#8B4513"
-        android:pathData="M10,0 L20,0 L20,1000 L10,1000 Z" />
+    <path android:pathData="M10,0 L20,0 L20,1000 L10,1000 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="10"
+                android:startY="500"
+                android:endX="20"
+                android:endY="500"
+                android:type="linear">
+                <item android:color="#A0522D" android:offset="0.0" />
+                <item android:color="#8B4513" android:offset="0.5" />
+                <item android:color="#A0522D" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
     <!-- Right rail -->
-    <path
-        android:fillColor="#8B4513"
-        android:pathData="M80,0 L90,0 L90,1000 L80,1000 Z" />
+    <path android:pathData="M80,0 L90,0 L90,1000 L80,1000 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="80"
+                android:startY="500"
+                android:endX="90"
+                android:endY="500"
+                android:type="linear">
+                <item android:color="#A0522D" android:offset="0.0" />
+                <item android:color="#8B4513" android:offset="0.5" />
+                <item android:color="#A0522D" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
     
     <!-- Rungs -->
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,50 L80,50 L80,60 L20,60 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,100 L80,100 L80,110 L20,110 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,150 L80,150 L80,160 L20,160 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,200 L80,200 L80,210 L20,210 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,250 L80,250 L80,260 L20,260 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,300 L80,300 L80,310 L20,310 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,350 L80,350 L80,360 L20,360 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,400 L80,400 L80,410 L20,410 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,450 L80,450 L80,460 L20,460 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,500 L80,500 L80,510 L20,510 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,550 L80,550 L80,560 L20,560 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,600 L80,600 L80,610 L20,610 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,650 L80,650 L80,660 L20,660 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,700 L80,700 L80,710 L20,710 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,750 L80,750 L80,760 L20,760 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,800 L80,800 L80,810 L20,810 Z" />
     <path
         android:fillColor="#A0522D"
         android:pathData="M20,850 L80,850 L80,860 L20,860 Z" />
     <path
-        android:fillColor="#A0522D"
+        android:fillColor="#9A4E2A"
         android:pathData="M20,900 L80,900 L80,910 L20,910 Z" />
     <path
         android:fillColor="#A0522D"

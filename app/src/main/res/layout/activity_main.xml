@@ -120,9 +120,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.955" />
 
@@ -137,9 +136,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.905" />
 
@@ -154,9 +152,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.855" />
 
@@ -171,9 +168,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.805" />
 
@@ -188,9 +184,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.755" />
 
@@ -205,9 +200,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.705" />
 
@@ -222,9 +216,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.655" />
 
@@ -239,9 +232,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.605" />
 
@@ -256,9 +248,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.555" />
 
@@ -273,9 +264,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.505" />
 
@@ -290,9 +280,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.455" />
 
@@ -307,9 +296,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.405" />
 
@@ -324,9 +312,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.355" />
 
@@ -341,9 +328,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.305" />
 
@@ -358,9 +344,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.285" />
 
@@ -375,9 +360,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.265" />
 
@@ -392,9 +376,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.245" />
 
@@ -409,9 +392,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.225" />
 
@@ -426,9 +408,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.205" />
 
@@ -443,9 +424,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.185" />
 
@@ -460,9 +440,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.165" />
 
@@ -477,9 +456,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.145" />
 
@@ -494,9 +472,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.125" />
 
@@ -511,9 +488,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.105" />
 
@@ -528,9 +504,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.085" />
 
@@ -545,9 +520,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.065" />
 
@@ -562,9 +536,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.045" />
 
@@ -579,9 +552,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.75"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintStart_toEndOf="@id/ladder_image"
+                android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.025" />
 
@@ -596,9 +568,8 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
-                app:layout_constraintEnd_toEndOf="@id/ladder_image"
-                app:layout_constraintHorizontal_bias="0.25"
-                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toStartOf="@id/ladder_image"
+                android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.005" />
 
