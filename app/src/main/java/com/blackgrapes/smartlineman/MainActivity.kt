@@ -23,10 +23,10 @@ class MainActivity : AppCompatActivity() {
         // Apply padding for the status bar at the top and the navigation bar at the bottom
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { view, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            // Apply top padding to the main layout
-            view.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
+            // Apply top padding to the header container to avoid overlap with status bar
+            findViewById<View>(R.id.header_container).setPadding(0, systemBars.top, 0, 16)
             // Apply bottom padding to the footer text to avoid overlap with navigation bar
-            findViewById<View>(R.id.footer_text).setPadding(0, 0, 0, systemBars.bottom)
+            findViewById<View>(R.id.footer_text).setPadding(0, 0, 0, systemBars.bottom + 24)
             insets
         }
 

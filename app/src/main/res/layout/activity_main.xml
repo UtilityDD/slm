@@ -8,11 +8,46 @@
     android:background="@color/midnight_blue"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:id="@+id/header_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center_horizontal"
+        android:paddingTop="64dp"
+        android:paddingBottom="16dp">
+
+        <TextView
+            android:id="@+id/title_lineman_quest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-condensed-black"
+            android:text="@string/title_lineman_quest"
+            android:textColor="@color/electric_cyan"
+            android:textSize="36sp"
+            android:shadowColor="#000000"
+            android:shadowDx="2"
+            android:shadowDy="2"
+            android:shadowRadius="4"/>
+
+        <TextView
+            android:id="@+id/subtitle_climb_ladder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="sans-serif-light"
+            android:text="@string/subtitle_climb_ladder"
+            android:textColor="@color/pearl_white"
+            android:textSize="18sp" />
+    </LinearLayout>
+
     <androidx.core.widget.NestedScrollView
         android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:fillViewport="true">
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="60dp"
+        android:fillViewport="true"
+        android:overScrollMode="never">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -29,35 +64,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 android:contentDescription="@string/ladder_image_desc" />
-
-            <TextView
-                android:id="@+id/title_lineman_quest"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="64dp"
-                android:fontFamily="sans-serif-black"
-                android:text="@string/title_lineman_quest"
-                android:textColor="@color/electric_cyan"
-                android:textSize="34sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <TextView
-                android:id="@+id/subtitle_climb_ladder"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="32dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="32dp"
-                android:fontFamily="sans-serif-light"
-                android:gravity="center"
-                android:text="@string/subtitle_climb_ladder"
-                android:textColor="@color/pearl_white"
-                android:textSize="18sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/title_lineman_quest" />
 
             <ImageView
                 android:id="@+id/climber_image"
@@ -116,11 +122,15 @@
         android:id="@+id/footer_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="40dp"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:fontFamily="sans-serif-light"
         android:text="@string/footer_text"
         android:textColor="@color/light_gray"
-        android:textSize="14sp" />
+        android:textSize="14sp"
+        android:shadowColor="#000000"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="2"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
