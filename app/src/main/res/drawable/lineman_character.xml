@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="96dp"
+    android:viewportWidth="48"
+    android:viewportHeight="96">
+
+    <!-- Helmet -->
+    <path
+        android:fillColor="@color/golden_light"
+        android:pathData="M24,10 A10,8 0 0,0 14,18 L14,22 L34,22 L34,18 A10,8 0 0,0 24,10 Z" />
+
+    <!-- Body -->
+    <path
+        android:strokeColor="@color/pearl_white"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M24,28 l0,30" />
+
+    <!-- Limbs -->
+    <path
+        android:strokeColor="@color/pearl_white"
+        android:strokeWidth="5"
+        android:strokeLineCap="round"
+        android:pathData="M24,32 l-8,10 M24,32 l8,10 M24,58 l-8,15 M24,58 l8,15" />
+</vector>

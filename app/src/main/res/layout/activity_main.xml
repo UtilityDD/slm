@@ -66,14 +66,14 @@
                 android:contentDescription="@string/ladder_image_desc" />
 
             <ImageView
-                android:id="@+id/climber_image"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/climber_animation"
+                android:id="@+id/lineman_character"
+                android:layout_width="60dp"
+                android:layout_height="120dp"
+                android:src="@drawable/lineman_character"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
                 app:layout_constraintEnd_toEndOf="@id/ladder_image"
                 app:layout_constraintStart_toStartOf="@id/ladder_image"
-                android:contentDescription="@string/climber_desc" />
+                android:contentDescription="@string/lineman_character_desc" />
 
             <Button
                 android:id="@+id/level_1_button"
@@ -81,10 +81,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Level 1"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"                app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.85" />
 
@@ -94,10 +93,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Level 2"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:textColor="@color/white"                app:layout_constraintStart_toEndOf="@id/ladder_image"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.3"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.65" />
 
@@ -107,10 +105,9 @@
                 android:layout_height="wrap_content"
                 android:background="@drawable/button_background"
                 android:text="Level 3"
-                android:textColor="@color/white"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:textColor="@color/white"                app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.7"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.45" />
 
