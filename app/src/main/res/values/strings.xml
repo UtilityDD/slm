@@ -16,4 +16,5 @@
     <string name="play_again">PLAY AGAIN</string>
     <string name="ladder_image_desc">A long wooden ladder reaching upwards.</string>
     <string name="lineman_character_desc">A lineman character standing at the foot of the ladder.</string>
+    <string name="ground_base_desc">A patch of ground at the base of the ladder.</string>
 </resources>

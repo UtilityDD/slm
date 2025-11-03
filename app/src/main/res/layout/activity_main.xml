@@ -66,11 +66,45 @@
                 android:contentDescription="@string/ladder_image_desc" />
 
             <ImageView
+                android:id="@+id/ground_base"
+                android:layout_width="0dp"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:src="@drawable/ground_base"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/ground_base_desc" />
+
+            <ImageView
+                android:id="@+id/grass_1"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:src="@drawable/ic_grass_tuft"
+                app:layout_constraintBottom_toBottomOf="@id/ground_base"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.1"
+                android:layout_marginBottom="25dp"/>
+
+            <ImageView
+                android:id="@+id/grass_2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_grass_tuft"
+                app:layout_constraintBottom_toBottomOf="@id/ground_base"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.9"
+                android:layout_marginBottom="20dp"/>
+
+            <ImageView
                 android:id="@+id/lineman_character"
                 android:layout_width="60dp"
                 android:layout_height="120dp"
                 android:src="@drawable/lineman_character"
-                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="30dp"
                 app:layout_constraintEnd_toEndOf="@id/ladder_image"
                 app:layout_constraintStart_toStartOf="@id/ladder_image"
                 android:contentDescription="@string/lineman_character_desc" />

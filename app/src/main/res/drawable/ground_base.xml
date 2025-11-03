@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="400dp"
+    android:height="80dp"
+    android:viewportWidth="400"
+    android:viewportHeight="80">
+
+    <!-- Darker green base for depth -->
+    <path
+        android:fillColor="#386641"
+        android:pathData="M0,80 L400,80 L400,30 Q200,10 0,30 Z" />
+    <!-- Lighter green top layer for grass -->
+    <path
+        android:fillColor="#6A994E"
+        android:pathData="M0,70 L400,70 L400,25 Q200,5 0,25 Z" />
+</vector>
