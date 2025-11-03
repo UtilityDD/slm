@@ -3,8 +3,8 @@ package com.blackgrapes.smartlineman
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.Animation
 import android.view.animation.AnimationUtils
-import android.widget.Button
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -27,12 +27,12 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        val level1Button = findViewById<Button>(R.id.level_1_button)
-        val level2Button = findViewById<Button>(R.id.level_2_button)
-        val level3Button = findViewById<Button>(R.id.level_3_button)
+        val level1Button = findViewById<View>(R.id.level_1_button)
+        val level2Button = findViewById<View>(R.id.level_2_button)
+        val level3Button = findViewById<View>(R.id.level_3_button)
 
         // Apply pulsating animation to level buttons
-        val pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
+        val pulseAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
         level1Button.startAnimation(pulseAnimation)
         level2Button.startAnimation(pulseAnimation)
         level3Button.startAnimation(pulseAnimation)
