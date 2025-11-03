@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "What is the primary purpose of a fuse in an electrical circuit?",
+    "options": ["To regulate voltage", "To protect against overcurrent", "To store electrical energy", "To increase current flow"],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "What does 'PPE' stand for in the context of a lineman's safety?",
+    "options": ["Personal Protective Equipment", "Primary Power Equipment", "Protective Power Engineering", "Personal Power Estimator"],
+    "correctAnswerIndex": 0
+  },
+  {
+    "questionText": "What is a 'hot stick' used for?",
+    "options": ["Measuring transformer temperature", "Working on energized lines from a distance", "Grounding de-energized lines", "Testing circuit voltage"],
+    "correctAnswerIndex": 1
+  }
+]

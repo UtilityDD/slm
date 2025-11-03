@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "What is the function of a transformer on a utility pole?",
+    "options": ["Generate electricity", "Change the voltage of electricity", "Store excess electricity", "Measure electricity consumption"],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "In a standard three-phase system, what is the typical phase difference between each phase?",
+    "options": ["90 degrees", "120 degrees", "180 degrees", "360 degrees"],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "What is the primary danger associated with 'backfeed'?",
+    "options": ["It can cause power surges", "It can energize a line that is thought to be de-energized", "It can damage transformers", "It can reverse the polarity of a circuit"],
+    "correctAnswerIndex": 1
+  }
+]

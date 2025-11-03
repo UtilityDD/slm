@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_game"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background_gradient"
+    tools:context=".GameActivity">
+
+    <TextView
+        android:id="@+id/question_counter_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="@string/question_placeholder"
+        android:textColor="@color/pearl_white"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <LinearLayout
+        android:id="@+id/question_card"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="24dp"
+        android:background="@drawable/question_card_background"
+        android:gravity="center"
+        android:minHeight="150dp"
+        android:orientation="vertical"
+        android:padding="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/question_counter_text">
+
+        <TextView
+            android:id="@+id/question_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/sample_question"
+            android:textColor="@color/pearl_white"
+            android:textSize="22sp"
+            android:lineSpacingMultiplier="1.2"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/feedback_icon"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="@id/question_card"
+        app:layout_constraintBottom_toBottomOf="@id/question_card"
+        app:layout_constraintStart_toStartOf="@id/question_card"
+        app:layout_constraintEnd_toEndOf="@id/question_card"
+        tools:src="@drawable/ic_correct"
+        tools:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/answers_container"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:orientation="vertical"
+        app:layout_constraintEnd_toEndOf="@id/question_card"
+        app:layout_constraintStart_toStartOf="@id/question_card"
+        app:layout_constraintTop_toBottomOf="@id/question_card">
+
+        <Button
+            android:id="@+id/answer_button_a"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="12dp"
+            android:text="@string/sample_answer_a"
+            app:cornerRadius="8dp"
+            android:textColor="@color/pearl_white"
+            app:strokeColor="@color/answer_blue" />
+
+        <Button
+            android:id="@+id/answer_button_b"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="12dp"
+            android:text="@string/sample_answer_b"
+            app:cornerRadius="8dp"
+            android:textColor="@color/pearl_white"
+            app:strokeColor="@color/answer_blue" />
+
+        <Button
+            android:id="@+id/answer_button_c"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="12dp"
+            android:text="@string/sample_answer_c"
+            app:cornerRadius="8dp"
+            android:textColor="@color/pearl_white"
+            app:strokeColor="@color/answer_blue" />
+
+        <Button
+            android:id="@+id/answer_button_d"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:paddingVertical="12dp"
+            android:text="@string/sample_answer_d"
+            app:cornerRadius="8dp"
+            android:textColor="@color/pearl_white"
+            app:strokeColor="@color/answer_blue" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/submit_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="40dp"
+        android:background="@drawable/button_background"
+        android:paddingVertical="16dp"
+        android:text="@string/submit_answer"
+        android:textColor="@color/midnight_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/answers_container"
+        app:layout_constraintStart_toStartOf="@id/answers_container" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
