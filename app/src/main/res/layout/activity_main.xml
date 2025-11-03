@@ -413,6 +413,246 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.7625" />
 
+            <TextView
+                android:id="@+id/level_20_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="20"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.75" />
+
+            <TextView
+                android:id="@+id/level_21_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="21"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7375" />
+
+            <TextView
+                android:id="@+id/level_22_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="22"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.725" />
+
+            <TextView
+                android:id="@+id/level_23_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="23"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7125" />
+
+            <TextView
+                android:id="@+id/level_24_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="24"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7" />
+
+            <TextView
+                android:id="@+id/level_25_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="25"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6875" />
+
+            <TextView
+                android:id="@+id/level_26_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="26"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.675" />
+
+            <TextView
+                android:id="@+id/level_27_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="27"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6625" />
+
+            <TextView
+                android:id="@+id/level_28_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="28"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.65" />
+
+            <TextView
+                android:id="@+id/level_29_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="29"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6375" />
+
+            <TextView
+                android:id="@+id/level_30_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="30"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.625" />
+
+            <TextView
+                android:id="@+id/level_31_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="31"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6125" />
+
+            <TextView
+                android:id="@+id/level_32_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="32"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.6" />
+
+            <TextView
+                android:id="@+id/level_33_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="33"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.15"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.5875" />
+
+            <TextView
+                android:id="@+id/level_34_button"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:background="@drawable/level_marker_background"
+                android:gravity="center"
+                android:text="34"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                app:layout_constraintBottom_toBottomOf="@id/ladder_image"
+                app:layout_constraintEnd_toEndOf="@id/ladder_image"
+                app:layout_constraintHorizontal_bias="0.85"
+                app:layout_constraintStart_toStartOf="@id/ladder_image"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.575" />
+
             <!-- Add levels 30 to 100 here following the pattern -->
 
         </androidx.constraintlayout.widget.ConstraintLayout>
