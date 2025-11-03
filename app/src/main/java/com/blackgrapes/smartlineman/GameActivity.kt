@@ -90,7 +90,7 @@ class GameActivity : AppCompatActivity() {
         val currentQuestion = questions[currentQuestionIndex]
         questionCounterText.text = "Question ${currentQuestionIndex + 1}/${questions.size}"
         questionText.text = currentQuestion.questionText
-        submitButton.text = getString(R.string.submit_answer)
+        submitButton.visibility = View.INVISIBLE
         feedbackIcon.visibility = View.GONE
 
         answerButtons.forEachIndexed { index, button ->
@@ -103,7 +103,7 @@ class GameActivity : AppCompatActivity() {
         answerButtons.forEachIndexed { index, button ->
             button.setOnClickListener {
                 if (!isAnswerSubmitted) {
-                    handleAnswerSelection(index)
+                    checkAnswer(index)
                 }
             }
         }
@@ -125,47 +125,40 @@ class GameActivity : AppCompatActivity() {
                     finish() // Finish GameActivity so it's not on the back stack
                 }
             } else {
-                // "SUBMIT" was clicked
-                if (selectedAnswerIndex != null) {
-                    checkAnswer()
-                } else {
-                    Toast.makeText(this, "Please select an answer", Toast.LENGTH_SHORT).show()
-                }
+                // This block is no longer needed as we check the answer on button click
             }
         }
     }
 
-    private fun handleAnswerSelection(index: Int) {
-        selectedAnswerIndex = index
-        answerButtons.forEach { resetButtonState(it) } // Reset all first
-        val selectedButton = answerButtons[index]
-        selectedButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_selected)
-        selectedButton.setTextColor(ContextCompat.getColor(this, R.color.white))
-    }
-
-    private fun checkAnswer() {
+    private fun checkAnswer(index: Int) {
         isAnswerSubmitted = true
+        selectedAnswerIndex = index
         val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
         val selectedButton = answerButtons[selectedAnswerIndex!!]
 
         if (selectedAnswerIndex == correctIndex) {
             score++
             selectedButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_correct)
-            selectedButton.setTextColor(ContextCompat.getColor(this, R.color.white))
             animateFeedback(true)
         } else {
             // Mark the incorrect answer red
             selectedButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_incorrect)
-            selectedButton.setTextColor(ContextCompat.getColor(this, R.color.white))
+            selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
 
             // Mark the correct answer green
             val correctButton = answerButtons[correctIndex]
             correctButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_correct)
-            correctButton.setTextColor(ContextCompat.getColor(this, R.color.white))
             animateFeedback(false)
         }
 
+        // Disable all answer buttons after submission
+        answerButtons.forEach {
+            it.isEnabled = false
+            it.setTextColor(ContextCompat.getColor(this, R.color.white))
+        }
+
         submitButton.text = "NEXT QUESTION"
+        submitButton.visibility = View.VISIBLE
     }
 
     private fun animateFeedback(isCorrect: Boolean) {
@@ -198,6 +191,7 @@ class GameActivity : AppCompatActivity() {
     private fun resetButtonState(button: Button) {
         // Reset to the default outlined button style using our new drawable
         button.background = ContextCompat.getDrawable(this, R.drawable.answer_button_default)
+        button.isEnabled = true
         button.setTextColor(ContextCompat.getColor(this, R.color.pearl_white))
     }
 
