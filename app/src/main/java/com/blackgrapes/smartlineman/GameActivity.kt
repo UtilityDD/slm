@@ -4,9 +4,11 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
+import android.os.CountDownTimer
 import android.view.animation.AnimationUtils
 import android.os.Bundle
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
@@ -38,6 +40,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var questionText: TextView
     private lateinit var answerButtons: List<Button>
     private lateinit var submitButton: Button
+    private lateinit var timerProgressBar: ProgressBar
     private lateinit var feedbackIcon: ImageView
 
     private var currentQuestionIndex = 0
@@ -45,6 +48,9 @@ class GameActivity : AppCompatActivity() {
     private var score = 0
     private var isAnswerSubmitted = false
     private var level = 1
+    private var countDownTimer: CountDownTimer? = null
+    private val questionTimeInMillis: Long = 15000 // 15 seconds per question
+
 
     private lateinit var questions: List<Question>
 
@@ -82,6 +88,7 @@ class GameActivity : AppCompatActivity() {
             findViewById(R.id.answer_button_d)
         )
         feedbackIcon = findViewById(R.id.feedback_icon)
+        timerProgressBar = findViewById(R.id.timer_progress_bar)
     }
 
     private fun setupQuestion() {
@@ -97,6 +104,8 @@ class GameActivity : AppCompatActivity() {
             button.text = currentQuestion.options[index]
             resetButtonState(button)
         }
+
+        startTimer()
     }
 
     private fun setupClickListeners() {
@@ -109,6 +118,7 @@ class GameActivity : AppCompatActivity() {
         }
 
         submitButton.setOnClickListener {
+            countDownTimer?.cancel()
             if (isAnswerSubmitted) {
                 // "NEXT QUESTION" was clicked
                 currentQuestionIndex++
@@ -131,6 +141,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun checkAnswer(index: Int) {
+        countDownTimer?.cancel()
         isAnswerSubmitted = true
         selectedAnswerIndex = index
         val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
@@ -188,11 +199,44 @@ class GameActivity : AppCompatActivity() {
         feedbackIcon.startAnimation(fadeIn)
     }
 
+    private fun startTimer() {
+        timerProgressBar.progress = 100
+        countDownTimer = object : CountDownTimer(questionTimeInMillis, 100) {
+            override fun onTick(millisUntilFinished: Long) {
+                val progress = (millisUntilFinished * 100 / questionTimeInMillis).toInt()
+                timerProgressBar.progress = progress
+            }
+
+            override fun onFinish() {
+                timerProgressBar.progress = 0
+                handleTimeUp()
+            }
+        }.start()
+    }
+
+    private fun handleTimeUp() {
+        isAnswerSubmitted = true
+        Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
+        val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
+        answerButtons[correctIndex].background = ContextCompat.getDrawable(this, R.drawable.answer_button_correct)
+        answerButtons.forEach {
+            it.isEnabled = false
+            it.setTextColor(ContextCompat.getColor(this, R.color.white))
+        }
+        submitButton.text = "NEXT QUESTION"
+        submitButton.visibility = View.VISIBLE
+    }
     private fun resetButtonState(button: Button) {
         // Reset to the default outlined button style using our new drawable
         button.background = ContextCompat.getDrawable(this, R.drawable.answer_button_default)
         button.isEnabled = true
         button.setTextColor(ContextCompat.getColor(this, R.color.pearl_white))
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        // Cancel the timer to prevent memory leaks
+        countDownTimer?.cancel()
     }
 
     private fun loadQuestionsFromJson(level: Int): List<Question> {
