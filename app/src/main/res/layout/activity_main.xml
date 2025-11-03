@@ -347,7 +347,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.285" />
+                app:layout_constraintVertical_bias="0.255" />
 
             <TextView
                 android:id="@+id/level_16_button"
@@ -363,7 +363,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.265" />
+                app:layout_constraintVertical_bias="0.205" />
 
             <TextView
                 android:id="@+id/level_17_button"
@@ -379,7 +379,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.245" />
+                app:layout_constraintVertical_bias="0.155" />
 
             <TextView
                 android:id="@+id/level_18_button"
@@ -395,7 +395,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.225" />
+                app:layout_constraintVertical_bias="0.105" />
 
             <TextView
                 android:id="@+id/level_19_button"
@@ -411,7 +411,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.205" />
+                app:layout_constraintVertical_bias="0.055" />
 
             <TextView
                 android:id="@+id/level_20_button"
@@ -427,7 +427,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.185" />
+                app:layout_constraintVertical_bias="0.005" />
 
             <TextView
                 android:id="@+id/level_21_button"
@@ -443,7 +443,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.165" />
+                app:layout_constraintVertical_bias="0.985" />
 
             <TextView
                 android:id="@+id/level_22_button"
@@ -459,7 +459,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.145" />
+                app:layout_constraintVertical_bias="0.935" />
 
             <TextView
                 android:id="@+id/level_23_button"
@@ -475,7 +475,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.125" />
+                app:layout_constraintVertical_bias="0.885" />
 
             <TextView
                 android:id="@+id/level_24_button"
@@ -491,7 +491,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.105" />
+                app:layout_constraintVertical_bias="0.835" />
 
             <TextView
                 android:id="@+id/level_25_button"
@@ -507,7 +507,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.085" />
+                app:layout_constraintVertical_bias="0.785" />
 
             <TextView
                 android:id="@+id/level_26_button"
@@ -523,7 +523,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.065" />
+                app:layout_constraintVertical_bias="0.735" />
 
             <TextView
                 android:id="@+id/level_27_button"
@@ -539,7 +539,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.045" />
+                app:layout_constraintVertical_bias="0.685" />
 
             <TextView
                 android:id="@+id/level_28_button"
@@ -555,7 +555,7 @@
                 app:layout_constraintStart_toEndOf="@id/ladder_image"
                 android:layout_marginStart="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.025" />
+                app:layout_constraintVertical_bias="0.635" />
 
             <TextView
                 android:id="@+id/level_29_button"
@@ -571,7 +571,7 @@
                 app:layout_constraintEnd_toStartOf="@id/ladder_image"
                 android:layout_marginEnd="-15dp"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.005" />
+                app:layout_constraintVertical_bias="0.585" />
 
             <!-- Add levels 30 to 100 here following the pattern -->
 
