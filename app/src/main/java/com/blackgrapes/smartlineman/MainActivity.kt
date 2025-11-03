@@ -30,12 +30,27 @@ class MainActivity : AppCompatActivity() {
         val level1Button = findViewById<View>(R.id.level_1_button)
         val level2Button = findViewById<View>(R.id.level_2_button)
         val level3Button = findViewById<View>(R.id.level_3_button)
+        val level4Button = findViewById<View>(R.id.level_4_button)
+        val level5Button = findViewById<View>(R.id.level_5_button)
+        val level6Button = findViewById<View>(R.id.level_6_button)
+        val level7Button = findViewById<View>(R.id.level_7_button)
+        val level8Button = findViewById<View>(R.id.level_8_button)
+        val level9Button = findViewById<View>(R.id.level_9_button)
+        val level10Button = findViewById<View>(R.id.level_10_button)
+        val level11Button = findViewById<View>(R.id.level_11_button)
+        val level12Button = findViewById<View>(R.id.level_12_button)
+        val level13Button = findViewById<View>(R.id.level_13_button)
+        val level14Button = findViewById<View>(R.id.level_14_button)
 
         // Apply pulsating animation to level buttons
         val pulseAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
-        level1Button.startAnimation(pulseAnimation)
-        level2Button.startAnimation(pulseAnimation)
-        level3Button.startAnimation(pulseAnimation)
+        val allLevels = listOf(level1Button, level2Button, level3Button, level4Button,
+            level5Button, level6Button, level7Button, level8Button, level9Button,
+            level10Button, level11Button, level12Button, level13Button, level14Button)
+
+        allLevels.forEach {
+            it.startAnimation(pulseAnimation)
+        }
 
         level1Button.setOnClickListener {
             startGame(1)
