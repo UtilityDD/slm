@@ -1,13 +1,15 @@
 package com.blackgrapes.smartlineman
 
 import android.content.Intent
+import android.graphics.drawable.AnimationDrawable
 import android.os.Bundle
 import android.view.View
 import android.view.animation.AnimationUtils
 import android.widget.Button
-import android.widget.LinearLayout
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -28,6 +30,9 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
+        val scrollView = findViewById<NestedScrollView>(R.id.scroll_view)
+        val climberImage = findViewById<ImageView>(R.id.climber_image)
+        val climberAnimation = climberImage.drawable as AnimationDrawable
         val level1Button = findViewById<Button>(R.id.level_1_button)
         val level2Button = findViewById<Button>(R.id.level_2_button)
         val level3Button = findViewById<Button>(R.id.level_3_button)
@@ -37,6 +42,23 @@ class MainActivity : AppCompatActivity() {
         level1Button.startAnimation(pulseAnimation)
         level2Button.startAnimation(pulseAnimation)
         level3Button.startAnimation(pulseAnimation)
+
+        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, oldScrollY ->
+            // Move the climber up or down based on scroll
+            climberImage.translationY = -scrollY.toFloat()
+
+            // Start animation on scroll, stop when idle
+            if (scrollY != oldScrollY) {
+                if (!climberAnimation.isRunning) {
+                    climberAnimation.start()
+                }
+            } else {
+                // Optional: A delay could be added here before stopping
+                if (climberAnimation.isRunning) {
+                    climberAnimation.stop()
+                }
+            }
+        })
 
         level1Button.setOnClickListener {
             startGame(1)

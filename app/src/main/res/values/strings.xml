@@ -15,4 +15,5 @@
     <string name="your_score">Your Score</string>
     <string name="play_again">PLAY AGAIN</string>
     <string name="ladder_image_desc">A long wooden ladder reaching upwards.</string>
+    <string name="climber_desc">A character climbing the ladder.</string>
 </resources>
