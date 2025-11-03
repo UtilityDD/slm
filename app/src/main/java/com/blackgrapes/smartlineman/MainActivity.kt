@@ -28,13 +28,15 @@ class MainActivity : AppCompatActivity() {
             insets
         }
 
-        // Find the emoji ladder and apply the climbing animation
-        val emojiLadder = findViewById<LinearLayout>(R.id.emoji_ladder)
-        val climbAnimation = AnimationUtils.loadAnimation(this, R.anim.climb_animation)
-        emojiLadder.startAnimation(climbAnimation)
-
         val level1Button = findViewById<Button>(R.id.level_1_button)
         val level2Button = findViewById<Button>(R.id.level_2_button)
+        val level3Button = findViewById<Button>(R.id.level_3_button)
+
+        // Apply pulsating animation to level buttons
+        val pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
+        level1Button.startAnimation(pulseAnimation)
+        level2Button.startAnimation(pulseAnimation)
+        level3Button.startAnimation(pulseAnimation)
 
         level1Button.setOnClickListener {
             startGame(1)
@@ -42,6 +44,9 @@ class MainActivity : AppCompatActivity() {
 
         level2Button.setOnClickListener {
             startGame(2)
+        }
+        level3Button.setOnClickListener {
+            startGame(3)
         }
     }
 

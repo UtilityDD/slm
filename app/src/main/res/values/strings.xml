@@ -14,4 +14,5 @@
     <string name="well_done">WELL DONE!</string>
     <string name="your_score">Your Score</string>
     <string name="play_again">PLAY AGAIN</string>
+    <string name="ladder_image_desc">A long wooden ladder reaching upwards.</string>
 </resources>
