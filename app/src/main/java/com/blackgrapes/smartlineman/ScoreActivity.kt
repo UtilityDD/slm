@@ -54,12 +54,17 @@ class ScoreActivity : AppCompatActivity() {
 
         if (score == totalQuestions && !isLastLevel) {
             nextLevelButton.visibility = View.VISIBLE
+            // When the level is passed, set a result for MainActivity
+            val resultIntent = Intent()
+            resultIntent.putExtra("level_passed", level)
+            setResult(RESULT_OK, resultIntent)
+
             nextLevelButton.setOnClickListener {
                 // Start the next level
                 val nextLevelIntent = Intent(this, GameActivity::class.java).apply {
                     putExtra(GameActivity.EXTRA_LEVEL, level + 1)
                 }
-                startActivity(nextLevelIntent)
+                // We just finish, MainActivity will handle the next step
                 finish()
             }
         } else {
@@ -70,11 +75,7 @@ class ScoreActivity : AppCompatActivity() {
 
 
         playAgainButton.setOnClickListener {
-            // Create an intent to go back to the MainActivity
-            val intent = Intent(this, MainActivity::class.java)
-            // Clear the activity stack and start a new task
-            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-            startActivity(intent)
+            // Simply finish and go back to MainActivity
             finish() // Finish the ScoreActivity
         }
     }

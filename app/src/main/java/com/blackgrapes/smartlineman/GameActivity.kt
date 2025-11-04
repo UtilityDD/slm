@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.app.Activity
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -11,6 +12,7 @@ import android.widget.Button
 import android.widget.ProgressBar
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.activity.result.contract.ActivityResultContracts
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -131,8 +133,7 @@ class GameActivity : AppCompatActivity() {
                         putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
                         putExtra(EXTRA_LEVEL, level)
                     }
-                    startActivity(scoreIntent)
-                    finish() // Finish GameActivity so it's not on the back stack
+                    scoreActivityResultLauncher.launch(scoreIntent)
                 }
             } else {
                 // This block is no longer needed as we check the answer on button click
@@ -272,5 +273,13 @@ class GameActivity : AppCompatActivity() {
             // You can optionally show an error message to the user
         }
         return questionList
+    }
+
+    private val scoreActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Pass the result back to MainActivity
+            setResult(Activity.RESULT_OK, result.data)
+            finish()
+        }
     }
 }
