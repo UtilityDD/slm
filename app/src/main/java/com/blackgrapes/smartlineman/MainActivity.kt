@@ -68,16 +68,12 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // Apply pulsating animation to level buttons
-        val pulseAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
-
         for (i in 1..100) {
             val levelId = resources.getIdentifier("level_${i}_button", "id", packageName)
             // Check if the view exists before trying to access it
             if (levelId != 0) {
                 val levelButton = findViewById<View>(levelId)
                 levelButton?.let {
-                    it.startAnimation(pulseAnimation)
                     it.setOnClickListener {
                         startGame(i)
                     }
