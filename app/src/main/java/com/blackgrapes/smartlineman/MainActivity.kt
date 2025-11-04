@@ -44,10 +44,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Scroll to the bottom to show the lineman
+        val mainView = findViewById<View>(R.id.main)
         scrollView = findViewById(R.id.scroll_view)
         linemanCharacter = findViewById(R.id.lineman_character)
 
-        loadProgress()
+        mainView.post {
+            loadProgress()
+        }
 
         // Add a scroll listener to implement the elastic snap-back effect
         scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
@@ -117,11 +120,14 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             val levelButtonId = resources.getIdentifier("level_${linemanOnLevel}_button", "id", packageName)
-            if (levelButtonId != 0) {
-                val levelButton = findViewById<View>(levelButtonId)
-                levelButton.post {
+            val levelContainerId = resources.getIdentifier("level_${linemanOnLevel}_container", "id", packageName)
+            val targetViewId = if (levelContainerId != 0) levelContainerId else levelButtonId
+
+            if (targetViewId != 0) {
+                val targetView = findViewById<View>(targetViewId)
+                targetView.post {
                     // Position the lineman's feet on the rung
-                    val targetY = levelButton.y + levelButton.height - linemanCharacter.height
+                    val targetY = targetView.y + targetView.height / 2 - linemanCharacter.height
                     targetScrollY = (targetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
 
                     if (animate) {
