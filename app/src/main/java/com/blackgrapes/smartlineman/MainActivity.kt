@@ -65,15 +65,6 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        // Animate clouds
-        val cloud1 = findViewById<View>(R.id.cloud1)
-        val cloud2 = findViewById<View>(R.id.cloud2)
-        val cloud3 = findViewById<View>(R.id.cloud3)
-
-        animateCloud(cloud1, 25000, 0, true)
-        animateCloud(cloud2, 35000, 5000, false)
-        animateCloud(cloud3, 45000, 2000, true)
-
         // Apply pulsating animation to level buttons
         val pulseAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
 
@@ -110,25 +101,38 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateLinemanPosition(level: Int, animate: Boolean) {
-        val nextLevelButtonId = resources.getIdentifier("level_${level}_button", "id", packageName)
-        if (nextLevelButtonId != 0) {
-            val nextLevelButton = findViewById<View>(nextLevelButtonId)
-            nextLevelButton.post {
-                val targetY = nextLevelButton.y + nextLevelButton.height / 2 - linemanCharacter.height
-                targetScrollY = (targetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
+        // The lineman should be on the rung of the previously completed level.
+        // If currentLevel is 1, he is on the ground (level 0).
+        val linemanOnLevel = level - 1
 
-                if (animate) {
-                    linemanCharacter.animate()
-                        .translationY(targetY - scrollView.getChildAt(0).height + linemanCharacter.height)
-                        .setDuration(1000)
-                        .withEndAction {
-                            scrollView.smoothScrollTo(0, targetScrollY)
-                        }
-                        .start()
-                } else {
-                    linemanCharacter.translationY = targetY - scrollView.getChildAt(0).height + linemanCharacter.height
-                    scrollView.post {
-                        scrollView.scrollTo(0, targetScrollY)
+        if (linemanOnLevel < 1) {
+            // Position on the ground
+            // The lineman is already in the correct ground position via XML.
+            // We just need to scroll to the bottom to make him visible.
+            scrollView.post {
+                scrollView.fullScroll(View.FOCUS_DOWN)
+                // Set the target for snap-back
+                val bottomY = scrollView.getChildAt(0).height - scrollView.height
+                targetScrollY = bottomY
+            }
+        } else {
+            val levelButtonId = resources.getIdentifier("level_${linemanOnLevel}_button", "id", packageName)
+            if (levelButtonId != 0) {
+                val levelButton = findViewById<View>(levelButtonId)
+                levelButton.post {
+                    // Position the lineman's feet on the rung
+                    val targetY = levelButton.y + levelButton.height - linemanCharacter.height
+                    targetScrollY = (targetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
+
+                    if (animate) {
+                        linemanCharacter.animate()
+                            .y(targetY)
+                            .setDuration(1000)
+                            .withEndAction { scrollView.smoothScrollTo(0, targetScrollY) }
+                            .start()
+                    } else {
+                        linemanCharacter.y = targetY
+                        scrollView.post { scrollView.scrollTo(0, targetScrollY) }
                     }
                 }
             }
@@ -155,24 +159,5 @@ class MainActivity : AppCompatActivity() {
             // Smoothly scroll back to the bottom (lineman's position)
             ObjectAnimator.ofInt(scrollView, "scrollY", lastScrollY, targetScrollY).setDuration(400).start()
         }
-    }
-
-    private fun animateCloud(cloud: View, duration: Long, delay: Long, startFromLeft: Boolean) {
-        val displayMetrics = DisplayMetrics()
-        windowManager.defaultDisplay.getMetrics(displayMetrics)
-        val screenWidth = displayMetrics.widthPixels.toFloat()
-
-        val startX = if (startFromLeft) -cloud.width.toFloat() - 200 else screenWidth + 200
-        val endX = if (startFromLeft) screenWidth + 200 else -cloud.width.toFloat() - 200
-
-        cloud.translationX = startX
-
-        val animator = ObjectAnimator.ofFloat(cloud, "translationX", startX, endX).apply {
-            this.duration = duration
-            startDelay = delay
-            repeatCount = ObjectAnimator.INFINITE
-            repeatMode = ObjectAnimator.RESTART
-        }
-        animator.start()
     }
 }
