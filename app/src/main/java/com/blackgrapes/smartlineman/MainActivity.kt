@@ -1,6 +1,7 @@
 package com.blackgrapes.smartlineman
 
 import android.content.Intent
+import android.animation.ObjectAnimator
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -12,6 +13,11 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
 class MainActivity : AppCompatActivity() {
+
+    private lateinit var scrollView: NestedScrollView
+    private val scrollCheckRunnable = Runnable { onScrollIdle() }
+    private var isScrolling = false
+    private var lastScrollY = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,10 +35,26 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Scroll to the bottom to show the lineman
-        val scrollView = findViewById<NestedScrollView>(R.id.scroll_view)
+        scrollView = findViewById(R.id.scroll_view)
         scrollView.post {
             scrollView.fullScroll(View.FOCUS_DOWN)
         }
+
+        // Add a scroll listener to implement the elastic snap-back effect
+        scrollView.setOnScrollChangeListener(NestedScrollView.OnScrollChangeListener { _, _, scrollY, _, _ ->
+            val totalHeight = scrollView.getChildAt(0).height - scrollView.height
+
+            // If scrolling and not at the top or bottom, handle snap-back logic
+            if (scrollY > 0 && scrollY < totalHeight) {
+                isScrolling = true
+                lastScrollY = scrollY
+                scrollView.removeCallbacks(scrollCheckRunnable)
+                scrollView.postDelayed(scrollCheckRunnable, 150)
+            } else {
+                isScrolling = false
+                scrollView.removeCallbacks(scrollCheckRunnable)
+            }
+        })
 
         // Apply pulsating animation to level buttons
         val pulseAnimation: Animation = AnimationUtils.loadAnimation(this, R.anim.fade_in_out)
@@ -56,5 +78,14 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, GameActivity::class.java)
         intent.putExtra("LEVEL", level)
         startActivity(intent)
+    }
+
+    private fun onScrollIdle() {
+        if (isScrolling) {
+            isScrolling = false
+            // Smoothly scroll back to the bottom (lineman's position)
+            val bottomY = scrollView.getChildAt(0).height - scrollView.height
+            ObjectAnimator.ofInt(scrollView, "scrollY", lastScrollY, bottomY).setDuration(400).start()
+        }
     }
 }
