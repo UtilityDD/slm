@@ -7,6 +7,7 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.widget.NestedScrollView
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 
@@ -25,6 +26,12 @@ class MainActivity : AppCompatActivity() {
             // Apply bottom padding to the footer text to avoid overlap with navigation bar
             findViewById<View>(R.id.footer_text).setPadding(0, 0, 0, systemBars.bottom + 24)
             insets
+        }
+
+        // Scroll to the bottom to show the lineman
+        val scrollView = findViewById<NestedScrollView>(R.id.scroll_view)
+        scrollView.post {
+            scrollView.fullScroll(View.FOCUS_DOWN)
         }
 
         // Apply pulsating animation to level buttons
