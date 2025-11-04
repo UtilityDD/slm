@@ -1,0 +1,32 @@
+[
+  {
+    "questionText": "What is the main purpose of a fuse in an electrical circuit?",
+    "options": [
+      "To increase voltage",
+      "To store electrical charge",
+      "To protect the circuit from overcurrent",
+      "To decrease resistance"
+    ],
+    "correctAnswerIndex": 2
+  },
+  {
+    "questionText": "Which of these is the standard unit of electrical power?",
+    "options": [
+      "Watt",
+      "Volt",
+      "Ampere",
+      "Ohm"
+    ],
+    "correctAnswerIndex": 0
+  },
+  {
+    "questionText": "What safety equipment is most essential for a lineman working on high-voltage lines?",
+    "options": [
+      "Sunglasses",
+      "Insulated gloves and boots",
+      "A metal helmet",
+      "Cotton clothing"
+    ],
+    "correctAnswerIndex": 1
+  }
+]
