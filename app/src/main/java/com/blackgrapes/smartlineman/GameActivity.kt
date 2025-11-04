@@ -48,6 +48,7 @@ class GameActivity : AppCompatActivity() {
     private var currentQuestionIndex = 0
     private var selectedAnswerIndex: Int? = null
     private var score = 0
+    private var currentCorrectAnswerIndex: Int = 0
     private var isAnswerSubmitted = false
     private var level = 1
     private var countDownTimer: CountDownTimer? = null
@@ -105,10 +106,18 @@ class GameActivity : AppCompatActivity() {
         questionText.text = currentQuestion.questionText
         submitButton.visibility = View.INVISIBLE
         feedbackIcon.visibility = View.GONE
+
+        // Get the correct answer text before shuffling
+        val correctAnswerText = currentQuestion.options[currentQuestion.correctAnswerIndex]
+        // Shuffle the options
+        val shuffledOptions = currentQuestion.options.shuffled()
+        // Find the new index of the correct answer
+        currentCorrectAnswerIndex = shuffledOptions.indexOf(correctAnswerText)
+
         animateQuestionIn()
 
         answerButtons.forEachIndexed { index, button ->
-            button.text = currentQuestion.options[index]
+            button.text = shuffledOptions[index]
             resetButtonState(button)
         }
 
@@ -171,10 +180,9 @@ class GameActivity : AppCompatActivity() {
         countDownTimer?.cancel()
         isAnswerSubmitted = true
         selectedAnswerIndex = index
-        val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
         val selectedButton = answerButtons[selectedAnswerIndex!!]
 
-        if (selectedAnswerIndex == correctIndex) {
+        if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(true)
@@ -184,7 +192,7 @@ class GameActivity : AppCompatActivity() {
             selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
 
             // Mark the correct answer green
-            val correctButton = answerButtons[correctIndex]
+            val correctButton = answerButtons[currentCorrectAnswerIndex]
             correctButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(false)
         }
@@ -257,9 +265,8 @@ class GameActivity : AppCompatActivity() {
     private fun handleTimeUp() {
         isAnswerSubmitted = true
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
-        animateFeedback(false)
-        val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
-        answerButtons[correctIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
+        animateFeedback(false) // Show incorrect feedback
+        answerButtons[currentCorrectAnswerIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
         answerButtons.forEach {
             it.isEnabled = false
             it.setTextColor(ContextCompat.getColor(this, R.color.white))
