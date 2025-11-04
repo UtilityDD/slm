@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="100dp"
+    android:height="50dp"
+    android:viewportWidth="100"
+    android:viewportHeight="50">
+
+    <!-- Left rail -->
+    <path android:pathData="M10,0 L20,0 L20,50 L10,50 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="10"
+                android:startY="25"
+                android:endX="20"
+                android:endY="25"
+                android:type="linear">
+                <item android:color="#A0522D" android:offset="0.0" />
+                <item android:color="#8B4513" android:offset="0.5" />
+                <item android:color="#A0522D" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <!-- Right rail -->
+    <path android:pathData="M80,0 L90,0 L90,50 L80,50 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="80"
+                android:startY="25"
+                android:endX="90"
+                android:endY="25"
+                android:type="linear">
+                <item android:color="#A0522D" android:offset="0.0" />
+                <item android:color="#8B4513" android:offset="0.5" />
+                <item android:color="#A0522D" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Rungs (matching the original 25dp spacing) -->
+    <path android:pathData="M20,0 L80,0 L80,6 L20,6 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="50" android:endY="6" android:startX="50" android:startY="0" android:type="linear">
+                <item android:color="#B57B4F" android:offset="0.0" /><item android:color="#A0522D" android:offset="0.5" /><item android:color="#8A4725" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+    <path android:pathData="M20,25 L80,25 L80,31 L20,31 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient android:endX="50" android:endY="31" android:startX="50" android:startY="25" android:type="linear">
+                <item android:color="#AF684A" android:offset="0.0" /><item android:color="#9A4E2A" android:offset="0.5" /><item android:color="#844224" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+</vector>
