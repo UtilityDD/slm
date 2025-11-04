@@ -5,12 +5,12 @@ import android.content.Intent
 import android.util.Log
 import android.view.View
 import android.view.animation.Animation
-import android.os.CountDownTimer
 import android.view.animation.AnimationUtils
 import android.os.Bundle
+import android.os.CountDownTimer
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
 import android.widget.Toast
@@ -18,7 +18,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
-import androidx.core.view.isVisible
 import androidx.core.view.WindowInsetsCompat
 import org.json.JSONArray
 import org.json.JSONException
@@ -56,6 +55,9 @@ class GameActivity : AppCompatActivity() {
 
 
     private lateinit var questions: List<Question>
+    private val timerProgressDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background) }
+    private val timerWarningDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background_warning) }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -157,8 +159,6 @@ class GameActivity : AppCompatActivity() {
                     }
                     scoreActivityResultLauncher.launch(scoreIntent)
                 }
-            } else {
-                // This block is no longer needed as we check the answer on button click
             }
         }
     }
@@ -216,8 +216,7 @@ class GameActivity : AppCompatActivity() {
 
         val fadeIn = AnimationUtils.loadAnimation(this, R.anim.scale_fade_in)
         val fadeOut = AnimationUtils.loadAnimation(this, R.anim.scale_fade_out)
-        fadeOut.startOffset = 600 // Keep the icon visible for a moment
-
+        fadeOut.startOffset = 600 // Keep the icon visible for a moment before fading out
         fadeIn.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
@@ -225,7 +224,6 @@ class GameActivity : AppCompatActivity() {
             }
             override fun onAnimationRepeat(animation: Animation?) {}
         })
-
         fadeOut.setAnimationListener(object : Animation.AnimationListener {
             override fun onAnimationStart(animation: Animation?) {}
             override fun onAnimationEnd(animation: Animation?) {
@@ -233,7 +231,6 @@ class GameActivity : AppCompatActivity() {
             }
             override fun onAnimationRepeat(animation: Animation?) {}
         })
-
         feedbackIcon.startAnimation(fadeIn)
     }
 
@@ -243,9 +240,9 @@ class GameActivity : AppCompatActivity() {
             override fun onTick(millisUntilFinished: Long) {
                 val progress = (millisUntilFinished * 100 / questionTimeInMillis).toInt()
                 if (progress < 25) { // Turns orange when 25% time is left
-                    timerProgressBar.progressDrawable = ContextCompat.getDrawable(this@GameActivity, R.drawable.timer_progress_background_warning)
+                    timerProgressBar.progressDrawable = timerWarningDrawable
                 } else {
-                    timerProgressBar.progressDrawable = ContextCompat.getDrawable(this@GameActivity, R.drawable.timer_progress_background)
+                    timerProgressBar.progressDrawable = timerProgressDrawable
                 }
                 timerProgressBar.progress = progress
             }
@@ -260,6 +257,7 @@ class GameActivity : AppCompatActivity() {
     private fun handleTimeUp() {
         isAnswerSubmitted = true
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
+        animateFeedback(false)
         val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
         answerButtons[correctIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
         answerButtons.forEach {
@@ -270,15 +268,9 @@ class GameActivity : AppCompatActivity() {
     }
     private fun resetButtonState(button: Button) {
         // Reset background tint based on the button's ID
-        val colorRes = when(button.id) {
-            R.id.answer_button_a -> R.color.emerald_green
-            R.id.answer_button_b -> R.color.sky_blue
-            R.id.answer_button_c -> R.color.amethyst_purple
-            R.id.answer_button_d -> R.color.sunflower_orange
-            else -> R.color.answer_blue // Fallback
-        }
-        button.backgroundTintList = ContextCompat.getColorStateList(this, colorRes)
 
+        button.backgroundTintList =
+            ContextCompat.getColorStateList(this, R.color.answer_option_default)
         button.isEnabled = true
         button.setTextColor(ContextCompat.getColor(this, R.color.white))
     }

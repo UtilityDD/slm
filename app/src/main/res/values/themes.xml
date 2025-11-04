@@ -18,18 +18,18 @@
     </style>
 
     <style name="Widget.App.Button.Answer.A" parent="Widget.App.Button.Answer">
-        <item name="android:backgroundTint">@color/emerald_green</item>
+        <item name="android:backgroundTint">@color/answer_option_default</item>
     </style>
 
     <style name="Widget.App.Button.Answer.B" parent="Widget.App.Button.Answer">
-        <item name="android:backgroundTint">@color/sky_blue</item>
+        <item name="android:backgroundTint">@color/answer_option_default</item>
     </style>
 
     <style name="Widget.App.Button.Answer.C" parent="Widget.App.Button.Answer">
-        <item name="android:backgroundTint">@color/amethyst_purple</item>
+        <item name="android:backgroundTint">@color/answer_option_default</item>
     </style>
 
     <style name="Widget.App.Button.Answer.D" parent="Widget.App.Button.Answer">
-        <item name="android:backgroundTint">@color/sunflower_orange</item>
+        <item name="android:backgroundTint">@color/answer_option_default</item>
     </style>
 </resources>
