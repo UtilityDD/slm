@@ -73,11 +73,13 @@ class MainActivity : AppCompatActivity() {
             // Check if the view exists before trying to access it
             if (levelId != 0) {
                 val levelButton = findViewById<View>(levelId)
-                levelButton?.let {
-                    it.setOnClickListener {
+                levelButton?.setOnClickListener {
+                    // Only allow starting the current level
+                    if (i == currentLevel) {
                         startGame(i)
                     }
                 }
+
             }
         }
     }
@@ -86,6 +88,7 @@ class MainActivity : AppCompatActivity() {
         if (result.resultCode == Activity.RESULT_OK) {
             val levelPassed = result.data?.getIntExtra("level_passed", -1) ?: -1
             if (levelPassed != -1 && levelPassed == currentLevel) {
+                // Level was passed, advance to the next one
                 currentLevel++
                 saveProgress()
                 updateLinemanPosition(currentLevel, true)
@@ -103,6 +106,8 @@ class MainActivity : AppCompatActivity() {
         // The lineman should be on the rung of the previously completed level.
         // If currentLevel is 1, he is on the ground (level 0).
         val linemanOnLevel = level - 1
+
+        updateLevelColors()
 
         if (linemanOnLevel == 0) {
             // Position on the ground
@@ -133,6 +138,21 @@ class MainActivity : AppCompatActivity() {
                     } else {
                         linemanCharacter.y = targetY
                         scrollView.post { scrollView.scrollTo(0, targetScrollY) }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun updateLevelColors() {
+        for (i in 1..100) {
+            val levelId = resources.getIdentifier("level_${i}_button", "id", packageName)
+            if (levelId != 0) {
+                findViewById<View>(levelId)?.let { levelButton ->
+                    when {
+                        i > currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_disabled_background)
+                        i == currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
+                        else -> levelButton.setBackgroundResource(R.drawable.level_marker_background)
                     }
                 }
             }
