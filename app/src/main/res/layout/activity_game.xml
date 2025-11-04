@@ -5,58 +5,76 @@
     android:id="@+id/main_game"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
+    android:background="@drawable/game_background_gradient"
     tools:context=".GameActivity">
 
     <TextView
         android:id="@+id/question_counter_text"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:fontFamily="sans-serif-medium"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/level_marker_background"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
         android:text="@string/question_placeholder"
-        android:textColor="@color/pearl_white"
-        android:textSize="18sp"
+        android:textColor="@color/midnight_blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintHorizontal_bias="0.95" />
 
     <ProgressBar
         android:id="@+id/timer_progress_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
+        android:layout_height="8dp"
         android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="@id/question_card"
-        app:layout_constraintStart_toStartOf="@id/question_card"
-        app:layout_constraintTop_toBottomOf="@id/question_counter_text"
+        android:progressDrawable="@drawable/timer_progress_background"
+        app:layout_constraintTop_toBottomOf="@id/question_card"
+        app:layout_constraintStart_toStartOf="@id/answers_container"
+        app:layout_constraintEnd_toEndOf="@id/answers_container"
         tools:progress="60" />
 
-    <LinearLayout
+    <com.google.android.material.card.MaterialCardView
         android:id="@+id/question_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/question_card_background"
-        android:gravity="center"
+        android:layout_marginHorizontal="16dp"
+        android:layout_marginTop="64dp"
+        app:cardBackgroundColor="@color/white"
+        app:cardCornerRadius="20dp"
+        app:cardElevation="8dp"
         android:minHeight="150dp"
-        android:orientation="vertical"
-        android:padding="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/timer_progress_bar">
+        app:layout_constraintTop_toTopOf="parent">
 
-        <TextView
-            android:id="@+id/question_text"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:text="@string/sample_question"
-            android:textColor="@color/pearl_white"
-            android:textSize="22sp"
-            android:lineSpacingMultiplier="1.2"/>
+            android:orientation="vertical">
 
-    </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="12dp"
+                android:background="@drawable/game_background_gradient"/>
+
+            <TextView
+                android:id="@+id/question_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="24dp"
+                android:text="@string/sample_question"
+                android:textColor="@color/midnight_blue"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.2"/>
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <ImageView
         android:id="@+id/feedback_icon"
@@ -74,75 +92,67 @@
         android:id="@+id/answers_container"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
         android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="@id/question_card"
-        app:layout_constraintStart_toStartOf="@id/question_card"
-        app:layout_constraintTop_toBottomOf="@id/question_card">
+        android:paddingHorizontal="24dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/timer_progress_bar"
+        app:layout_constraintVertical_bias="0.2"
+        app:layout_constraintBottom_toTopOf="@id/submit_button">
 
         <Button
             android:id="@+id/answer_button_a"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.App.Button.Answer.A"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingVertical="12dp"
-            android:text="@string/sample_answer_a"
-            app:cornerRadius="8dp"
-            android:textColor="@color/pearl_white"
-            app:strokeColor="@color/answer_blue" />
+            android:text="@string/sample_answer_a" />
 
         <Button
             android:id="@+id/answer_button_b"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.App.Button.Answer.B"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingVertical="12dp"
-            android:text="@string/sample_answer_b"
-            app:cornerRadius="8dp"
-            android:textColor="@color/pearl_white"
-            app:strokeColor="@color/answer_blue" />
+            android:layout_marginTop="16dp"
+            android:text="@string/sample_answer_b" />
 
         <Button
             android:id="@+id/answer_button_c"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.App.Button.Answer.C"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingVertical="12dp"
-            android:text="@string/sample_answer_c"
-            app:cornerRadius="8dp"
-            android:textColor="@color/pearl_white"
-            app:strokeColor="@color/answer_blue" />
+            android:layout_marginTop="16dp"
+            android:text="@string/sample_answer_c" />
 
         <Button
             android:id="@+id/answer_button_d"
-            style="@style/Widget.Material3.Button.OutlinedButton"
+            style="@style/Widget.App.Button.Answer.D"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:paddingVertical="12dp"
-            android:text="@string/sample_answer_d"
-            app:cornerRadius="8dp"
-            android:textColor="@color/pearl_white"
-            app:strokeColor="@color/answer_blue" />
+            android:layout_marginTop="16dp"
+            android:text="@string/sample_answer_d" />
 
     </LinearLayout>
 
     <Button
         android:id="@+id/submit_button"
-        android:layout_width="0dp"
-        android:visibility="invisible"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="40dp"
-        android:background="@drawable/button_background"
+        style="@style/Widget.Material3.Button.ElevatedButton"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="32dp"
+        android:backgroundTint="@null"
+        android:background="@drawable/next_button_gradient"
         android:paddingVertical="16dp"
         android:text="@string/submit_answer"
-        android:textColor="@color/midnight_blue"
+        android:textColor="@color/white"
         android:textSize="16sp"
         android:textStyle="bold"
+        android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@id/answers_container"
-        app:layout_constraintStart_toStartOf="@id/answers_container" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

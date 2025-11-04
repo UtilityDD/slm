@@ -104,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         // If currentLevel is 1, he is on the ground (level 0).
         val linemanOnLevel = level - 1
 
-        if (linemanOnLevel < 1) {
+        if (linemanOnLevel == 0) {
             // Position on the ground
             // The lineman is already in the correct ground position via XML.
             // We just need to scroll to the bottom to make him visible.
@@ -116,14 +116,12 @@ class MainActivity : AppCompatActivity() {
             }
         } else {
             val levelButtonId = resources.getIdentifier("level_${linemanOnLevel}_button", "id", packageName)
-            val levelContainerId = resources.getIdentifier("level_${linemanOnLevel}_container", "id", packageName)
-            val targetViewId = if (levelContainerId != 0) levelContainerId else levelButtonId
 
-            if (targetViewId != 0) {
-                val targetView = findViewById<View>(targetViewId)
-                targetView.post {
+            if (levelButtonId != 0) {
+                val levelButton = findViewById<View>(levelButtonId)
+                levelButton.post {
                     // Position the lineman's feet on the rung
-                    val targetY = targetView.y + targetView.height / 2 - linemanCharacter.height
+                    val targetY = levelButton.y + levelButton.height - linemanCharacter.height
                     targetScrollY = (targetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
 
                     if (animate) {

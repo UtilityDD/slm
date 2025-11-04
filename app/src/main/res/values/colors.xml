@@ -9,6 +9,10 @@
     <color name="pearl_white">#E8F1F2</color>
     <color name="light_gray">#BDBDBD</color>
     <color name="answer_blue">#3A506B</color>
-    <color name="correct_green">#4CAF50</color>
-    <color name="incorrect_red">#F44336</color>
+    <color name="correct_green">#2ECC71</color>
+    <color name="incorrect_red">#E74C3C</color>
+    <color name="emerald_green">#2ecc71</color>
+    <color name="sky_blue">#3498db</color>
+    <color name="amethyst_purple">#9b59b6</color>
+    <color name="sunflower_orange">#f1c40f</color>
 </resources>

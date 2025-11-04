@@ -43,6 +43,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var answerButtons: List<Button>
     private lateinit var submitButton: Button
     private lateinit var timerProgressBar: ProgressBar
+    private lateinit var questionCard: View
     private lateinit var feedbackIcon: ImageView
 
     private var currentQuestionIndex = 0
@@ -83,6 +84,7 @@ class GameActivity : AppCompatActivity() {
         questionCounterText = findViewById(R.id.question_counter_text)
         questionText = findViewById(R.id.question_text)
         submitButton = findViewById(R.id.submit_button)
+        questionCard = findViewById(R.id.question_card)
         answerButtons = listOf(
             findViewById(R.id.answer_button_a),
             findViewById(R.id.answer_button_b),
@@ -101,6 +103,7 @@ class GameActivity : AppCompatActivity() {
         questionText.text = currentQuestion.questionText
         submitButton.visibility = View.INVISIBLE
         feedbackIcon.visibility = View.GONE
+        animateQuestionIn()
 
         answerButtons.forEachIndexed { index, button ->
             button.text = currentQuestion.options[index]
@@ -109,13 +112,32 @@ class GameActivity : AppCompatActivity() {
 
         startTimer()
     }
+    private fun animateQuestionIn() {
+        // Question card slides in from top with a bounce
+        questionCard.translationY = -300f
+        questionCard.animate()
+            .translationY(0f)
+            .setInterpolator(android.view.animation.OvershootInterpolator(1.2f))
+            .setDuration(600)
+            .start()
+
+        // Answer buttons fade in from bottom with a stagger
+        answerButtons.forEachIndexed { index, button ->
+            button.alpha = 0f
+            button.translationY = 100f
+            button.animate()
+                .alpha(1f)
+                .translationY(0f)
+                .setStartDelay((index * 100).toLong())
+                .setDuration(400)
+                .start()
+        }
+    }
 
     private fun setupClickListeners() {
         answerButtons.forEachIndexed { index, button ->
             button.setOnClickListener {
-                if (!isAnswerSubmitted) {
-                    checkAnswer(index)
-                }
+                handleAnswerSelection(index)
             }
         }
 
@@ -141,7 +163,11 @@ class GameActivity : AppCompatActivity() {
         }
     }
 
-    private fun checkAnswer(index: Int) {
+    private fun handleAnswerSelection(index: Int) {
+        if (isAnswerSubmitted) {
+            return
+        }
+
         countDownTimer?.cancel()
         isAnswerSubmitted = true
         selectedAnswerIndex = index
@@ -150,19 +176,21 @@ class GameActivity : AppCompatActivity() {
 
         if (selectedAnswerIndex == correctIndex) {
             score++
-            selectedButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_correct)
+            selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(true)
         } else {
             // Mark the incorrect answer red
-            selectedButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_incorrect)
+            selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.incorrect_red)
             selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
 
             // Mark the correct answer green
             val correctButton = answerButtons[correctIndex]
-            correctButton.background = ContextCompat.getDrawable(this, R.drawable.answer_button_correct)
+            correctButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(false)
         }
 
+        // Animate and show the next button
+        showNextButton()
         // Disable all answer buttons after submission
         answerButtons.forEach {
             it.isEnabled = false
@@ -170,7 +198,16 @@ class GameActivity : AppCompatActivity() {
         }
 
         submitButton.text = "NEXT QUESTION"
+    }
+
+    private fun showNextButton() {
+        submitButton.translationY = 150f
         submitButton.visibility = View.VISIBLE
+        submitButton.animate()
+            .translationY(0f)
+            .setDuration(400)
+            .setStartDelay(600) // Delay to allow feedback animation to play
+            .start()
     }
 
     private fun animateFeedback(isCorrect: Boolean) {
@@ -205,6 +242,11 @@ class GameActivity : AppCompatActivity() {
         countDownTimer = object : CountDownTimer(questionTimeInMillis, 100) {
             override fun onTick(millisUntilFinished: Long) {
                 val progress = (millisUntilFinished * 100 / questionTimeInMillis).toInt()
+                if (progress < 25) { // Turns orange when 25% time is left
+                    timerProgressBar.progressDrawable = ContextCompat.getDrawable(this@GameActivity, R.drawable.timer_progress_background_warning)
+                } else {
+                    timerProgressBar.progressDrawable = ContextCompat.getDrawable(this@GameActivity, R.drawable.timer_progress_background)
+                }
                 timerProgressBar.progress = progress
             }
 
@@ -219,19 +261,26 @@ class GameActivity : AppCompatActivity() {
         isAnswerSubmitted = true
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
         val correctIndex = questions[currentQuestionIndex].correctAnswerIndex
-        answerButtons[correctIndex].background = ContextCompat.getDrawable(this, R.drawable.answer_button_correct)
+        answerButtons[correctIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
         answerButtons.forEach {
             it.isEnabled = false
             it.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
-        submitButton.text = "NEXT QUESTION"
-        submitButton.visibility = View.VISIBLE
+        showNextButton()
     }
     private fun resetButtonState(button: Button) {
-        // Reset to the default outlined button style using our new drawable
-        button.background = ContextCompat.getDrawable(this, R.drawable.answer_button_default)
+        // Reset background tint based on the button's ID
+        val colorRes = when(button.id) {
+            R.id.answer_button_a -> R.color.emerald_green
+            R.id.answer_button_b -> R.color.sky_blue
+            R.id.answer_button_c -> R.color.amethyst_purple
+            R.id.answer_button_d -> R.color.sunflower_orange
+            else -> R.color.answer_blue // Fallback
+        }
+        button.backgroundTintList = ContextCompat.getColorStateList(this, colorRes)
+
         button.isEnabled = true
-        button.setTextColor(ContextCompat.getColor(this, R.color.pearl_white))
+        button.setTextColor(ContextCompat.getColor(this, R.color.white))
     }
 
     override fun onDestroy() {

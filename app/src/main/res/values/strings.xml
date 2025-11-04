@@ -10,7 +10,7 @@
     <string name="sample_answer_b">To change voltage levels</string>
     <string name="sample_answer_c">To generate electricity</string>
     <string name="sample_answer_d">To measure electrical current</string>
-    <string name="submit_answer">SUBMIT</string>
+    <string name="submit_answer">Continue ▶️</string>
     <string name="well_done">WELL DONE!</string>
     <string name="your_score">Your Score</string>
     <string name="play_again">PLAY AGAIN</string>
