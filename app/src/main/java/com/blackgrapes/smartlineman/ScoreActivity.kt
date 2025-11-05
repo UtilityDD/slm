@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -9,6 +10,10 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.util.concurrent.TimeUnit
 
 class ScoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,6 +29,7 @@ class ScoreActivity : AppCompatActivity() {
         val score = intent.getIntExtra(GameActivity.EXTRA_SCORE, 0)
         val totalQuestions = intent.getIntExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, 0)
         val level = intent.getIntExtra(GameActivity.EXTRA_LEVEL, 1)
+        val totalTime = intent.getLongExtra(GameActivity.EXTRA_TOTAL_TIME, 0)
 
         val scoreTextView = findViewById<TextView>(R.id.score_text)
         val feedbackEmojiTextView = findViewById<TextView>(R.id.feedback_emoji)
@@ -31,10 +37,17 @@ class ScoreActivity : AppCompatActivity() {
 
         scoreTextView.text = "$score / $totalQuestions"
 
+        if (totalQuestions > 0) {
+            val avgTime = totalTime.toFloat() / totalQuestions.toFloat() / 1000f
+            animateAverageTime(avgTime)
+        }
         val percentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
 
         val (feedbackMessage, emoji) = when {
-            percentage == 100 -> "Perfect!" to "🏆"
+            percentage == 100 -> {
+                startConfetti()
+                "Perfect!" to "🏆"
+            }
             percentage >= 75 -> "Great Job!" to "👍"
             percentage >= 50 -> "Good Effort!" to "😊"
             else -> "Keep Trying!" to "💪"
@@ -78,5 +91,29 @@ class ScoreActivity : AppCompatActivity() {
             // Simply finish and go back to MainActivity
             finish() // Finish the ScoreActivity
         }
+    }
+
+    private fun startConfetti() {
+        val konfettiView = findViewById<KonfettiView>(R.id.konfetti_view)
+        konfettiView.start(
+            Party(
+                speed = 0f,
+                maxSpeed = 30f,
+                damping = 0.9f,
+                spread = 360,
+                emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100)
+            )
+        )
+    }
+
+    private fun animateAverageTime(avgTime: Float) {
+        val avgTimeTextView = findViewById<TextView>(R.id.avg_time_text)
+        val animator = ValueAnimator.ofFloat(0f, avgTime)
+        animator.duration = 1500 // Animation duration in milliseconds
+        animator.addUpdateListener { animation ->
+            val animatedValue = animation.animatedValue as Float
+            avgTimeTextView.text = "%.1fs".format(animatedValue)
+        }
+        animator.start()
     }
 }

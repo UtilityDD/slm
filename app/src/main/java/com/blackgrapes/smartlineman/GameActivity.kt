@@ -37,6 +37,7 @@ class GameActivity : AppCompatActivity() {
         const val EXTRA_LEVEL = "LEVEL"
         const val EXTRA_SCORE = "SCORE"
         const val EXTRA_TOTAL_QUESTIONS = "TOTAL_QUESTIONS"
+        const val EXTRA_TOTAL_TIME = "TOTAL_TIME"
     }
 
     private lateinit var questionCounterText: TextView
@@ -54,6 +55,7 @@ class GameActivity : AppCompatActivity() {
     private var currentCorrectAnswerIndex: Int = 0
     private var isAnswerSubmitted = false
     private var level = 1
+    private var totalTimeTakenInMillis: Long = 0
     private var countDownTimer: CountDownTimer? = null
     private val questionTimeInMillis: Long = 15000 // 15 seconds per question
 
@@ -185,6 +187,7 @@ class GameActivity : AppCompatActivity() {
                         putExtra(EXTRA_SCORE, score)
                         putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
                         putExtra(EXTRA_LEVEL, level)
+                        putExtra(EXTRA_TOTAL_TIME, totalTimeTakenInMillis)
                     }
                     scoreActivityResultLauncher.launch(scoreIntent)
                 }
@@ -201,6 +204,10 @@ class GameActivity : AppCompatActivity() {
         isAnswerSubmitted = true
         selectedAnswerIndex = index
         val selectedButton = answerButtons[selectedAnswerIndex!!]
+
+        val progress = timerProgressBar.progress
+        val timeRemaining = (progress.toLong() * questionTimeInMillis) / 100L
+        totalTimeTakenInMillis += (questionTimeInMillis - timeRemaining)
 
         if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
@@ -284,6 +291,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun handleTimeUp() {
         isAnswerSubmitted = true
+        totalTimeTakenInMillis += questionTimeInMillis
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
         animateFeedback(false) // Show incorrect feedback
         answerButtons[currentCorrectAnswerIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
