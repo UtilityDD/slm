@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,6 +47,7 @@ class ChapterSectionAdapter(
             if (section.isExpanded) {
                 contentTextView.visibility = View.VISIBLE
                 markwon.setMarkdown(contentTextView, section.content)
+                contentTextView.movementMethod = LinkMovementMethod.getInstance()
                 expandIcon.setImageResource(R.drawable.ic_arrow_up)
             } else {
                 contentTextView.visibility = View.GONE
