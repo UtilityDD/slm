@@ -55,7 +55,7 @@ class MainActivity : AppCompatActivity() {
         linemanCharacter = findViewById(R.id.lineman_character)
 
         mainView.post {
-            loadProgress()
+            loadProgress(false)
         }
 
         // Add a scroll listener to implement the elastic snap-back effect
@@ -93,7 +93,14 @@ class MainActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         // Refresh the progress and UI in case it was reset in another activity
-        loadProgress()
+        loadProgress(false) // Don't animate on a regular resume
+    }
+
+    private val menuActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            // Progress was reset in MenuActivity, reload with animation
+            loadProgress(true)
+        }
     }
 
     private fun setupFabMenu() {
@@ -101,7 +108,7 @@ class MainActivity : AppCompatActivity() {
 
         fabMain.setOnClickListener {
             val intent = Intent(this, MenuActivity::class.java)
-            startActivity(intent)
+            menuActivityResultLauncher.launch(intent)
         }
     }
 
@@ -112,7 +119,7 @@ class MainActivity : AppCompatActivity() {
                 // Level was passed, advance to the next one
                 currentLevel++
                 saveProgress()
-                updateLinemanPosition(currentLevel, true)
+                updateLinemanPosition(currentLevel - 1, true)
             }
         } else {
             // Even if the level wasn't passed, refresh the colors and scores
@@ -137,10 +144,17 @@ class MainActivity : AppCompatActivity() {
             scrollView.post {
                 // Reset lineman's Y position to the bottom of the ladder
                 val groundY = (scrollView.getChildAt(0).height - linemanCharacter.height - findViewById<View>(R.id.ground_base).height).toFloat()
-                linemanCharacter.y = groundY
 
-                // Scroll to the bottom to make him visible
-                scrollView.fullScroll(View.FOCUS_DOWN)
+                if (animate) {
+                    linemanCharacter.animate()
+                        .y(groundY)
+                        .setDuration(1000)
+                        .withEndAction { scrollView.fullScroll(View.FOCUS_DOWN) }
+                        .start()
+                } else {
+                    linemanCharacter.y = groundY
+                    scrollView.fullScroll(View.FOCUS_DOWN)
+                }
                 // Set the target for snap-back
                 val bottomY = scrollView.getChildAt(0).height - scrollView.height
                 targetScrollY = bottomY
@@ -218,7 +232,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun loadProgress() {
+    private fun loadProgress(animate: Boolean) {
         val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
         var highestLevelPlayed = 0
         for (i in 1..100) {
@@ -229,7 +243,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
         currentLevel = highestLevelPlayed + 1
-        updateLinemanPosition(currentLevel, false) // Position based on the next level to play
+        updateLinemanPosition(highestLevelPlayed, animate) // Position based on the highest level played
     }
 
     private fun onScrollIdle() {

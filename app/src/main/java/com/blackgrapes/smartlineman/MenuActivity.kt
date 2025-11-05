@@ -1,6 +1,7 @@
 package com.blackgrapes.smartlineman
 
 import android.content.Context
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -44,6 +45,8 @@ class MenuActivity : AppCompatActivity() {
                 val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
                 sharedPref.edit().clear().apply()
                 showToast("Progress has been reset!")
+                setResult(Activity.RESULT_OK)
+                finish()
             }
             .setNegativeButton("Cancel", null)
             .show()
