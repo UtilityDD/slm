@@ -169,7 +169,7 @@ class MainActivity : AppCompatActivity() {
 
                 levelButton.post {
                     // Position the lineman's feet on the current rung
-                    val linemanTargetY = levelButton.y + levelButton.height - linemanCharacter.height
+                    val linemanTargetY = levelButton.y + (levelButton.height / 2) - linemanCharacter.height
 
                     // Calculate the scroll position.
                     // If a future level button exists, scroll to show it. Otherwise, center the lineman.
