@@ -79,8 +79,9 @@ class MainActivity : AppCompatActivity() {
             // Check if the view exists before trying to access it
             if (levelId != 0) {
                 val levelButton = findViewById<View>(levelId)
+                val levelToStart = i // Capture the level number for the listener
                 levelButton?.setOnClickListener {
-                    startGame(i)
+                    startGame(levelToStart)
                 }
 
             }
@@ -141,19 +142,29 @@ class MainActivity : AppCompatActivity() {
 
             if (levelButtonId != 0) {
                 val levelButton = findViewById<View>(levelButtonId)
+                val futureLevelButtonId = resources.getIdentifier("level_${linemanOnLevel + 2}_button", "id", packageName)
+                val futureLevelButton = if (futureLevelButtonId != 0) findViewById<View>(futureLevelButtonId) else null
+
                 levelButton.post {
-                    // Position the lineman's feet on the rung
-                    val targetY = levelButton.y + levelButton.height - linemanCharacter.height
-                    targetScrollY = (targetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
+                    // Position the lineman's feet on the current rung
+                    val linemanTargetY = levelButton.y + levelButton.height - linemanCharacter.height
+
+                    // Calculate the scroll position.
+                    // If a future level button exists, scroll to show it. Otherwise, center the lineman.
+                    targetScrollY = if (futureLevelButton != null) {
+                        (futureLevelButton.y - (scrollView.height / 2) + (futureLevelButton.height / 2)).toInt()
+                    } else {
+                        (linemanTargetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
+                    }
 
                     if (animate) {
                         linemanCharacter.animate()
-                            .y(targetY)
+                            .y(linemanTargetY)
                             .setDuration(1000)
                             .withEndAction { scrollView.smoothScrollTo(0, targetScrollY) }
                             .start()
                     } else {
-                        linemanCharacter.y = targetY
+                        linemanCharacter.y = linemanTargetY
                         scrollView.post { scrollView.scrollTo(0, targetScrollY) }
                     }
                 }
@@ -201,8 +212,16 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadProgress() {
         val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
-        currentLevel = sharedPref.getInt("currentLevel", 1)
-        updateLinemanPosition(currentLevel, false)
+        var highestLevelPlayed = 0
+        for (i in 1..100) {
+            if (sharedPref.contains("high_score_level_$i")) {
+                highestLevelPlayed = i
+            } else {
+                break // Stop when we find a level without a high score
+            }
+        }
+        currentLevel = highestLevelPlayed + 1
+        updateLinemanPosition(currentLevel, false) // Position based on the next level to play
     }
 
     private fun onScrollIdle() {
