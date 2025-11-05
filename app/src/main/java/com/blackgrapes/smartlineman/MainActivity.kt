@@ -16,6 +16,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.NestedScrollView
 import androidx.core.view.ViewCompat
 import android.util.DisplayMetrics
+import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.content.Context
@@ -39,6 +40,10 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
+        // Force system icons to be dark, making them invisible on a dark background
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = true
+
         setContentView(R.layout.activity_main)
 
         // Apply padding for the status bar at the top and the navigation bar at the bottom
