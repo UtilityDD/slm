@@ -20,6 +20,7 @@ import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.json.JSONArray
+import android.graphics.BitmapFactory
 import org.json.JSONException
 import java.io.IOException
 
@@ -112,11 +113,14 @@ class GameActivity : AppCompatActivity() {
 
         // Handle the question image
         if (currentQuestion.imageName != null) {
-            val imageResId = resources.getIdentifier(currentQuestion.imageName, "drawable", packageName)
-            if (imageResId != 0) {
-                questionImage.setImageResource(imageResId)
+            try {
+                val inputStream = assets.open(currentQuestion.imageName)
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+                questionImage.setImageBitmap(bitmap)
                 questionImage.visibility = View.VISIBLE
-            } else {
+                inputStream.close()
+            } catch (e: IOException) {
+                Log.e("GameActivity", "Error loading image from assets: ${currentQuestion.imageName}", e)
                 questionImage.visibility = View.GONE
             }
         } else {
