@@ -105,6 +105,24 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Reset Progress Card -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_reset_progress"
+            style="@style/Widget.App.MenuCard">
+
+            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
+
+                <ImageView
+                    style="@style/Widget.App.MenuCard.ImageView"
+                    android:src="@drawable/ic_reset"
+                    app:tint="?attr/colorPrimary" />
+
+                <TextView
+                    style="@style/Widget.App.MenuCard.TextView"
+                    android:text="Reset Progress" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
     </GridLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

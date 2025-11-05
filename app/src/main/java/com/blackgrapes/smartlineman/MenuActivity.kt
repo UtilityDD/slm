@@ -1,9 +1,11 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Context
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -25,9 +27,25 @@ class MenuActivity : AppCompatActivity() {
         findViewById<View>(R.id.card_update).setOnClickListener { showToast("Update Clicked") }
         findViewById<View>(R.id.card_notice).setOnClickListener { showToast("Notice Clicked") }
         findViewById<View>(R.id.card_help).setOnClickListener { showToast("Help Clicked") }
+        findViewById<View>(R.id.card_reset_progress).setOnClickListener { showResetConfirmationDialog() }
     }
 
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun showResetConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Reset Progress")
+            .setMessage("Are you sure you want to erase all your scores and progress? This action cannot be undone.")
+            .setPositiveButton("Reset") { _, _ ->
+                // User clicked Reset button
+                val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
+                sharedPref.edit().clear().apply()
+                showToast("Progress has been reset!")
+            }
+            .setNegativeButton("Cancel", null)
+            .setIcon(R.drawable.ic_reset)
+            .show()
     }
 }
