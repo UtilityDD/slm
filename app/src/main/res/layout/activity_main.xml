@@ -103,7 +103,7 @@
                 android:id="@+id/lineman_character"
                 android:layout_width="60dp"
                 android:layout_height="120dp"
-                android:src="@drawable/lineman_character"
+                android:src="@drawable/lm2"
                 app:layout_constraintBottom_toBottomOf="@id/ladder_image"
                 android:layout_marginBottom="60dp"
                 app:layout_constraintEnd_toEndOf="@id/ladder_image"
