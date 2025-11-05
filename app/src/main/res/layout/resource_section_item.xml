@@ -4,10 +4,12 @@
     style="@style/Widget.App.MenuCard"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardBackgroundColor="#33FFFFFF"
+    android:layout_margin="6dp"
+    app:cardBackgroundColor="@color/card_background"
     app:cardCornerRadius="16dp"
     app:cardElevation="4dp"
+    app:strokeColor="#33FFFFFF"
+    app:strokeWidth="1dp"
     android:clickable="true"
     android:focusable="true">
 
@@ -22,7 +24,7 @@
             android:id="@+id/section_icon"
             android:layout_width="48dp"
             android:layout_height="48dp"
-            app:tint="?attr/colorPrimary" />
+            app:tint="@color/white" />
 
         <TextView
             android:id="@+id/section_title"

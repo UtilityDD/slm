@@ -11,6 +11,6 @@
     <color name="answer_blue">#3A506B</color>
     <color name="correct_green">#2ECC71</color>
     <color name="incorrect_red">#E74C3C</color>
-
-    <color name="answer_option_default">#1d3557</color>
+    <color name="card_background">#1C2541</color>
+    <color name="answer_option_default">@color/card_background</color>
 </resources>
