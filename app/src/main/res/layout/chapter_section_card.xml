@@ -57,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="150dp"
             android:layout_marginTop="12dp"
-            android:scaleType="centerCrop"
+            android:scaleType="fitCenter"
             android:visibility="gone"
             tools:src="@drawable/lineman_character"
             tools:visibility="visible"/>
