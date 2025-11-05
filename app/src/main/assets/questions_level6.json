@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "What is the main advantage of AC over DC for long-distance power transmission?",
+    "options": [
+      "AC is safer at high voltages",
+      "AC can be easily stepped up or down in voltage",
+      "AC requires thinner wires",
+      "AC is generated more easily"
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "A 'bucket truck' is also known as a:",
+    "options": [ "Digger derrick", "Cable puller", "Aerial work platform", "Tensioner" ],
+    "correctAnswerIndex": 2
+  }
+]

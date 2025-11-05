@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "What is the primary function of a step-up transformer?",
+    "options": [
+      "To decrease voltage",
+      "To increase voltage",
+      "To convert AC to DC",
+      "To store energy"
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "Which of these is NOT considered standard Personal Protective Equipment (PPE) for a lineman?",
+    "options": [ "Hard hat", "Insulated gloves", "Safety glasses", "Steel-toed sneakers" ],
+    "correctAnswerIndex": 3
+  }
+]

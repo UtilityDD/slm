@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "What does a circuit breaker do when it 'trips'?",
+    "options": [
+      "It increases the circuit's voltage",
+      "It interrupts the flow of current",
+      "It reduces the circuit's resistance",
+      "It sends a notification"
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "Why is proper grounding essential when working on power lines?",
+    "options": [ "To increase power output", "To provide a safe path for fault current", "To make the wires look neater", "To communicate with the power station" ],
+    "correctAnswerIndex": 1
+  }
+]

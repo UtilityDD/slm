@@ -1,0 +1,17 @@
+[
+  {
+    "questionText": "What instrument is used to safely check for the absence of voltage on a line before working on it?",
+    "options": [
+      "A multimeter",
+      "A high-voltage proximity tester",
+      "An ammeter",
+      "A phase rotation meter"
+    ],
+    "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "What is the 'fall arrest system' primarily designed to do?",
+    "options": [ "Prevent falls from happening", "Stop a fall that is already in progress", "Help a lineman climb faster", "Carry tools up the pole" ],
+    "correctAnswerIndex": 1
+  }
+]
