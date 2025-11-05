@@ -14,6 +14,7 @@ import androidx.core.view.WindowInsetsCompat
 import nl.dionsegijn.konfetti.core.Party
 import nl.dionsegijn.konfetti.core.emitter.Emitter
 import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.io.IOException
 import java.util.concurrent.TimeUnit
 
 class ScoreActivity : AppCompatActivity() {
@@ -65,10 +66,8 @@ class ScoreActivity : AppCompatActivity() {
 
         // Show "Next Level" button if the player scored perfectly
         // Also, check if there is a next level to go to.
-        // We'll assume for now there are only 2 levels.
-        val isLastLevel = level >= 2 // You can make this more dynamic if you have more levels
 
-        if (score == totalQuestions && !isLastLevel) {
+        if (score == totalQuestions && hasNextLevel(level)) {
             nextLevelButton.visibility = View.VISIBLE
             // When the level is passed, set a result for MainActivity
             val resultIntent = Intent()
@@ -128,6 +127,16 @@ class ScoreActivity : AppCompatActivity() {
                 putInt(totalQuestionsKey, totalQuestions)
                 apply()
             }
+        }
+    }
+
+    private fun hasNextLevel(currentLevel: Int): Boolean {
+        val nextLevelFileName = "questions_level${currentLevel + 1}.json"
+        return try {
+            assets.open(nextLevelFileName).close() // Check if file exists and can be opened
+            true
+        } catch (e: IOException) {
+            false
         }
     }
 }

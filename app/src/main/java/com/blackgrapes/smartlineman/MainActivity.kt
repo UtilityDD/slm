@@ -107,6 +107,9 @@ class MainActivity : AppCompatActivity() {
                 saveProgress()
                 updateLinemanPosition(currentLevel, true)
             }
+        } else {
+            // Even if the level wasn't passed, refresh the colors and scores
+            updateLevelColors()
         }
     }
 
