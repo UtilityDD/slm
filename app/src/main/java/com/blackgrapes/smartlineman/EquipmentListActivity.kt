@@ -1,6 +1,9 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Intent
 import android.os.Bundle
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -45,8 +48,15 @@ class EquipmentListActivity : AppCompatActivity() {
         )
 
         val adapter = EquipmentListAdapter(equipmentChapters) { equipment ->
-            showToast("${equipment.name} Clicked")
-            // TODO: Launch a detail activity for the selected equipment
+            if (equipment.name.startsWith("Transformers")) {
+                val intent = Intent(this, ChapterDetailActivity::class.java).apply {
+                    putExtra(ChapterDetailActivity.EXTRA_TITLE, "ট্রান্সফরমার")
+                    putExtra(ChapterDetailActivity.EXTRA_CONTENT_RES_ID, R.string.transformer_chapter_bengali)
+                }
+                startActivity(intent)
+            } else {
+                showToast("${equipment.name} Clicked")
+            }
         }
         recyclerView.adapter = adapter
     }

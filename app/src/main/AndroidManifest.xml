@@ -22,6 +22,9 @@
             android:name=".EquipmentListActivity"
             android:exported="false" />
         <activity
+            android:name=".ChapterDetailActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScoreActivity"
             android:exported="false" />
         <activity
