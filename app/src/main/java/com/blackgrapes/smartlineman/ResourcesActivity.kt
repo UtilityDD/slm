@@ -44,11 +44,10 @@ class ResourcesActivity : AppCompatActivity() {
 
         val adapter = ResourceSectionAdapter(resourceSections) { section ->
             // Handle click for each resource section
-            showToast("${section.title} Clicked")
-            // Here you would typically launch a new activity or fragment
             if (section.title == "Useful Equipments") {
                 startActivity(Intent(this, EquipmentListActivity::class.java))
             } else {
+                showToast("${section.title} Clicked")
                 // TODO: Launch detail view for other sections
             }
         }
