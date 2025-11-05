@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Context
 import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
@@ -36,6 +37,8 @@ class ScoreActivity : AppCompatActivity() {
         val wellDoneTextView = findViewById<TextView>(R.id.well_done_text)
 
         scoreTextView.text = "$score / $totalQuestions"
+
+        saveHighScore(level, score, totalQuestions)
 
         if (totalQuestions > 0) {
             val avgTime = totalTime.toFloat() / totalQuestions.toFloat() / 1000f
@@ -115,5 +118,20 @@ class ScoreActivity : AppCompatActivity() {
             avgTimeTextView.text = "%.1fs".format(animatedValue)
         }
         animator.start()
+    }
+
+    private fun saveHighScore(level: Int, score: Int, totalQuestions: Int) {
+        val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
+        val highScoreKey = "high_score_level_$level"
+        val totalQuestionsKey = "total_questions_level_$level"
+        val currentHighScore = sharedPref.getInt(highScoreKey, 0)
+
+        if (score > currentHighScore) {
+            with(sharedPref.edit()) {
+                putInt(highScoreKey, score)
+                putInt(totalQuestionsKey, totalQuestions)
+                apply()
+            }
+        }
     }
 }

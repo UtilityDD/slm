@@ -18,4 +18,5 @@
     <string name="lineman_character_desc">A lineman character standing at the foot of the ladder.</string>
     <string name="ground_base_desc">A patch of ground at the base of the ladder.</string>
     <string name="question_image_desc">Image for the current question</string>
+    <string name="score_display">🏆 %1$d/%2$d</string>
 </resources>

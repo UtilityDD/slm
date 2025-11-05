@@ -127,6 +127,21 @@
                 app:layout_constraintVertical_bias="0.9875" />
 
             <TextView
+                android:id="@+id/level_1_score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/golden_light"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/level_1_button"
+                app:layout_constraintStart_toEndOf="@id/level_1_button"
+                app:layout_constraintTop_toTopOf="@id/level_1_button"
+                tools:text="🏆 5/5"
+                tools:visibility="visible" />
+
+            <TextView
                 android:id="@+id/level_2_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -143,6 +158,21 @@
                 app:layout_constraintVertical_bias="0.975" />
 
             <TextView
+                android:id="@+id/level_2_score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:textColor="@color/golden_light"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/level_2_button"
+                app:layout_constraintEnd_toStartOf="@id/level_2_button"
+                app:layout_constraintTop_toTopOf="@id/level_2_button"
+                tools:text="🏆 5/5"
+                tools:visibility="visible" />
+
+            <TextView
                 android:id="@+id/level_3_button"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
@@ -157,6 +187,21 @@
                 app:layout_constraintStart_toStartOf="@id/ladder_image"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.9625" />
+
+            <TextView
+                android:id="@+id/level_3_score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:textColor="@color/golden_light"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@id/level_3_button"
+                app:layout_constraintStart_toEndOf="@id/level_3_button"
+                app:layout_constraintTop_toTopOf="@id/level_3_button"
+                tools:text="🏆 5/5"
+                tools:visibility="visible" />
 
             <TextView
                 android:id="@+id/level_4_button"

@@ -15,6 +15,7 @@ import androidx.core.widget.NestedScrollView
 import androidx.core.view.ViewCompat
 import android.util.DisplayMetrics
 import androidx.core.view.WindowInsetsCompat
+import android.widget.TextView
 import android.content.Context
 import android.widget.ImageView
 
@@ -146,6 +147,20 @@ class MainActivity : AppCompatActivity() {
             val levelId = resources.getIdentifier("level_${i}_button", "id", packageName)
             if (levelId != 0) {
                 findViewById<View>(levelId)?.let { levelButton ->
+                    val scoreTextViewId = resources.getIdentifier("level_${i}_score_text", "id", packageName)
+                    val scoreTextView = if (scoreTextViewId != 0) findViewById<TextView>(scoreTextViewId) else null
+
+                    val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
+                    val highScore = sharedPref.getInt("high_score_level_$i", -1)
+                    val totalQuestions = sharedPref.getInt("total_questions_level_$i", -1)
+
+                    if (highScore != -1 && totalQuestions != -1) {
+                        scoreTextView?.text = getString(R.string.score_display, highScore, totalQuestions)
+                        scoreTextView?.visibility = View.VISIBLE
+                    } else {
+                        scoreTextView?.visibility = View.GONE
+                    }
+
                     // For now, all levels are unlocked. Highlight the current one.
                     if (i == currentLevel) {
                         levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
