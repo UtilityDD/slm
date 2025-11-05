@@ -51,4 +51,5 @@ dependencies {
     // For rendering markdown text
     implementation("io.noties.markwon:core:4.6.2")
     implementation("io.noties.markwon:html:4.6.2")
+    implementation("com.airbnb.android:lottie:6.4.0")
 }

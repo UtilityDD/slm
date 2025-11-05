@@ -46,7 +46,6 @@ class MenuActivity : AppCompatActivity() {
                 showToast("Progress has been reset!")
             }
             .setNegativeButton("Cancel", null)
-            .setIcon(R.drawable.ic_reset)
             .show()
     }
 }

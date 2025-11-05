@@ -112,10 +112,12 @@
 
             <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
 
-                <ImageView
+                <com.airbnb.lottie.LottieAnimationView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_reset"
-                    app:tint="?attr/colorPrimary" />
+                    app:lottie_rawRes="@raw/reset"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_colorFilter="@color/white"/>
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
