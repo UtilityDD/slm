@@ -126,18 +126,20 @@ class MainActivity : AppCompatActivity() {
         gameActivityResultLauncher.launch(intent)
     }
 
-    private fun updateLinemanPosition(level: Int, animate: Boolean) {
+    private fun updateLinemanPosition(linemanOnLevel: Int, animate: Boolean) {
         // The lineman should be on the rung of the previously completed level.
-        // If currentLevel is 1, he is on the ground (level 0).
-        val linemanOnLevel = level - 1
 
         updateLevelColors()
 
         if (linemanOnLevel == 0) {
             // Position on the ground
             // The lineman is already in the correct ground position via XML.
-            // We just need to scroll to the bottom to make him visible.
             scrollView.post {
+                // Reset lineman's Y position to the bottom of the ladder
+                val groundY = (scrollView.getChildAt(0).height - linemanCharacter.height - findViewById<View>(R.id.ground_base).height).toFloat()
+                linemanCharacter.y = groundY
+
+                // Scroll to the bottom to make him visible
                 scrollView.fullScroll(View.FOCUS_DOWN)
                 // Set the target for snap-back
                 val bottomY = scrollView.getChildAt(0).height - scrollView.height
@@ -157,7 +159,7 @@ class MainActivity : AppCompatActivity() {
 
                     // Calculate the scroll position.
                     // If a future level button exists, scroll to show it. Otherwise, center the lineman.
-                    targetScrollY = if (futureLevelButton != null) {
+                    targetScrollY = if (futureLevelButton != null && animate) { // Only auto-scroll on animation
                         (futureLevelButton.y - (scrollView.height / 2) + (futureLevelButton.height / 2)).toInt()
                     } else {
                         (linemanTargetY - (scrollView.height / 2) + (linemanCharacter.height / 2)).toInt()
