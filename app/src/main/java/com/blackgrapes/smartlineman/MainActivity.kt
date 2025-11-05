@@ -167,9 +167,12 @@ class MainActivity : AppCompatActivity() {
                 val groundY = (scrollView.getChildAt(0).height - linemanCharacter.height - findViewById<View>(R.id.ground_base).height).toFloat()
 
                 if (animate) {
+                    val distance = Math.abs(linemanCharacter.y - groundY)
+                    // Slower speed: 500ms per 100 pixels, with a min of 1.5s and max of 5s
+                    val duration = (distance / 100 * 500).toLong().coerceIn(1500, 5000)
                     linemanCharacter.animate()
                         .y(groundY)
-                        .setDuration(1000)
+                        .setDuration(duration)
                         .withEndAction { scrollView.fullScroll(View.FOCUS_DOWN) }
                         .start()
                 } else {
@@ -201,9 +204,12 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (animate) {
+                        val distance = Math.abs(linemanCharacter.y - linemanTargetY)
+                        // Slower speed: 500ms per 100 pixels, with a min of 1.5s and max of 5s
+                        val duration = (distance / 100 * 500).toLong().coerceIn(1500, 5000)
                         linemanCharacter.animate()
                             .y(linemanTargetY)
-                            .setDuration(1000)
+                            .setDuration(duration)
                             .withEndAction { scrollView.smoothScrollTo(0, targetScrollY) }
                             .start()
                     } else {
