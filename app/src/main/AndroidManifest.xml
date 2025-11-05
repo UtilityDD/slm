@@ -16,6 +16,9 @@
             android:name=".MenuActivity"
             android:exported="false" />
         <activity
+            android:name=".ResourcesActivity"
+            android:exported="false" />
+        <activity
             android:name=".ScoreActivity"
             android:exported="false" />
         <activity
