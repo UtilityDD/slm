@@ -18,6 +18,8 @@ import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.content.Context
 import android.widget.ImageView
+import android.widget.Toast
+import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class MainActivity : AppCompatActivity() {
 
@@ -28,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     private var lastScrollY = 0
     private var currentLevel = 1
     private var targetScrollY = 0
+
+    // Floating Action Button menu state
+    private lateinit var fabMain: FloatingActionButton
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +84,17 @@ class MainActivity : AppCompatActivity() {
                 }
 
             }
+        }
+
+        setupFabMenu()
+    }
+
+    private fun setupFabMenu() {
+        fabMain = findViewById(R.id.fab_main)
+
+        fabMain.setOnClickListener {
+            val intent = Intent(this, MenuActivity::class.java)
+            startActivity(intent)
         }
     }
 

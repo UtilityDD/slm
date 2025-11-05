@@ -1520,4 +1520,16 @@
         android:shadowDy="2"
         android:shadowRadius="4"/>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fab_main"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        app:backgroundTint="@color/golden_light"
+        app:fabSize="normal"
+        app:srcCompat="@drawable/ic_bolt_white"
+        app:tint="@color/midnight_blue"
+        android:contentDescription="Menu"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

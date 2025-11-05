@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="64dp"
+    android:height="64dp"
+    android:viewportWidth="64"
+    android:viewportHeight="64">
+
+    <!-- Background circle with gradient -->
+    <path
+        android:pathData="M32,4a28,28 0 1,1 0,56a28,28 0 1,1 0,-56z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:type="radial"
+                android:centerX="32"
+                android:centerY="32"
+                android:gradientRadius="30"
+                android:startColor="#FF6F00"
+                android:endColor="#FF9100" />
+        </aapt:attr>
+    </path>
+
+    <!-- Glow rim -->
+    <path
+        android:pathData="M32,4a28,28 0 1,1 0,56a28,28 0 1,1 0,-56z"
+        android:strokeColor="#FFFFFF"
+        android:strokeAlpha="0.25"
+        android:strokeWidth="2" />
+
+    <!-- Lineman head symbol (helmet + head) -->
+    <!-- Helmet -->
+    <path
+        android:pathData="M32,16 a10,8 0 0,0 -10,8 v4 h20 v-4 a10,8 0 0,0 -10,-8z"
+        android:fillColor="#FFD740"
+        android:strokeColor="#E6AC00"
+        android:strokeWidth="1" />
+    <!-- Face -->
+    <path
+        android:pathData="M26,28 a4,4 0 1,0 8,0 a4,4 0 1,0 -8,0"
+        android:fillColor="#FDD9B5"
+        android:strokeColor="#E0B48A"
+        android:strokeWidth="0.7" />
+
+    <!-- Optional simplified body (small) -->
+    <path
+        android:pathData="M32,34 l0,10"
+        android:strokeColor="#2196F3"
+        android:strokeWidth="2"
+        android:strokeLineCap="round" />
+
+</vector>
