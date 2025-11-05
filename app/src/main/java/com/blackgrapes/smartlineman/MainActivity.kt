@@ -54,6 +54,9 @@ class MainActivity : AppCompatActivity() {
         scrollView = findViewById(R.id.scroll_view)
         linemanCharacter = findViewById(R.id.lineman_character)
 
+        val swingAnimation = AnimationUtils.loadAnimation(this, R.anim.swing_animation)
+        linemanCharacter.startAnimation(swingAnimation)
+
         mainView.post {
             loadProgress(false)
         }
