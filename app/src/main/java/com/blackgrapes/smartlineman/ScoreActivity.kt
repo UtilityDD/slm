@@ -119,9 +119,14 @@ class ScoreActivity : AppCompatActivity() {
         val highScoreKey = "high_score_level_$level"
         val totalQuestionsKey = "total_questions_level_$level"
         val totalTimeKey = "total_time_level_$level"
-        val currentHighScore = sharedPref.getInt(highScoreKey, 0)
+        val currentHighScore = sharedPref.getInt(highScoreKey, -1)
+        val currentBestTime = sharedPref.getLong(totalTimeKey, Long.MAX_VALUE)
 
-        if (score > currentHighScore) {
+        // Save if it's a new high score, or if the score is the same but the time is better.
+        val isNewHighScore = score > currentHighScore
+        val isSameScoreFasterTime = (score == currentHighScore && totalTime < currentBestTime)
+
+        if (isNewHighScore || isSameScoreFasterTime) {
             with(sharedPref.edit()) {
                 putInt(highScoreKey, score)
                 putInt(totalQuestionsKey, totalQuestions)
