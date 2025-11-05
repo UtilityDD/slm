@@ -354,9 +354,12 @@ class GameActivity : AppCompatActivity() {
 
     private val scoreActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == Activity.RESULT_OK) {
-            // Pass the result back to MainActivity
+            // Level was passed, pass the result back to MainActivity
             setResult(Activity.RESULT_OK, result.data)
-            finish()
+        } else {
+            // Level was not passed or user hit "Play Again"
+            setResult(Activity.RESULT_CANCELED)
         }
+        finish()
     }
 }
