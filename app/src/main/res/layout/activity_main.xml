@@ -23,7 +23,6 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-condensed-black"
             android:text="@string/title_lineman_quest"
-            android:textColor="@color/electric_cyan"
             android:textSize="36sp"
             android:shadowColor="#000000"
             android:shadowDx="2"

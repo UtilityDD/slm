@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.os.Build
+import android.text.Html
 import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
@@ -53,6 +55,16 @@ class MainActivity : AppCompatActivity() {
         val mainView = findViewById<View>(R.id.main)
         scrollView = findViewById(R.id.scroll_view)
         linemanCharacter = findViewById(R.id.lineman_character)
+
+        // Set the colorful title text
+        val titleTextView = findViewById<TextView>(R.id.title_lineman_quest)
+        val styledText = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Html.fromHtml(getString(R.string.title_lineman_quest), Html.FROM_HTML_MODE_LEGACY)
+        } else {
+            @Suppress("DEPRECATION")
+            Html.fromHtml(getString(R.string.title_lineman_quest))
+        }
+        titleTextView.text = styledText
 
         val swingAnimation = AnimationUtils.loadAnimation(this, R.anim.swing_animation)
         linemanCharacter.startAnimation(swingAnimation)
