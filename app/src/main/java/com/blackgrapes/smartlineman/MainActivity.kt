@@ -96,7 +96,12 @@ class MainActivity : AppCompatActivity() {
                 val levelButton = findViewById<View>(levelId)
                 val levelToStart = i // Capture the level number for the listener
                 levelButton?.setOnClickListener {
-                    startGame(levelToStart)
+                    if (levelToStart <= currentLevel) {
+                        startGame(levelToStart)
+                    } else {
+                        // Optionally, you can show a message that the level is locked
+                        Toast.makeText(this, "Complete previous levels to unlock!", Toast.LENGTH_SHORT).show()
+                    }
                 }
 
             }

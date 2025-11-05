@@ -52,9 +52,8 @@ class ScoreActivity : AppCompatActivity() {
                 startConfetti()
                 "Perfect!" to "🏆"
             }
-            percentage >= 75 -> "Great Job!" to "👍"
-            percentage >= 50 -> "Good Effort!" to "😊"
-            else -> "Keep Trying!" to "💪"
+            percentage >= 50 -> "Good Effort!" to "👍"
+            else -> "Try Again!" to "💪"
         }
 
         wellDoneTextView.text = feedbackMessage
