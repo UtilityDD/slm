@@ -227,8 +227,16 @@ class MainActivity : AppCompatActivity() {
                     val highScore = sharedPref.getInt("high_score_level_$i", -1)
                     val totalQuestions = sharedPref.getInt("total_questions_level_$i", -1)
 
-                    if (highScore != -1 && totalQuestions != -1) {
-                        scoreTextView?.text = getString(R.string.score_display, highScore, totalQuestions)
+                    if (highScore != -1 && totalQuestions > 0) {
+                        if (highScore == totalQuestions) {
+                            // Perfect score, show time
+                            val totalTime = sharedPref.getLong("total_time_level_$i", 0)
+                            val avgTime = totalTime.toFloat() / totalQuestions.toFloat() / 1000f
+                            scoreTextView?.text = getString(R.string.time_display, avgTime)
+                        } else {
+                            // Not a perfect score, show score
+                            scoreTextView?.text = getString(R.string.score_display, highScore, totalQuestions)
+                        }
                         scoreTextView?.visibility = View.VISIBLE
                     } else {
                         scoreTextView?.visibility = View.GONE

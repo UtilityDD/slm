@@ -39,7 +39,7 @@ class ScoreActivity : AppCompatActivity() {
 
         scoreTextView.text = "$score / $totalQuestions"
 
-        saveHighScore(level, score, totalQuestions)
+        saveHighScore(level, score, totalQuestions, totalTime)
 
         if (totalQuestions > 0) {
             val avgTime = totalTime.toFloat() / totalQuestions.toFloat() / 1000f
@@ -114,16 +114,18 @@ class ScoreActivity : AppCompatActivity() {
         animator.start()
     }
 
-    private fun saveHighScore(level: Int, score: Int, totalQuestions: Int) {
+    private fun saveHighScore(level: Int, score: Int, totalQuestions: Int, totalTime: Long) {
         val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
         val highScoreKey = "high_score_level_$level"
         val totalQuestionsKey = "total_questions_level_$level"
+        val totalTimeKey = "total_time_level_$level"
         val currentHighScore = sharedPref.getInt(highScoreKey, 0)
 
         if (score > currentHighScore) {
             with(sharedPref.edit()) {
                 putInt(highScoreKey, score)
                 putInt(totalQuestionsKey, totalQuestions)
+                putLong(totalTimeKey, totalTime)
                 apply()
             }
         }
