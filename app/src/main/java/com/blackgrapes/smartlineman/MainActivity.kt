@@ -216,11 +216,11 @@ class MainActivity : AppCompatActivity() {
                         scoreTextView?.visibility = View.GONE
                     }
 
-                    // For now, all levels are unlocked. Highlight the current one.
-                    if (i == currentLevel) {
-                        levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
-                    } else {
-                        levelButton.setBackgroundResource(R.drawable.level_marker_background)
+                    // Set the background based on the level's state
+                    when {
+                        i < currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_completed_background)
+                        i == currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
+                        else -> levelButton.setBackgroundResource(R.drawable.level_marker_disabled_background)
                     }
                 }
             }
