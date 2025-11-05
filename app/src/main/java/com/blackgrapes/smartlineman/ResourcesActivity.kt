@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -37,7 +38,7 @@ class ResourcesActivity : AppCompatActivity() {
             ResourceSection("Construction Standard", R.drawable.ic_construction),
             ResourceSection("Accident", R.drawable.ic_accident),
             ResourceSection("First Aid", R.drawable.ic_first_aid),
-            ResourceSection("Most Useful Equipments", R.drawable.ic_equipment),
+            ResourceSection("Useful Equipments", R.drawable.ic_equipment),
             ResourceSection("Operation Manuals", R.drawable.ic_manuals)
         )
 
@@ -45,8 +46,11 @@ class ResourcesActivity : AppCompatActivity() {
             // Handle click for each resource section
             showToast("${section.title} Clicked")
             // Here you would typically launch a new activity or fragment
-            // to display the content for the selected section.
-            // Example: startActivity(Intent(this, DetailActivity::class.java).putExtra("SECTION_TITLE", section.title))
+            if (section.title == "Useful Equipments") {
+                startActivity(Intent(this, EquipmentListActivity::class.java))
+            } else {
+                // TODO: Launch detail view for other sections
+            }
         }
         recyclerView.adapter = adapter
     }
