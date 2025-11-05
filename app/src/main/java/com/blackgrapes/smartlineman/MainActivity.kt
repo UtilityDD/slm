@@ -90,6 +90,12 @@ class MainActivity : AppCompatActivity() {
         setupFabMenu()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Refresh the progress and UI in case it was reset in another activity
+        loadProgress()
+    }
+
     private fun setupFabMenu() {
         fabMain = findViewById(R.id.fab_main)
 
