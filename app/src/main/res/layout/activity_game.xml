@@ -61,6 +61,15 @@
                 android:layout_height="12dp"
                 android:background="@drawable/game_background_gradient"/>
 
+            <ImageView
+                android:id="@+id/question_image"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/question_image_desc"
+                android:scaleType="fitCenter"
+                android:visibility="gone"
+                tools:src="@drawable/lineman_character" />
             <TextView
                 android:id="@+id/question_text"
                 android:layout_width="match_parent"

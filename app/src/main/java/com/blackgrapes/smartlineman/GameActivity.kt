@@ -26,7 +26,8 @@ import java.io.IOException
 data class Question(
     val questionText: String,
     val options: List<String>,
-    val correctAnswerIndex: Int
+    val correctAnswerIndex: Int,
+    val imageName: String? = null
 )
 
 class GameActivity : AppCompatActivity() {
@@ -44,6 +45,7 @@ class GameActivity : AppCompatActivity() {
     private lateinit var timerProgressBar: ProgressBar
     private lateinit var questionCard: View
     private lateinit var feedbackIcon: ImageView
+    private lateinit var questionImage: ImageView
 
     private var currentQuestionIndex = 0
     private var selectedAnswerIndex: Int? = null
@@ -96,6 +98,7 @@ class GameActivity : AppCompatActivity() {
         )
         feedbackIcon = findViewById(R.id.feedback_icon)
         timerProgressBar = findViewById(R.id.timer_progress_bar)
+        questionImage = findViewById(R.id.question_image)
     }
 
     private fun setupQuestion() {
@@ -106,6 +109,19 @@ class GameActivity : AppCompatActivity() {
         questionText.text = currentQuestion.questionText
         submitButton.visibility = View.INVISIBLE
         feedbackIcon.visibility = View.GONE
+
+        // Handle the question image
+        if (currentQuestion.imageName != null) {
+            val imageResId = resources.getIdentifier(currentQuestion.imageName, "drawable", packageName)
+            if (imageResId != 0) {
+                questionImage.setImageResource(imageResId)
+                questionImage.visibility = View.VISIBLE
+            } else {
+                questionImage.visibility = View.GONE
+            }
+        } else {
+            questionImage.visibility = View.GONE
+        }
 
         // Get the correct answer text before shuffling
         val correctAnswerText = currentQuestion.options[currentQuestion.correctAnswerIndex]
@@ -310,8 +326,9 @@ class GameActivity : AppCompatActivity() {
                     options.add(optionsArray.getString(j))
                 }
                 val correctAnswerIndex = questionObject.getInt("correctAnswerIndex")
+                val imageName = questionObject.optString("imageName", null)
 
-                questionList.add(Question(questionText, options, correctAnswerIndex))
+                questionList.add(Question(questionText, options, correctAnswerIndex, imageName))
             }
         } catch (e: IOException) {
             Log.e("GameActivity", "IOException: Error reading $fileName", e)

@@ -28,5 +28,16 @@
       "Cotton clothing"
     ],
     "correctAnswerIndex": 1
+  },
+  {
+    "questionText": "What is this character's profession?",
+    "imageName": "lineman_character",
+    "options": [
+      "Doctor",
+      "Chef",
+      "Lineman",
+      "Pilot"
+    ],
+    "correctAnswerIndex": 2
   }
 ]

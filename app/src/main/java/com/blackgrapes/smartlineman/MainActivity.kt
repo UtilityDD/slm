@@ -74,10 +74,7 @@ class MainActivity : AppCompatActivity() {
             if (levelId != 0) {
                 val levelButton = findViewById<View>(levelId)
                 levelButton?.setOnClickListener {
-                    // Only allow starting the current level
-                    if (i == currentLevel) {
-                        startGame(i)
-                    }
+                    startGame(i)
                 }
 
             }
@@ -149,10 +146,11 @@ class MainActivity : AppCompatActivity() {
             val levelId = resources.getIdentifier("level_${i}_button", "id", packageName)
             if (levelId != 0) {
                 findViewById<View>(levelId)?.let { levelButton ->
-                    when {
-                        i > currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_disabled_background)
-                        i == currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
-                        else -> levelButton.setBackgroundResource(R.drawable.level_marker_background)
+                    // For now, all levels are unlocked. Highlight the current one.
+                    if (i == currentLevel) {
+                        levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
+                    } else {
+                        levelButton.setBackgroundResource(R.drawable.level_marker_background)
                     }
                 }
             }

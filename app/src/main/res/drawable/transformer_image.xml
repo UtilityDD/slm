@@ -1,0 +1,23 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="24dp"
+    android:height="24dp"
+    android:viewportWidth="24"
+    android:viewportHeight="24">
+
+    <!-- Transformer Core -->
+    <path
+        android:fillColor="#000000"
+        android:pathData="M10,4h4v16h-4z" />
+
+    <!-- Primary Winding -->
+    <path
+        android:strokeColor="#000000"
+        android:strokeWidth="1"
+        android:pathData="M8,6 C6,8 6,10 8,12 C6,14 6,16 8,18" />
+
+    <!-- Secondary Winding -->
+    <path
+        android:strokeColor="#000000"
+        android:strokeWidth="1"
+        android:pathData="M16,6 C18,8 18,10 16,12 C18,14 18,16 16,18" />
+</vector>
