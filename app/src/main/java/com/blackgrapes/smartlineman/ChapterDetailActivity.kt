@@ -1,6 +1,7 @@
 package com.blackgrapes.smartlineman
 
 import android.os.Bundle
+import android.graphics.Rect
 import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -57,8 +58,23 @@ class ChapterDetailActivity : AppCompatActivity() {
         val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
 
         adapter = ChapterSectionAdapter(sections, markwon) { position ->
+            val isExpanding = !sections[position].isExpanded
             sections[position].isExpanded = !sections[position].isExpanded
             adapter.notifyItemChanged(position)
+
+            if (isExpanding) {
+                // After the layout has been updated, scroll if necessary to show the full card
+                recyclerView.post {
+                    val viewHolder = recyclerView.findViewHolderForAdapterPosition(position)
+                    viewHolder?.itemView?.let { itemView ->
+                        val rect = Rect()
+                        itemView.getGlobalVisibleRect(rect)
+                        if (rect.bottom > recyclerView.height) {
+                            recyclerView.smoothScrollBy(0, rect.bottom - recyclerView.height + 20) // 20px padding
+                        }
+                    }
+                }
+            }
         }
         recyclerView.adapter = adapter
     }
