@@ -1,21 +1,29 @@
 package com.blackgrapes.smartlineman
 
 import android.os.Bundle
-import android.widget.TextView
+import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.IOException
 
 class ChapterDetailActivity : AppCompatActivity() {
 
     companion object {
         const val EXTRA_TITLE = "EXTRA_TITLE"
-        const val EXTRA_CONTENT_RES_ID = "EXTRA_CONTENT_RES_ID"
+        const val EXTRA_CONTENT_FILE_NAME = "EXTRA_CONTENT_FILE_NAME"
     }
+
+    private lateinit var sections: MutableList<ChapterSection>
+    private lateinit var adapter: ChapterSectionAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +37,7 @@ class ChapterDetailActivity : AppCompatActivity() {
         }
 
         val title = intent.getStringExtra(EXTRA_TITLE)
-        val contentResId = intent.getIntExtra(EXTRA_CONTENT_RES_ID, 0)
+        val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME)
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -37,12 +45,44 @@ class ChapterDetailActivity : AppCompatActivity() {
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        if (contentResId != 0) {
-            val contentTextView: TextView = findViewById(R.id.chapter_content_textview)
-            val markdown = getString(contentResId)
-
-            val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
-            markwon.setMarkdown(contentTextView, markdown)
+        if (contentFileName != null) {
+            sections = loadSectionsFromJson(contentFileName).toMutableList()
+            setupRecyclerView()
         }
+    }
+
+    private fun setupRecyclerView() {
+        val recyclerView: RecyclerView = findViewById(R.id.chapter_recycler_view)
+        recyclerView.layoutManager = LinearLayoutManager(this)
+        val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
+
+        adapter = ChapterSectionAdapter(sections, markwon) { position ->
+            sections[position].isExpanded = !sections[position].isExpanded
+            adapter.notifyItemChanged(position)
+        }
+        recyclerView.adapter = adapter
+    }
+
+    private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
+        val sectionList = mutableListOf<ChapterSection>()
+        try {
+            val jsonString: String = assets.open(fileName).use { inputStream ->
+                inputStream.bufferedReader().use { it.readText() }
+            }
+            val jsonArray = JSONArray(jsonString)
+
+            for (i in 0 until jsonArray.length()) {
+                val sectionObject = jsonArray.getJSONObject(i)
+                val emoji = sectionObject.getString("emoji")
+                val title = sectionObject.getString("title")
+                val content = sectionObject.getString("content")
+                sectionList.add(ChapterSection(emoji, title, content))
+            }
+        } catch (e: IOException) {
+            Log.e("ChapterDetailActivity", "IOException: Error reading $fileName", e)
+        } catch (e: JSONException) {
+            Log.e("ChapterDetailActivity", "JSONException: Error parsing $fileName", e)
+        }
+        return sectionList
     }
 }
