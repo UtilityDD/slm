@@ -91,7 +91,8 @@ class ChapterDetailActivity : AppCompatActivity() {
                 val emoji = sectionObject.getString("emoji")
                 val title = sectionObject.getString("title")
                 val content = sectionObject.getString("content")
-                sectionList.add(ChapterSection(emoji, title, content))
+                val imageName = sectionObject.optString("imageName", null)
+                sectionList.add(ChapterSection(emoji, title, content, false, imageName))
             }
         } catch (e: IOException) {
             Log.e("ChapterDetailActivity", "IOException: Error reading $fileName", e)
