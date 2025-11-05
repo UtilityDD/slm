@@ -138,7 +138,8 @@ class MainActivity : AppCompatActivity() {
             if (levelPassed != -1 && levelPassed == currentLevel) {
                 // Level was passed, advance to the next one
                 currentLevel++
-                saveProgress()
+                // Save the new currentLevel
+                saveProgress(currentLevel)
                 updateLinemanPosition(currentLevel - 1, true)
             }
         } else {
@@ -244,10 +245,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun saveProgress() {
+    private fun saveProgress(levelToSave: Int) {
         val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
         with(sharedPref.edit()) {
-            putInt("currentLevel", currentLevel)
+            putInt("currentLevel", levelToSave)
             apply()
         }
     }
