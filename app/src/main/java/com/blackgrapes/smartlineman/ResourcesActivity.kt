@@ -1,7 +1,7 @@
 package com.blackgrapes.smartlineman
 
-import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -10,6 +10,9 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import org.json.JSONArray
+import org.json.JSONException
+import java.io.IOException
 
 class ResourcesActivity : AppCompatActivity() {
 
@@ -31,29 +34,40 @@ class ResourcesActivity : AppCompatActivity() {
         val recyclerView: RecyclerView = findViewById(R.id.resources_recycler_view)
         recyclerView.layoutManager = GridLayoutManager(this, 2) // 2 columns
 
-        val resourceSections = listOf(
-            ResourceSection("Act and Law", R.drawable.ic_law),
-            ResourceSection("Regulation", R.drawable.ic_regulation),
-            ResourceSection("Safety", R.drawable.ic_safety),
-            ResourceSection("Construction Standard", R.drawable.ic_construction),
-            ResourceSection("Accident", R.drawable.ic_accident),
-            ResourceSection("First Aid", R.drawable.ic_first_aid),
-            ResourceSection("Useful Equipments", R.drawable.ic_equipment),
-            ResourceSection("Operation Manuals", R.drawable.ic_manuals)
-        )
-
+        val resourceSections = loadResourceSectionsFromJson()
         val adapter = ResourceSectionAdapter(resourceSections) { section ->
             // Handle click for each resource section
-            if (section.title == "Useful Equipments") {
-                startActivity(Intent(this, EquipmentListActivity::class.java))
-            } else {
-                showToast("${section.title} Clicked")
-                // TODO: Launch detail view for other sections
-            }
+            showToast("${section.title} Clicked")
+            // TODO: Launch detail view for other sections
         }
         recyclerView.adapter = adapter
     }
 
+    private fun loadResourceSectionsFromJson(): List<ResourceSection> {
+        val sections = mutableListOf<ResourceSection>()
+        val fileName = "resource_sections.json"
+        try {
+            val jsonString: String = assets.open(fileName).bufferedReader().use { it.readText() }
+            val jsonArray = JSONArray(jsonString)
+
+            for (i in 0 until jsonArray.length()) {
+                val sectionObject = jsonArray.getJSONObject(i)
+                val title = sectionObject.getString("title")
+                val iconName = sectionObject.getString("iconName")
+                val iconResId = resources.getIdentifier(iconName, "drawable", packageName)
+
+                // Only add if the icon exists
+                if (iconResId != 0) {
+                    sections.add(ResourceSection(title, iconResId))
+                }
+            }
+        } catch (e: IOException) {
+            Log.e("ResourcesActivity", "IOException: Error reading $fileName", e)
+        } catch (e: JSONException) {
+            Log.e("ResourcesActivity", "JSONException: Error parsing $fileName", e)
+        }
+        return sections
+    }
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

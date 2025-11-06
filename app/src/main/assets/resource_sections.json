@@ -1,0 +1,30 @@
+[
+  {
+    "title": "Act and Law",
+    "iconName": "ic_law"
+  },
+  {
+    "title": "Regulation",
+    "iconName": "ic_regulation"
+  },
+  {
+    "title": "Safety",
+    "iconName": "ic_safety"
+  },
+  {
+    "title": "Construction Standard",
+    "iconName": "ic_construction"
+  },
+  {
+    "title": "Accident",
+    "iconName": "ic_accident"
+  },
+  {
+    "title": "First Aid",
+    "iconName": "ic_first_aid"
+  },
+  {
+    "title": "Operation Manuals",
+    "iconName": "ic_manuals"
+  }
+]
