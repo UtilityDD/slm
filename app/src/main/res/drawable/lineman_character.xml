@@ -1,79 +1,93 @@
 <?xml version="1.0" encoding="utf-8"?>
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
-    android:width="128dp"
-    android:height="128dp"
+    android:width="256dp"
+    android:height="256dp"
     android:viewportWidth="512"
     android:viewportHeight="512">
 
-    <!-- Helmet -->
+    <!-- Helmet top -->
     <path
-        android:fillColor="#F5C94A"
-        android:pathData="M256,56c-80,0-160,56-160,88v24c0,32,80,56,160,56s160-24,160-56v-24c0-32-80-88-160-88z"/>
-    <path
-        android:fillColor="#F0B03A"
-        android:pathData="M96,168c0,0,72,40,160,40s160-40,160-40c0,48-72,80-160,80s-160-32-160-80z"
-        android:fillAlpha="0.12"/>
+        android:fillColor="#FFD930"
+        android:strokeColor="#E5B800"
+        android:strokeWidth="4"
+        android:pathData="M92,176c0,-68 72,-112 164,-112s164,44 164,112c0,8 -6,16 -16,16H108c-10,0 -16,-8 -16,-16z" />
 
-    <!-- Face -->
+    <!-- Helmet shine -->
     <path
-        android:fillColor="#8D5A43"
-        android:pathData="M176,192c0,56,40,96,80,96s80-40,80-96c0-24-24-56-80-56s-80,32-80,56z"/>
+        android:fillColor="#FFF27A"
+        android:fillAlpha="0.4"
+        android:pathData="M100,160c10,-52 72,-84 156,-84c84,0 146,32 156,84c0,4 -2,8 -6,8H106c-4,0 -6,-4 -6,-8z" />
 
-    <!-- Body (shirt) -->
+    <!-- Helmet ridge -->
     <path
-        android:fillColor="#243746"
-        android:pathData="M144,304c0,0,24,120,32,144h160c8-24,32-144,32-144H144z"/>
+        android:fillColor="#F5C500"
+        android:pathData="M220,76h72c10,0 20,10 20,24v8h-112v-8c0,-14 10,-24 20,-24z" />
 
-    <!-- Safety Vest -->
+    <!-- Face base -->
     <path
-        android:fillColor="#F48024"
-        android:pathData="M192,216h128v184H192z"/>
-    <path
-        android:fillColor="#FFD17A"
-        android:pathData="M208,248h32v112h-32zM272,248h32v112h-32z"
-        android:fillAlpha="0.85"/>
+        android:fillColor="#FFD69B"
+        android:strokeColor="#E5A464"
+        android:strokeWidth="3"
+        android:pathData="M128,200c-20,48 -12,136 24,184c36,48 76,56 104,56s68,-8 104,-56c36,-48 44,-136 24,-184c-52,10 -100,20 -152,20s-100,-10 -152,-20z" />
 
-    <!-- Left Arm -->
+    <!-- Ears -->
     <path
-        android:fillColor="#8D5A43"
-        android:pathData="M128,312c16,8,40,8,56,0v-40c-18-8-44-8-56,0v40z"/>
+        android:fillColor="#FFD69B"
+        android:pathData="M116,280a20,28 0 1,0 0.1,0" />
+    <path
+        android:fillColor="#FFD69B"
+        android:pathData="M396,280a20,28 0 1,0 0.1,0" />
 
-    <!-- Right Arm (holding wrench) -->
-    <path
-        android:fillColor="#8D5A43"
-        android:pathData="M384,312c-16,8-40,8-56,0v-40c18-8,44-8,56,0v40z"/>
+    <!-- Eyes -->
+    <path android:fillColor="#FFFFFF" android:pathData="M188,260a24,18 0 1,0 48,0a24,18 0 1,0 -48,0" />
+    <path android:fillColor="#FFFFFF" android:pathData="M276,260a24,18 0 1,0 48,0a24,18 0 1,0 -48,0" />
 
-    <!-- Gloves -->
-    <path
-        android:fillColor="#FFC75E"
-        android:pathData="M112,360c0,16,12,28,28,28s28-12,28-28-12-28-28-28-28,12-28,28z"/>
-    <path
-        android:fillColor="#FFC75E"
-        android:pathData="M372,360c0,16-12,28-28,28s-28-12-28-28,12-28,28-28,28,12,28,28z"/>
+    <!-- Pupils with highlight -->
+    <path android:fillColor="#3C2A1E" android:pathData="M208,266a10,10 0 1,0 20,0a10,10 0 1,0 -20,0" />
+    <path android:fillColor="#3C2A1E" android:pathData="M296,266a10,10 0 1,0 20,0a10,10 0 1,0 -20,0" />
+    <path android:fillColor="#FFFFFF" android:fillAlpha="0.5" android:pathData="M214,260a4,4 0 1,0 8,0a4,4 0 1,0 -8,0" />
+    <path android:fillColor="#FFFFFF" android:fillAlpha="0.5" android:pathData="M302,260a4,4 0 1,0 8,0a4,4 0 1,0 -8,0" />
 
-    <!-- Wrench -->
-    <path
-        android:fillColor="#9AA6B2"
-        android:pathData="M360,360c24,0,40,28,16,44l-96,64c-12,8-28,6-38-4s-12-26-4-38l64-96c16-24,44-8,44,16z"/>
+    <!-- Eyebrows -->
+    <path android:fillColor="#5A3E2A" android:pathData="M184,236c24,-10 44,-10 64,0c-28,-2 -44,-2 -64,0z" />
+    <path android:fillColor="#5A3E2A" android:pathData="M276,236c20,-10 40,-10 64,0c-24,-2 -40,-2 -64,0z" />
 
-    <!-- Pants -->
+    <!-- Nose -->
     <path
-        android:fillColor="#243746"
-        android:pathData="M176,424c0,0,16,56,24,72h112c8-16,24-72,24-72H176z"/>
+        android:fillColor="#FDC27A"
+        android:pathData="M252,300c-8,0 -12,6 -12,12c0,6 4,12 12,12s12,-6 12,-12c0,-6 -4,-12 -12,-12z" />
 
-    <!-- Boots -->
+    <!-- Mustache -->
     <path
-        android:fillColor="#4B2F1F"
-        android:pathData="M176,496h-24c-8,0-16-8-16-16v-8h56v24zM376,496h24c8,0,16-8,16-16v-8h-56v24z"/>
+        android:fillColor="#4B2E1E"
+        android:pathData="M184,324c24,20 52,24 72,24s48,-4 72,-24c-12,10 -36,16 -72,16s-60,-6 -72,-16z" />
 
-    <!-- Outline strokes (for emoji-like bold outline) -->
-    <group android:name="outline" android:translateX="0" android:translateY="0">
-        <path
-            android:fillColor="#000000"
-            android:strokeWidth="8"
-            android:strokeColor="#000000"
-            android:strokeLineJoin="round"
-            android:pathData="M96,168c0,0,72,40,160,40s160-40,160-40c0,48-72,80-160,80s-160-32-160-80z"/>
-    </group>
+    <!-- Mouth -->
+    <path
+        android:fillColor="#2C2C2C"
+        android:strokeColor="#1A1A1A"
+        android:strokeWidth="1"
+        android:pathData="M212,360c16,24 80,24 96,0c-16,8 -80,8 -96,0z" />
+
+    <!-- Shirt collar -->
+    <path
+        android:fillColor="#3572EF"
+        android:strokeColor="#2C5EDC"
+        android:strokeWidth="3"
+        android:pathData="M200,392h112l-40,40h-32z" />
+
+    <!-- Vest base -->
+    <path
+        android:fillColor="#FF7B00"
+        android:strokeColor="#E45C00"
+        android:strokeWidth="3"
+        android:pathData="M128,420h256l-36,72H164z" />
+
+    <!-- Reflective safety stripes -->
+    <path android:fillColor="#C8FF33" android:strokeColor="#A0E600" android:strokeWidth="2" android:pathData="M168,420l44,72h-20l-44,-72z" />
+    <path android:fillColor="#C8FF33" android:strokeColor="#A0E600" android:strokeWidth="2" android:pathData="M344,420l-44,72h20l44,-72z" />
+
+    <!-- Neck shadow -->
+    <path android:fillColor="#E6B678" android:fillAlpha="0.5" android:pathData="M216,384h80l-16,32h-48z" />
 
 </vector>
