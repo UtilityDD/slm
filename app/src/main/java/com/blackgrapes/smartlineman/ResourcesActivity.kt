@@ -37,14 +37,14 @@ class ResourcesActivity : AppCompatActivity() {
 
         val resourceSections = loadResourceSectionsFromJson()
         val adapter = ResourceSectionAdapter(resourceSections) { section ->
-            if (section.title == "সুরক্ষা কবচ") {
+            if (section.contentFile != null) {
                 val intent = Intent(this, ChapterDetailActivity::class.java).apply {
                     putExtra(ChapterDetailActivity.EXTRA_TITLE, section.title)
-                    putExtra(ChapterDetailActivity.EXTRA_CONTENT_FILE_NAME, "B1_detail_chapter.json")
+                    putExtra(ChapterDetailActivity.EXTRA_CONTENT_FILE_NAME, section.contentFile)
                 }
                 startActivity(intent)
             } else {
-                showToast("${section.title} Clicked")
+                showToast("${section.title} content is not available yet.")
             }
         }
         recyclerView.adapter = adapter
@@ -60,7 +60,9 @@ class ResourcesActivity : AppCompatActivity() {
             for (i in 0 until jsonArray.length()) {
                 val sectionObject = jsonArray.getJSONObject(i)
                 val title = sectionObject.getString("title")
+                val id = sectionObject.getString("id")
                 val iconName = sectionObject.getString("iconName")
+                val contentFile = sectionObject.optString("contentFile", null)
                 var iconResId = resources.getIdentifier(iconName, "drawable", packageName)
 
                 // If the icon doesn't exist, use a default placeholder
@@ -68,7 +70,7 @@ class ResourcesActivity : AppCompatActivity() {
                     Log.w("ResourcesActivity", "Icon not found for: $iconName. Using default.")
                     iconResId = R.drawable.ic_manuals // A default icon
                 }
-                sections.add(ResourceSection(title, iconResId))
+                sections.add(ResourceSection(id, title, iconResId, contentFile))
             }
         } catch (e: IOException) {
             Log.e("ResourcesActivity", "IOException: Error reading $fileName", e)
