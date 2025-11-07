@@ -54,12 +54,14 @@ class ResourcesActivity : AppCompatActivity() {
                 val sectionObject = jsonArray.getJSONObject(i)
                 val title = sectionObject.getString("title")
                 val iconName = sectionObject.getString("iconName")
-                val iconResId = resources.getIdentifier(iconName, "drawable", packageName)
+                var iconResId = resources.getIdentifier(iconName, "drawable", packageName)
 
-                // Only add if the icon exists
-                if (iconResId != 0) {
-                    sections.add(ResourceSection(title, iconResId))
+                // If the icon doesn't exist, use a default placeholder
+                if (iconResId == 0) {
+                    Log.w("ResourcesActivity", "Icon not found for: $iconName. Using default.")
+                    iconResId = R.drawable.ic_manuals // A default icon
                 }
+                sections.add(ResourceSection(title, iconResId))
             }
         } catch (e: IOException) {
             Log.e("ResourcesActivity", "IOException: Error reading $fileName", e)

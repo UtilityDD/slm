@@ -1,30 +1,26 @@
 [
   {
-    "title": "Act and Law",
-    "iconName": "ic_law"
+    "title": "সুরক্ষা কবচ",
+    "iconName": "shield_icon"
   },
   {
-    "title": "Regulation",
-    "iconName": "ic_regulation"
+    "title": "হাতিয়ারের ওস্তাদ",
+    "iconName": "tools_icon"
   },
   {
-    "title": "Safety",
-    "iconName": "ic_safety"
+    "title": "লাইন চেনার জাদুকর",
+    "iconName": "line_wizard_icon"
   },
   {
-    "title": "Construction Standard",
-    "iconName": "ic_construction"
+    "title": "কাজের কারিগর",
+    "iconName": "craftsman_icon"
   },
   {
-    "title": "Accident",
-    "iconName": "ic_accident"
+    "title": "ফল্ট ফাইন্ডার",
+    "iconName": "detective_icon"
   },
   {
-    "title": "First Aid",
-    "iconName": "ic_first_aid"
-  },
-  {
-    "title": "Operation Manuals",
-    "iconName": "ic_manuals"
+    "title": "যন্ত্র গুরু (Equipment Guru)",
+    "iconName": "guru_icon"
   }
 ]
