@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
@@ -36,9 +37,15 @@ class ResourcesActivity : AppCompatActivity() {
 
         val resourceSections = loadResourceSectionsFromJson()
         val adapter = ResourceSectionAdapter(resourceSections) { section ->
-            // Handle click for each resource section
-            showToast("${section.title} Clicked")
-            // TODO: Launch detail view for other sections
+            if (section.title == "সুরক্ষা কবচ") {
+                val intent = Intent(this, ChapterDetailActivity::class.java).apply {
+                    putExtra(ChapterDetailActivity.EXTRA_TITLE, section.title)
+                    putExtra(ChapterDetailActivity.EXTRA_CONTENT_FILE_NAME, "B1_detail_chapter.json")
+                }
+                startActivity(intent)
+            } else {
+                showToast("${section.title} Clicked")
+            }
         }
         recyclerView.adapter = adapter
     }
