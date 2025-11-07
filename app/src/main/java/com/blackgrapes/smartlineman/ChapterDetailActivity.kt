@@ -11,7 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
-import org.json.JSONArray
+import org.json.JSONObject
 import org.json.JSONException
 import java.io.IOException
 
@@ -66,15 +66,22 @@ class ChapterDetailActivity : AppCompatActivity() {
         val sectionList = mutableListOf<ChapterSection>()
         try {
             val jsonString: String = assets.open(fileName).bufferedReader().use { it.readText() }
-            val jsonArray = JSONArray(jsonString)
+            // The file contains a single chapter object, not an array.
+            val chapterObject = JSONObject(jsonString)
+            // Get the array of levels from within the chapter object.
+            val levelsArray = chapterObject.getJSONArray("levels")
 
-            for (i in 0 until jsonArray.length()) {
-                val sectionObject = jsonArray.getJSONObject(i)
-                val emoji = sectionObject.getString("emoji")
-                val title = sectionObject.getString("title")
-                val content = sectionObject.getString("content")
-                val imageName = sectionObject.optString("imageName", null)
-                sectionList.add(ChapterSection(emoji, title, content, false, imageName))
+            for (i in 0 until levelsArray.length()) {
+                val levelObject = levelsArray.getJSONObject(i)
+                val title = levelObject.getString("level_title")
+                val summary = levelObject.getString("level_summary")
+                val status = levelObject.getString("level_status")
+
+                // Use the status to determine the emoji for the list item.
+                val emoji = if (status == "unlocked") "🔓" else "🔒"
+
+                // Map the level data to a ChapterSection object.
+                sectionList.add(ChapterSection(emoji, title, summary, false, null))
             }
         } catch (e: IOException) {
             Log.e("ChapterDetailActivity", "IOException: Error reading $fileName", e)
