@@ -7,6 +7,7 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
@@ -23,13 +24,16 @@ class ResourcesActivity : AppCompatActivity() {
         setContentView(R.layout.activity_resources)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_resources)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            // We only need padding for the bottom to prevent overlap with navigation bar
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = "Knowledge Base"
+        toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         val recyclerView: RecyclerView = findViewById(R.id.resources_recycler_view)
@@ -61,15 +65,10 @@ class ResourcesActivity : AppCompatActivity() {
                 val sectionObject = jsonArray.getJSONObject(i)
                 val title = sectionObject.getString("title")
                 val id = sectionObject.getString("id")
-                val iconName = sectionObject.getString("iconName")
+                // Using a default icon as per the new design requirement.
+                // The iconName from JSON is ignored for now.
                 val contentFile = sectionObject.optString("contentFile", null)
-                var iconResId = resources.getIdentifier(iconName, "drawable", packageName)
-
-                // If the icon doesn't exist, use a default placeholder
-                if (iconResId == 0) {
-                    Log.w("ResourcesActivity", "Icon not found for: $iconName. Using default.")
-                    iconResId = R.drawable.ic_manuals // A default icon
-                }
+                val iconResId = R.drawable.ic_resources // Default book/document icon
                 sections.add(ResourceSection(id, title, iconResId, contentFile))
             }
         } catch (e: IOException) {

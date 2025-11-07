@@ -13,4 +13,17 @@
     <color name="incorrect_red">#E74C3C</color>
     <color name="card_background">#1C2541</color>
     <color name="answer_option_default">@color/card_background</color>
+
+    <!-- ECI Theme Colors -->
+    <color name="eci_violet">#6A5AE0</color>
+    <color name="eci_indigo">#4B3DBB</color>
+    <color name="text_on_light_card">#212121</color>
+
+    <!-- Pastel Card Colors -->
+    <color name="pastel_lavender">#F3E5F5</color>
+    <color name="pastel_baby_blue">#E3F2FD</color>
+    <color name="pastel_mint">#E0F2F1</color>
+    <color name="pastel_peach">#FFE0B2</color>
+    <color name="pastel_butter">#FFF9C4</color>
+    <color name="pastel_sky">#E1F5FE</color>
 </resources>

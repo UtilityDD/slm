@@ -37,12 +37,12 @@ class ChapterDetailActivity : AppCompatActivity() {
             insets
         }
 
-        val title = intent.getStringExtra(EXTRA_TITLE)
-        val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME)
+        val title = intent.getStringExtra(EXTRA_TITLE) ?: "Chapter Details"
+        val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME) ?: "chapter_1_1.json" // Default to chapter_1_1.json
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
-        supportActionBar?.title = title
+        supportActionBar?.title = intent.getStringExtra(EXTRA_TITLE) ?: "প্রথম দিনের ইউনিফর্ম ও পিপিই" // Use a specific title for the default case
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
@@ -74,29 +74,92 @@ class ChapterDetailActivity : AppCompatActivity() {
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
         val sectionList = mutableListOf<ChapterSection>()
         try {
-            val jsonString: String = assets.open(fileName).bufferedReader().use { it.readText() }
-            // The file contains a single chapter object, not an array.
-            val chapterObject = JSONObject(jsonString)
-            // Get the array of levels from within the chapter object.
-            val levelsArray = chapterObject.getJSONArray("levels")
+            val jsonString = assets.open(fileName).bufferedReader().use { it.readText() }
+            val chapterJson = JSONObject(jsonString)
 
-            for (i in 0 until levelsArray.length()) {
-                val levelObject = levelsArray.getJSONObject(i)
-                val title = levelObject.getString("level_title")
-                val summary = levelObject.getString("level_summary")
-                val status = levelObject.getString("level_status")
-                val contentFile = levelObject.optString("contentFile", null)
+            // Check if this is a chapter list (old format) or detailed content (new format)
+            if (chapterJson.has("levels")) {
+                // --- PARSE OLD FORMAT (List of chapters/levels) ---
+                val levelsArray = chapterJson.getJSONArray("levels")
+                for (i in 0 until levelsArray.length()) {
+                    val levelObject = levelsArray.getJSONObject(i)
+                    val title = levelObject.getString("level_title")
+                    val summary = levelObject.getString("level_summary")
+                    val status = levelObject.getString("level_status")
+                    val contentFile = levelObject.optString("contentFile", null)
+                    val emoji = if (status == "unlocked") "🔓" else "🔒"
+                    sectionList.add(ChapterSection(emoji, title, summary, false, null, contentFile))
+                }
+            } else {
+                // --- PARSE NEW FORMAT (Detailed single chapter content) ---
+                // 1. Mission Briefing Card
+                chapterJson.optString("mission_briefing").takeIf { it.isNotEmpty() }?.let {
+                    sectionList.add(ChapterSection("🎯", "মিশন ব্রিফিং", it))
+                }
 
-                // Use the status to determine the emoji for the list item.
-                val emoji = if (status == "unlocked") "🔓" else "🔒"
+                // 2. PPE Arsenal Card (from "sections" array)
+                chapterJson.optJSONArray("sections")?.let { ppeSectionsArray ->
+                    if (ppeSectionsArray.length() > 0) {
+                        val ppeSection = ppeSectionsArray.getJSONObject(0)
+                        val ppeTitle = ppeSection.getString("title")
+                        val ppePointsArray = ppeSection.getJSONArray("points")
+                        val ppeContent = StringBuilder()
+                        for (i in 0 until ppePointsArray.length()) {
+                            val point = ppePointsArray.getJSONObject(i)
+                            ppeContent.append("### ${point.getString("item_name")}\n")
+                            ppeContent.append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
+                            ppeContent.append("- **গুরুত্ব:** ${point.getString("importance")}\n")
+                            ppeContent.append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
+                        }
+                        sectionList.add(ChapterSection("🛡️", ppeTitle, ppeContent.toString()))
+                    }
+                }
 
-                // Map the level data to a ChapterSection object.
-                sectionList.add(ChapterSection(emoji, title, summary, false, null, contentFile))
+                // 3. Pro Tips Card
+                chapterJson.optJSONObject("pro_tip")?.let { proTipObject ->
+                    val proTipTitle = proTipObject.getString("title")
+                    val proTipContentArray = proTipObject.getJSONArray("content")
+                    val proTipContent = StringBuilder()
+                    for (i in 0 until proTipContentArray.length()) {
+                        proTipContent.append("- ${proTipContentArray.getString(i)}\n")
+                    }
+                    sectionList.add(ChapterSection("💡", proTipTitle, proTipContent.toString()))
+                }
+
+                // 4. Myth Buster Card
+                chapterJson.optJSONObject("myth_buster")?.let { mythBusterObject ->
+                    val mythBusterTitle = mythBusterObject.getString("title")
+                    val mythsArray = mythBusterObject.getJSONArray("myths")
+                    val mythBusterContent = StringBuilder()
+                    for (i in 0 until mythsArray.length()) {
+                        val myth = mythsArray.getJSONObject(i)
+                        mythBusterContent.append("**মিথ:** ${myth.getString("myth")}\n")
+                        mythBusterContent.append("> **বাস্তবতা:** ${myth.getString("reality")}\n\n")
+                    }
+                    sectionList.add(ChapterSection("👻", mythBusterTitle, mythBusterContent.toString()))
+                }
+
+                // 5. Advanced Facts Card
+                chapterJson.optJSONObject("advanced_section")?.let { advancedSectionObject ->
+                    val advancedTitle = advancedSectionObject.getString("title")
+                    val factsArray = advancedSectionObject.getJSONArray("facts")
+                    val advancedContent = StringBuilder()
+                    for (i in 0 until factsArray.length()) {
+                        val fact = factsArray.getJSONObject(i)
+                        advancedContent.append("#### ${fact.getString("title")}\n")
+                        advancedContent.append("${fact.getString("content")}\n\n")
+                    }
+                    sectionList.add(ChapterSection("🔬", advancedTitle, advancedContent.toString()))
+                }
             }
+
         } catch (e: IOException) {
             Log.e("ChapterDetailActivity", "IOException: Error reading $fileName", e)
+            // Optionally, show an error message to the user
+            Toast.makeText(this, "Could not load chapter data.", Toast.LENGTH_LONG).show()
         } catch (e: JSONException) {
             Log.e("ChapterDetailActivity", "JSONException: Error parsing $fileName", e)
+            Toast.makeText(this, "Error parsing chapter data.", Toast.LENGTH_LONG).show()
         }
         return sectionList
     }
