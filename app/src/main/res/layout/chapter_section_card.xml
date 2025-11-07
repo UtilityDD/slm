@@ -11,8 +11,7 @@
     app:cardElevation="4dp"
     app:strokeColor="#33FFFFFF"
     app:strokeWidth="1dp"
-    android:clickable="true"
-    android:focusable="true">
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,34 +43,24 @@
                 android:textStyle="bold"
                 tools:text="Section Title"/>
 
-            <ImageView
-                android:id="@+id/expand_icon"
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@drawable/ic_arrow_down"
-                app:tint="@color/white"/>
         </LinearLayout>
 
         <ImageView
             android:id="@+id/section_image"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:scaleType="fitCenter"
-            android:visibility="gone"
-            tools:src="@drawable/lineman_character"
-            tools:visibility="visible"/>
+            tools:src="@drawable/lineman_character"/>
 
         <TextView
             android:id="@+id/section_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
+            android:layout_marginTop="16dp"
             android:textColor="@color/pearl_white"
             android:textSize="16sp"
             android:lineSpacingMultiplier="1.4"
-            android:visibility="gone"
-            tools:visibility="visible"
             tools:text="This is the content of the section..."/>
     </LinearLayout>
 

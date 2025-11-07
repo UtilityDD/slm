@@ -55,10 +55,7 @@ class ChapterDetailActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
 
-        adapter = ChapterSectionAdapter(sections, markwon) { position ->
-            sections[position].isExpanded = !sections[position].isExpanded
-            adapter.notifyItemChanged(position)
-        }
+        adapter = ChapterSectionAdapter(sections, markwon)
         recyclerView.adapter = adapter
     }
 

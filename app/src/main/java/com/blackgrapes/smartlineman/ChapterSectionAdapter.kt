@@ -15,7 +15,6 @@ import java.io.IOException
 class ChapterSectionAdapter(
     private val sections: List<ChapterSection>,
     private val markwon: Markwon,
-    private val onSectionClick: (Int) -> Unit
 ) : RecyclerView.Adapter<ChapterSectionAdapter.ChapterSectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterSectionViewHolder {
@@ -36,42 +35,27 @@ class ChapterSectionAdapter(
         private val titleTextView: TextView = itemView.findViewById(R.id.section_title)
         private val contentTextView: TextView = itemView.findViewById(R.id.section_content)
         private val sectionImageView: ImageView = itemView.findViewById(R.id.section_image)
-        private val expandIcon: ImageView = itemView.findViewById(R.id.expand_icon)
-
-        init {
-            itemView.setOnClickListener {
-                onSectionClick(adapterPosition)
-            }
-        }
 
         fun bind(section: ChapterSection) {
             emojiTextView.text = section.emoji
             titleTextView.text = section.title
 
-            if (section.isExpanded) {
-                contentTextView.visibility = View.VISIBLE
-                contentTextView.movementMethod = LinkMovementMethod.getInstance()
-                markwon.setMarkdown(contentTextView, section.summary)
-                expandIcon.setImageResource(R.drawable.ic_arrow_up)
+            contentTextView.movementMethod = LinkMovementMethod.getInstance()
+            markwon.setMarkdown(contentTextView, section.summary)
 
-                if (section.imageName != null) {
-                    try {
-                        val inputStream = itemView.context.assets.open(section.imageName)
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        sectionImageView.setImageBitmap(bitmap)
-                        sectionImageView.visibility = View.VISIBLE
-                        inputStream.close()
-                    } catch (e: IOException) {
-                        Log.e("ChapterAdapter", "Error loading image: ${section.imageName}", e)
-                        sectionImageView.visibility = View.GONE
-                    }
-                } else {
+            if (section.imageName != null) {
+                try {
+                    val inputStream = itemView.context.assets.open(section.imageName)
+                    val bitmap = BitmapFactory.decodeStream(inputStream)
+                    sectionImageView.setImageBitmap(bitmap)
+                    sectionImageView.visibility = View.VISIBLE
+                    inputStream.close()
+                } catch (e: IOException) {
+                    Log.e("ChapterAdapter", "Error loading image: ${section.imageName}", e)
                     sectionImageView.visibility = View.GONE
                 }
             } else {
-                contentTextView.visibility = View.GONE
                 sectionImageView.visibility = View.GONE
-                expandIcon.setImageResource(R.drawable.ic_arrow_down)
             }
         }
     }
