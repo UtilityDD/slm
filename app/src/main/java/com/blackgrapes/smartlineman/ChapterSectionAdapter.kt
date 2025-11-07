@@ -15,6 +15,7 @@ import java.io.IOException
 class ChapterSectionAdapter(
     private val sections: List<ChapterSection>,
     private val markwon: Markwon,
+    private val onSectionClick: (ChapterSection) -> Unit
 ) : RecyclerView.Adapter<ChapterSectionAdapter.ChapterSectionViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ChapterSectionViewHolder {
@@ -35,6 +36,12 @@ class ChapterSectionAdapter(
         private val titleTextView: TextView = itemView.findViewById(R.id.section_title)
         private val contentTextView: TextView = itemView.findViewById(R.id.section_content)
         private val sectionImageView: ImageView = itemView.findViewById(R.id.section_image)
+
+        init {
+            itemView.setOnClickListener {
+                onSectionClick(sections[adapterPosition])
+            }
+        }
 
         fun bind(section: ChapterSection) {
             emojiTextView.text = section.emoji

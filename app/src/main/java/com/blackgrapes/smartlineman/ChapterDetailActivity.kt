@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
+import android.content.Intent
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -13,6 +14,7 @@ import io.noties.markwon.Markwon
 import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONObject
 import org.json.JSONException
+import android.widget.Toast
 import java.io.IOException
 
 class ChapterDetailActivity : AppCompatActivity() {
@@ -55,7 +57,17 @@ class ChapterDetailActivity : AppCompatActivity() {
         recyclerView.layoutManager = LinearLayoutManager(this)
         val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
 
-        adapter = ChapterSectionAdapter(sections, markwon)
+        adapter = ChapterSectionAdapter(sections, markwon) { section ->
+            if (section.contentFile != null) {
+                val intent = Intent(this, ChapterDetailActivity::class.java).apply {
+                    putExtra(EXTRA_TITLE, section.title)
+                    putExtra(EXTRA_CONTENT_FILE_NAME, section.contentFile)
+                }
+                startActivity(intent)
+            } else {
+                Toast.makeText(this, "No further details available.", Toast.LENGTH_SHORT).show()
+            }
+        }
         recyclerView.adapter = adapter
     }
 
@@ -73,12 +85,13 @@ class ChapterDetailActivity : AppCompatActivity() {
                 val title = levelObject.getString("level_title")
                 val summary = levelObject.getString("level_summary")
                 val status = levelObject.getString("level_status")
+                val contentFile = levelObject.optString("contentFile", null)
 
                 // Use the status to determine the emoji for the list item.
                 val emoji = if (status == "unlocked") "🔓" else "🔒"
 
                 // Map the level data to a ChapterSection object.
-                sectionList.add(ChapterSection(emoji, title, summary, false, null))
+                sectionList.add(ChapterSection(emoji, title, summary, false, null, contentFile))
             }
         } catch (e: IOException) {
             Log.e("ChapterDetailActivity", "IOException: Error reading $fileName", e)
