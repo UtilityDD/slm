@@ -51,7 +51,7 @@ class ChapterSectionAdapter(
             if (section.isExpanded) {
                 contentTextView.visibility = View.VISIBLE
                 contentTextView.movementMethod = LinkMovementMethod.getInstance()
-                markwon.setMarkdown(contentTextView, section.content)
+                markwon.setMarkdown(contentTextView, section.summary)
                 expandIcon.setImageResource(R.drawable.ic_arrow_up)
 
                 if (section.imageName != null) {
