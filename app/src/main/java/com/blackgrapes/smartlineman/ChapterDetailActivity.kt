@@ -87,8 +87,8 @@ class ChapterDetailActivity : AppCompatActivity() {
                     val title = levelObject.getString("level_title")
                     val summary = levelObject.getString("level_summary")
                     val status = levelObject.getString("level_status")
-                    val contentFile = levelObject.optString("contentFile", null)
-                    val emoji = if (status == "unlocked") "🔓" else "🔒"
+                    val contentFile = levelObject.optString("level_id", null)?.let { "chapter_$it.json" }
+                    val emoji = "${i + 1}." // Use serial number instead of lock icon
                     sectionList.add(ChapterSection(emoji, title, summary, false, null, contentFile))
                 }
             } else {
