@@ -4,7 +4,7 @@
     android:id="@+id/main_resources"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="?attr/colorSurface">
+    android:background="@color/pearl_white">
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/appbar"
