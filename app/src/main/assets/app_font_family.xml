@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <!-- Regular -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="400"
+        app:font="@font/hind_siliguri_regular" />
+
+    <!-- Bold -->
+    <font
+        android:fontStyle="normal"
+        android:fontWeight="700"
+        app:font="@font/hind_siliguri_bold" />
+
+</font-family>
