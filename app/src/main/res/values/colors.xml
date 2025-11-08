@@ -11,6 +11,13 @@
     <color name="very_light_gray">#EAEAEA</color>
     <color name="answer_blue">#3A506B</color>
     <color name="correct_green">#2ECC71</color>
+
+    <!-- Chapter Detail Card Colors -->
+    <color name="card_bg_light">#FFFFFF</color>
+    <color name="card_stroke_light">#E0E0E0</color>
+    <color name="title_text">#1A237E</color>
+    <color name="body_text">#424242</color>
+    <color name="card_divider">#EEEEEE</color>
     <color name="incorrect_red">#E74C3C</color>
     <color name="card_background">#1C2541</color>
     <color name="answer_option_default">@color/card_background</color>
