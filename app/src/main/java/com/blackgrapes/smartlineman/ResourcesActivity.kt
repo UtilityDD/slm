@@ -65,10 +65,15 @@ class ResourcesActivity : AppCompatActivity() {
                 val sectionObject = jsonArray.getJSONObject(i)
                 val title = sectionObject.getString("title")
                 val id = sectionObject.getString("id")
-                // Using a default icon as per the new design requirement.
-                // The iconName from JSON is ignored for now.
+                val iconName = sectionObject.getString("iconName")
                 val contentFile = sectionObject.optString("contentFile", null)
-                val iconResId = R.drawable.ic_resources // Default book/document icon
+
+                var iconResId = resources.getIdentifier(iconName, "drawable", packageName)
+                if (iconResId == 0) {
+                    Log.w("ResourcesActivity", "Icon not found for: $iconName. Using default.")
+                    iconResId = R.drawable.ic_resources // Fallback to a default icon
+                }
+
                 sections.add(ResourceSection(id, title, iconResId, contentFile))
             }
         } catch (e: IOException) {

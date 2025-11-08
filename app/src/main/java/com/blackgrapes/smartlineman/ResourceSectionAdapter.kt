@@ -42,6 +42,7 @@ class ResourceSectionAdapter(
         holder.title.text = section.title
         val colorRes = pastelColors[position % pastelColors.size]
         (holder.itemView as CardView).setCardBackgroundColor(ContextCompat.getColor(context, colorRes))
+        holder.icon.setImageResource(section.iconResId)
         holder.itemView.setOnClickListener { onItemClicked(section) }
         holder.itemView.animation = AnimationUtils.loadAnimation(context, R.anim.fade_in)
     }
