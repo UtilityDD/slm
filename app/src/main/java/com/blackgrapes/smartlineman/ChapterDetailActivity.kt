@@ -33,7 +33,8 @@ class ChapterDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_chapter_detail)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_chapter_detail)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            // We only need padding for the bottom to prevent overlap with navigation bar
+            v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
             insets
         }
 
