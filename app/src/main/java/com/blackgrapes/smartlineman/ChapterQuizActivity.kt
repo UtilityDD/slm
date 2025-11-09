@@ -13,6 +13,7 @@ import android.widget.ImageView
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -51,6 +52,13 @@ class ChapterQuizActivity : AppCompatActivity() {
     private lateinit var questions: List<Question>
     private val timerProgressDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background) }
     private val timerWarningDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background_warning) }
+
+    private val chapterScoreResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        // When ChapterScoreActivity finishes, pass its result back to ChapterDetailActivity.
+        setResult(result.resultCode)
+        finish()
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -154,8 +162,7 @@ class ChapterQuizActivity : AppCompatActivity() {
                         putExtra(GameActivity.EXTRA_SCORE, score)
                         putExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, questions.size)
                     }
-                    startActivity(scoreIntent)
-                    finish() // Finish this quiz activity
+                    chapterScoreResultLauncher.launch(scoreIntent)
                 }
             }
         }

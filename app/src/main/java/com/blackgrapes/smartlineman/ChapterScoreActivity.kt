@@ -1,5 +1,7 @@
 package com.blackgrapes.smartlineman
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
@@ -48,7 +50,8 @@ class ChapterScoreActivity : AppCompatActivity() {
         feedbackEmojiTextView.text = emoji
 
         finishButton.setOnClickListener {
-            finish() // Simply close this screen and return to the chapter detail page
+            setResult(Activity.RESULT_OK)
+            finish()
         }
     }
 

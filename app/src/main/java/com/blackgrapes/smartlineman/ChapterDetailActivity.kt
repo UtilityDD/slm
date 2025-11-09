@@ -5,6 +5,7 @@ import android.util.Log
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.view.ViewCompat
 import android.view.View
 import android.content.Intent
@@ -36,6 +37,12 @@ class ChapterDetailActivity : AppCompatActivity() {
     private lateinit var startQuizButton: Button
     private var chapterLevelId: String? = null
     private var isQuizButtonActive = false
+
+    private val chapterQuizResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            finish() // Quiz was completed, finish this detail view to go back to the list.
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -126,7 +133,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                             val intent = Intent(this, ChapterQuizActivity::class.java).apply {
                                 putExtra(ChapterQuizActivity.EXTRA_LEVEL_ID, chapterLevelId)
                             }
-                            startActivity(intent)
+                            chapterQuizResultLauncher.launch(intent)
                         } else {
                             Toast.makeText(this, "অধ্যায়টি শেষ পর্যন্ত পড়ে কুইজটি আনলক করুন!", Toast.LENGTH_SHORT).show()
                             startQuizButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
