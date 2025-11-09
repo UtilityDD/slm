@@ -34,5 +34,17 @@
     "title": "যন্ত্র গুরু (Equipment Guru)",
     "iconName": "guru_icon",
     "contentFile": "B6.json"
+  },
+    {
+    "id": "B7",
+    "title": "আইন কি বলে?",
+    "iconName": "law_icon",
+    "contentFile": "B6.json"
+  },
+  {
+    "id": "B8",
+    "title": "জরুরী রেগুলেশন",
+    "iconName": "regulation_icon",
+    "contentFile": "B6.json"
   }
 ]

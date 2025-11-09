@@ -77,7 +77,8 @@ class ChapterQuizActivity : AppCompatActivity() {
             return
         }
 
-        questions = loadQuestionsFromJson(levelId!!).shuffled()
+        val allQuestions = loadQuestionsFromJson(levelId!!).shuffled()
+        questions = allQuestions.take(10)
 
         initializeViews()
         if (questions.isNotEmpty()) {

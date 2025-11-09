@@ -76,7 +76,8 @@ class GameActivity : AppCompatActivity() {
         }
 
         level = intent.getIntExtra(EXTRA_LEVEL, 1)
-        questions = loadQuestionsFromJson(level).shuffled()
+        val allQuestions = loadQuestionsFromJson(level).shuffled()
+        questions = allQuestions.take(10)
 
         initializeViews()
         if (questions.isNotEmpty()) {
