@@ -78,6 +78,24 @@ class ChapterDetailActivity : AppCompatActivity() {
             }
         }
         recyclerView.adapter = adapter
+
+        // Add a scroll listener to hide/show the quiz button
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+                // Check if the button is supposed to be visible at all
+                if (chapterLevelId != null && hasQuizForLevel(chapterLevelId!!.split('.').last().toInt())) {
+                    if (dy > 10 && startQuizButton.isShown) { // Scrolling down and button is visible
+                        startQuizButton.animate().alpha(0f).setDuration(250).withEndAction {
+                            startQuizButton.visibility = View.GONE
+                        }.start()
+                    } else if (dy < -10 && !startQuizButton.isShown) { // Scrolling up and button is hidden
+                        startQuizButton.visibility = View.VISIBLE
+                        startQuizButton.animate().alpha(1f).setDuration(250).start()
+                    }
+                }
+            }
+        })
     }
 
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
