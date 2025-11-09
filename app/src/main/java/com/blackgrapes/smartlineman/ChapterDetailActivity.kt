@@ -296,19 +296,20 @@ class ChapterDetailActivity : AppCompatActivity() {
     private fun isLevelUnlocked(levelId: String?): Boolean {
         if (levelId == null) return false
 
-        val levelNumber = levelId.split('.').lastOrNull()?.toIntOrNull() ?: return false
+        val levelParts = levelId.split('.')
+        if (levelParts.size < 2) return false // Invalid level_id format
+        val majorVersion = levelParts[0]
+        val minorVersion = levelParts[1].toIntOrNull() ?: return false
 
         // The first level is always unlocked
-        if (levelNumber <= 1) return true
+        if (minorVersion <= 1) return true
 
-        // For subsequent levels, check if the previous level's quiz was perfected
-        val previousLevel = levelNumber - 1
-        val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
-        val highScore = sharedPref.getInt("high_score_level_$previousLevel", -1)
-        val totalQuestions = sharedPref.getInt("total_questions_level_$previousLevel", 0)
+        // For subsequent levels, check if the previous chapter's quiz was completed
+        val previousMinorVersion = minorVersion - 1
+        val previousLevelId = "$majorVersion.$previousMinorVersion"
 
-        // The level is unlocked if there was a perfect score on the previous level's quiz
-        return highScore != -1 && totalQuestions > 0 && highScore == totalQuestions
+        // The level is unlocked if the previous chapter's quiz was completed
+        return isChapterQuizCompleted(previousLevelId)
     }
 
     private fun isChapterQuizCompleted(levelId: String?): Boolean {
