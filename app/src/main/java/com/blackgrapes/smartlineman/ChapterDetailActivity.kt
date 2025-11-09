@@ -104,18 +104,23 @@ class ChapterDetailActivity : AppCompatActivity() {
                 chapterJson.optJSONArray("sections")?.let { ppeSectionsArray ->
                     for (j in 0 until ppeSectionsArray.length()) {
                         val ppeSection = ppeSectionsArray.getJSONObject(j)
-                        val ppeTitle = ppeSection.getString("title")
-                        val imageName = ppeSection.optString("image_name", null)
+                        // This is the main image for the whole section, if it exists
+                        val sectionImage = ppeSection.optString("image_name", null)
+                        val sectionTitle = ppeSection.getString("title")
+                        // Add a card for the main section title and its image
+                        sectionList.add(ChapterSection("🛡️", sectionTitle, "", false, sectionImage))
+
                         val ppePointsArray = ppeSection.getJSONArray("points")
-                        val ppeContent = StringBuilder()
                         for (k in 0 until ppePointsArray.length()) {
                             val point = ppePointsArray.getJSONObject(k)
-                            ppeContent.append("### ${point.getString("item_name")}\n")
-                            ppeContent.append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
-                            ppeContent.append("- **গুরুত্ব:** ${point.getString("importance")}\n")
-                            ppeContent.append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
+                            val pointTitle = point.getString("item_name")
+                            val pointImage = point.optString("image_name", null)
+                            val pointContent = StringBuilder()
+                                .append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
+                                .append("- **গুরুত্ব:** ${point.getString("importance")}\n")
+                                .append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
+                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage))
                         }
-                        sectionList.add(ChapterSection("🛡️", ppeTitle, ppeContent.toString(), false, imageName))
                     }
                 }
 
