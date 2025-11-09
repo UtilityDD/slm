@@ -95,21 +95,6 @@ class ChapterDetailActivity : AppCompatActivity() {
                 }
             } else {
                 // --- PARSE NEW FORMAT (Detailed single chapter content) ---
-                // 0. Chapter Image
-                chapterJson.optString("image_name").takeIf { it.isNotEmpty() }?.let { imageName ->
-                    val imageView: ImageView = findViewById(R.id.chapter_image)
-                    try {
-                        val inputStream = assets.open(imageName)
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        imageView.setImageBitmap(bitmap)
-                        imageView.visibility = ImageView.VISIBLE
-                        inputStream.close()
-                    } catch (e: IOException) {
-                        Log.e("ChapterDetailActivity", "Error loading image from assets: $imageName", e)
-                        imageView.visibility = ImageView.GONE
-                    }
-                }
-
                 // 1. Mission Briefing Card
                 chapterJson.optString("mission_briefing").takeIf { it.isNotEmpty() }?.let {
                     sectionList.add(ChapterSection("🎯", "মিশন ব্রিফিং", it))
@@ -117,19 +102,20 @@ class ChapterDetailActivity : AppCompatActivity() {
 
                 // 2. PPE Arsenal Card (from "sections" array)
                 chapterJson.optJSONArray("sections")?.let { ppeSectionsArray ->
-                    if (ppeSectionsArray.length() > 0) {
-                        val ppeSection = ppeSectionsArray.getJSONObject(0)
+                    for (j in 0 until ppeSectionsArray.length()) {
+                        val ppeSection = ppeSectionsArray.getJSONObject(j)
                         val ppeTitle = ppeSection.getString("title")
+                        val imageName = ppeSection.optString("image_name", null)
                         val ppePointsArray = ppeSection.getJSONArray("points")
                         val ppeContent = StringBuilder()
-                        for (i in 0 until ppePointsArray.length()) {
-                            val point = ppePointsArray.getJSONObject(i)
+                        for (k in 0 until ppePointsArray.length()) {
+                            val point = ppePointsArray.getJSONObject(k)
                             ppeContent.append("### ${point.getString("item_name")}\n")
                             ppeContent.append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
                             ppeContent.append("- **গুরুত্ব:** ${point.getString("importance")}\n")
                             ppeContent.append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
                         }
-                        sectionList.add(ChapterSection("🛡️", ppeTitle, ppeContent.toString()))
+                        sectionList.add(ChapterSection("🛡️", ppeTitle, ppeContent.toString(), false, imageName))
                     }
                 }
 

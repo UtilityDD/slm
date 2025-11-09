@@ -6,6 +6,7 @@
   "sections": [
     {
       "title": "আপনার আর্সেনাল: সুরক্ষা কবচের খুঁটিনাটি",
+      "image_name": "lineman_ppe.png",
       "points": [
         {
           "item_name": "১. পোশাক: স্মার্ট ও সেফ",
@@ -40,7 +41,6 @@
       ]
     }
   ],
-  "image_name": "lineman_ppe.png",
   "pro_tip": {
     "title": "বিশেষ প্রো টিপস (Pro Tips)",
     "content": [
