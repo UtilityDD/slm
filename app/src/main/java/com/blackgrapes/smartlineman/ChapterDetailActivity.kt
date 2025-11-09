@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
 import android.graphics.BitmapFactory
+import androidx.core.content.ContextCompat
 import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONObject
 import org.json.JSONException
@@ -32,6 +33,7 @@ class ChapterDetailActivity : AppCompatActivity() {
     private lateinit var adapter: ChapterSectionAdapter
     private lateinit var startQuizButton: Button
     private var chapterLevelId: String? = null
+    private var isQuizButtonActive = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +80,22 @@ class ChapterDetailActivity : AppCompatActivity() {
             }
         }
         recyclerView.adapter = adapter
+
+        // Add a scroll listener to enable the button at the end.
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+            override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                super.onScrolled(recyclerView, dx, dy)
+
+                // Check if the user can't scroll down anymore (is at the bottom)
+                if (!recyclerView.canScrollVertically(1) && dy > 0) {
+                    if (!isQuizButtonActive) {
+                        isQuizButtonActive = true
+                        startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this@ChapterDetailActivity, R.color.purple_500)
+                        startQuizButton.alpha = 1.0f
+                    }
+                }
+            }
+        })
     }
 
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
@@ -94,11 +112,18 @@ class ChapterDetailActivity : AppCompatActivity() {
                 val levelNumber = levelId.split('.').lastOrNull()?.toIntOrNull()
                 if (levelNumber != null && hasQuizForLevel(levelNumber)) {
                     startQuizButton.visibility = View.VISIBLE
+                    isQuizButtonActive = false
+                    // Set a distinct "disabled" look
+                    startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.disabled_gray)
+                    startQuizButton.alpha = 1.0f // Keep it fully opaque
+
                     startQuizButton.setOnClickListener {
-                        val intent = Intent(this, GameActivity::class.java).apply {
-                            putExtra(GameActivity.EXTRA_LEVEL, levelNumber)
+                        if (isQuizButtonActive) {
+                            val intent = Intent(this, GameActivity::class.java).apply {
+                                putExtra(GameActivity.EXTRA_LEVEL, levelNumber)
+                            }
+                            startActivity(intent)
                         }
-                        startActivity(intent)
                     }
                 } else {
                     startQuizButton.visibility = View.GONE
@@ -108,6 +133,21 @@ class ChapterDetailActivity : AppCompatActivity() {
                 startQuizButton.visibility = View.GONE
             }
 
+            // If the content is not scrollable from the start, enable the button immediately.
+            val recyclerView: RecyclerView = findViewById(R.id.chapter_recycler_view)
+            recyclerView.post {
+                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                val totalItemCount = recyclerView.adapter?.itemCount ?: 0
+
+                // Check if all items are visible (i.e., not scrollable)
+                if (totalItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1) {
+                    if (!isQuizButtonActive) {
+                        isQuizButtonActive = true
+                        startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.purple_500)
+                    }
+                }
+            }
 
 
 
