@@ -4,6 +4,7 @@ import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -29,6 +30,9 @@ class ImageZoomActivity : AppCompatActivity() {
 
         val imageName = intent.getStringExtra(EXTRA_IMAGE_NAME)
         val photoView: PhotoView = findViewById(R.id.photo_view)
+        val closeButton: ImageView = findViewById(R.id.close_button)
+
+        closeButton.setOnClickListener { finish() }
 
         if (imageName != null) {
             try {
