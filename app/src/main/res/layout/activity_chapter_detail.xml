@@ -24,16 +24,29 @@
             />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <ImageView
+        android:id="@+id/chapter_image"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:contentDescription="@string/question_image_desc"
+        android:scaleType="centerCrop"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/appbar"
+        tools:src="@drawable/dt"
+        tools:visibility="visible" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chapter_recycler_view"
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:clipToPadding="false"
         android:paddingVertical="8dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appbar"
+        app:layout_constraintTop_toBottomOf="@id/chapter_image"
+        app:layout_constraintBottom_toBottomOf="parent"
         tools:listitem="@layout/chapter_section_card" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

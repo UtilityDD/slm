@@ -11,10 +11,12 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
+import android.graphics.BitmapFactory
 import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONObject
 import org.json.JSONException
 import android.widget.Toast
+import android.widget.ImageView
 import java.io.IOException
 
 class ChapterDetailActivity : AppCompatActivity() {
@@ -93,6 +95,21 @@ class ChapterDetailActivity : AppCompatActivity() {
                 }
             } else {
                 // --- PARSE NEW FORMAT (Detailed single chapter content) ---
+                // 0. Chapter Image
+                chapterJson.optString("image_name").takeIf { it.isNotEmpty() }?.let { imageName ->
+                    val imageView: ImageView = findViewById(R.id.chapter_image)
+                    try {
+                        val inputStream = assets.open(imageName)
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                        imageView.setImageBitmap(bitmap)
+                        imageView.visibility = ImageView.VISIBLE
+                        inputStream.close()
+                    } catch (e: IOException) {
+                        Log.e("ChapterDetailActivity", "Error loading image from assets: $imageName", e)
+                        imageView.visibility = ImageView.GONE
+                    }
+                }
+
                 // 1. Mission Briefing Card
                 chapterJson.optString("mission_briefing").takeIf { it.isNotEmpty() }?.let {
                     sectionList.add(ChapterSection("🎯", "মিশন ব্রিফিং", it))
