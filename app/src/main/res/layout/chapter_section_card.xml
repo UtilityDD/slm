@@ -49,17 +49,36 @@
                 tools:text="Understanding Electricity Basics" />
         </LinearLayout>
 
-        <!-- Featured Image -->
-        <ImageView
-            android:id="@+id/section_image"
+        <!-- Image Container -->
+        <FrameLayout
+            android:id="@+id/image_container"
             android:layout_width="match_parent"
-            android:layout_height="180dp"
+            android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            android:background="@drawable/rounded_image_bg"
-            android:clipToOutline="true"
-            tools:src="@drawable/lineman_character" />
+            android:visibility="gone"
+            tools:visibility="visible">
+
+            <ImageView
+                android:id="@+id/section_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:adjustViewBounds="true"
+                android:background="@drawable/rounded_image_bg"
+                android:clipToOutline="true"
+                android:scaleType="fitCenter"
+                tools:src="@drawable/lineman_character" />
+
+            <ImageView
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="bottom|end"
+                android:layout_margin="8dp"
+                android:background="@drawable/zoom_icon_background"
+                android:contentDescription="Zoom image"
+                android:padding="4dp"
+                android:src="@drawable/ic_zoom_out_map"
+                app:tint="@android:color/white" />
+        </FrameLayout>
 
         <!-- Subtle Divider -->
         <View

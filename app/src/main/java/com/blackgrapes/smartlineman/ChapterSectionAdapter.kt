@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Intent
 import android.graphics.BitmapFactory
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
@@ -36,6 +37,7 @@ class ChapterSectionAdapter(
         private val titleTextView: TextView = itemView.findViewById(R.id.section_title)
         private val contentTextView: TextView = itemView.findViewById(R.id.section_content)
         private val sectionImageView: ImageView = itemView.findViewById(R.id.section_image)
+        private val imageContainer: View = itemView.findViewById(R.id.image_container)
 
         init {
             itemView.setOnClickListener {
@@ -51,20 +53,29 @@ class ChapterSectionAdapter(
             markwon.setMarkdown(contentTextView, section.summary)
 
             if (section.imageName != null) {
+                imageContainer.visibility = View.VISIBLE
                 sectionImageView.adjustViewBounds = true
                 sectionImageView.scaleType = ImageView.ScaleType.FIT_CENTER
                 try {
                     val inputStream = itemView.context.assets.open(section.imageName)
                     val bitmap = BitmapFactory.decodeStream(inputStream)
                     sectionImageView.setImageBitmap(bitmap)
-                    sectionImageView.visibility = View.VISIBLE
                     inputStream.close()
                 } catch (e: IOException) {
                     Log.e("ChapterAdapter", "Error loading image: ${section.imageName}", e)
-                    sectionImageView.visibility = View.GONE
+                    imageContainer.visibility = View.GONE
                 }
+
+                imageContainer.setOnClickListener {
+                    val intent = Intent(itemView.context, ImageZoomActivity::class.java).apply {
+                        putExtra(ImageZoomActivity.EXTRA_IMAGE_NAME, section.imageName)
+                    }
+                    itemView.context.startActivity(intent)
+                }
+
             } else {
-                sectionImageView.visibility = View.GONE
+                imageContainer.visibility = View.GONE
+                imageContainer.setOnClickListener(null) // Remove listener if no image
             }
         }
     }

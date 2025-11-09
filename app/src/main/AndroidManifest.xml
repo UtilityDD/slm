@@ -45,6 +45,9 @@
             android:exported="false" />
             <activity android:name=".ChapterContentActivity" 
                         android:exported="false" />
+            <activity
+                android:name=".ImageZoomActivity"
+                        android:exported="false" />
             
     </application>
 
