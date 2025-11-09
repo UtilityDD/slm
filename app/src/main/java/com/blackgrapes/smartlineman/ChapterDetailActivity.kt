@@ -178,6 +178,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                     val summary = levelObject.getString("level_summary")
 
                     val isUnlocked = isLevelUnlocked(levelId)
+                    val isCompleted = isChapterQuizCompleted(levelId)
 
                     val contentFile = if (isUnlocked) {
                         levelId?.let { "chapter_${it.replace('.', '_')}.json" }
@@ -185,9 +186,13 @@ class ChapterDetailActivity : AppCompatActivity() {
                         null // This will prevent the click from opening a new activity
                     }
 
-                    val emoji = if (isUnlocked) "📖" else "🔒"
+                    val emoji = when {
+                        isCompleted -> "✅"
+                        isUnlocked -> "📖"
+                        else -> "🔒"
+                    }
 
-                    sectionList.add(ChapterSection(emoji, title, summary, false, null, contentFile))
+                    sectionList.add(ChapterSection(emoji, title, summary, isCompleted, null, contentFile))
                 }
             } else {
                 // --- PARSE NEW FORMAT (Detailed single chapter content) ---
@@ -296,5 +301,11 @@ class ChapterDetailActivity : AppCompatActivity() {
 
         // The level is unlocked if there was a perfect score on the previous level's quiz
         return highScore != -1 && totalQuestions > 0 && highScore == totalQuestions
+    }
+
+    private fun isChapterQuizCompleted(levelId: String?): Boolean {
+        if (levelId == null) return false
+        val sharedPref = getSharedPreferences("ChapterProgress", Context.MODE_PRIVATE)
+        return sharedPref.getBoolean("chapter_quiz_completed_$levelId", false)
     }
 }

@@ -161,6 +161,7 @@ class ChapterQuizActivity : AppCompatActivity() {
                     val scoreIntent = Intent(this, ChapterScoreActivity::class.java).apply {
                         putExtra(GameActivity.EXTRA_SCORE, score)
                         putExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, questions.size)
+                        putExtra(EXTRA_LEVEL_ID, levelId) // Pass the level ID to the score screen
                     }
                     chapterScoreResultLauncher.launch(scoreIntent)
                 }

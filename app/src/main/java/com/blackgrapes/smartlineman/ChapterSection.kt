@@ -4,7 +4,7 @@ data class ChapterSection(
     val emoji: String,
     val title: String,
     val summary: String,
-    var isExpanded: Boolean = false,
+    val isCompleted: Boolean = false,
     val imageName: String? = null,
     val contentFile: String? = null
 )

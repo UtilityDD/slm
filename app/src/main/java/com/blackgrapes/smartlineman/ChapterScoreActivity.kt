@@ -1,5 +1,6 @@
 package com.blackgrapes.smartlineman
 
+import android.content.Context
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
@@ -27,6 +28,7 @@ class ChapterScoreActivity : AppCompatActivity() {
 
         val score = intent.getIntExtra(GameActivity.EXTRA_SCORE, 0)
         val totalQuestions = intent.getIntExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, 0)
+        val levelId = intent.getStringExtra(ChapterQuizActivity.EXTRA_LEVEL_ID)
 
         val scoreTextView = findViewById<TextView>(R.id.score_text)
         val feedbackEmojiTextView = findViewById<TextView>(R.id.feedback_emoji)
@@ -40,6 +42,9 @@ class ChapterScoreActivity : AppCompatActivity() {
         val (feedbackMessage, emoji) = when {
             percentage == 100 -> {
                 startConfetti()
+                if (levelId != null) {
+                    saveChapterQuizCompletion(levelId)
+                }
                 "চমৎকার! আপনি এই অধ্যায়টি আয়ত্ত করেছেন। এবার পরের অধ্যায়ে যেতে পারেন।" to "🏆"
             }
             percentage >= 50 -> "ভালো প্রচেষ্টা! অধ্যায়টি আবার পর্যালোচনা করে দেখুন।" to "👍"
@@ -52,6 +57,14 @@ class ChapterScoreActivity : AppCompatActivity() {
         finishButton.setOnClickListener {
             setResult(Activity.RESULT_OK)
             finish()
+        }
+    }
+
+    private fun saveChapterQuizCompletion(levelId: String) {
+        val sharedPref = getSharedPreferences("ChapterProgress", Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putBoolean("chapter_quiz_completed_$levelId", true)
+            apply()
         }
     }
 

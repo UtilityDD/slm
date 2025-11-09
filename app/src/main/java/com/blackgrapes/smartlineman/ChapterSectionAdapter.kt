@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import android.util.Log
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
@@ -37,6 +38,7 @@ class ChapterSectionAdapter(
         private val titleTextView: TextView = itemView.findViewById(R.id.section_title)
         private val contentTextView: TextView = itemView.findViewById(R.id.section_content)
         private val sectionImageView: ImageView = itemView.findViewById(R.id.section_image)
+        private val cardView: CardView = itemView as CardView
         private val imageContainer: View = itemView.findViewById(R.id.image_container)
 
         init {
@@ -51,6 +53,13 @@ class ChapterSectionAdapter(
 
             contentTextView.movementMethod = LinkMovementMethod.getInstance()
             markwon.setMarkdown(contentTextView, section.summary)
+
+            // Change card color if the chapter quiz is completed
+            if (section.isCompleted) {
+                cardView.setCardBackgroundColor(itemView.context.getColor(R.color.pastel_mint))
+            } else {
+                cardView.setCardBackgroundColor(itemView.context.getColor(R.color.card_bg_light))
+            }
 
             if (section.imageName != null) {
                 imageContainer.visibility = View.VISIBLE
