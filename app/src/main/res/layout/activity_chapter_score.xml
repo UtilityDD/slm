@@ -33,7 +33,7 @@
         android:background="@drawable/score_badge_background"
         android:paddingHorizontal="24dp"
         android:paddingVertical="12dp"
-        android:textColor="@color/midnight_blue"
+        android:textColor="@color/white"
         android:textSize="34sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/feedback_message_text"
