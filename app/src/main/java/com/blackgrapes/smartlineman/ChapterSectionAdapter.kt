@@ -51,6 +51,8 @@ class ChapterSectionAdapter(
             markwon.setMarkdown(contentTextView, section.summary)
 
             if (section.imageName != null) {
+                sectionImageView.adjustViewBounds = true
+                sectionImageView.scaleType = ImageView.ScaleType.FIT_CENTER
                 try {
                     val inputStream = itemView.context.assets.open(section.imageName)
                     val bitmap = BitmapFactory.decodeStream(inputStream)
