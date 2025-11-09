@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import android.view.View
 import android.content.Intent
 import androidx.core.view.WindowInsetsCompat
+import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
@@ -124,6 +125,9 @@ class ChapterDetailActivity : AppCompatActivity() {
                                 putExtra(GameActivity.EXTRA_LEVEL, levelNumber)
                             }
                             startActivity(intent)
+                        } else {
+                            Toast.makeText(this, "অধ্যায়টি শেষ পর্যন্ত পড়ে কুইজটি আনলক করুন!", Toast.LENGTH_SHORT).show()
+                            startQuizButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
                         }
                     }
                 } else {
