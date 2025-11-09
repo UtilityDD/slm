@@ -91,6 +91,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                     if (!isQuizButtonActive) {
                         isQuizButtonActive = true
                         startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this@ChapterDetailActivity, R.color.purple_500)
+                        startQuizButton.setTextColor(ContextCompat.getColor(this@ChapterDetailActivity, R.color.white))
                         startQuizButton.alpha = 1.0f
                     }
                 }
@@ -145,6 +146,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                     if (!isQuizButtonActive) {
                         isQuizButtonActive = true
                         startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.purple_500)
+                        startQuizButton.setTextColor(ContextCompat.getColor(this, R.color.white))
                     }
                 }
             }
