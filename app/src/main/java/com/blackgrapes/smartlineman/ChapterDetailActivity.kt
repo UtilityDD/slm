@@ -9,6 +9,7 @@ import androidx.core.view.ViewCompat
 import android.view.View
 import android.content.Intent
 import androidx.core.view.WindowInsetsCompat
+import android.content.Context
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -77,7 +78,8 @@ class ChapterDetailActivity : AppCompatActivity() {
                 }
                 startActivity(intent)
             } else {
-                Toast.makeText(this, "No further details available.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "আগের লেভেলের কুইজটি সম্পূর্ণ করে এটি আনলক করুন!", Toast.LENGTH_LONG).show()
+                recyclerView.findViewHolderForAdapterPosition(sections.indexOf(section))?.itemView?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
             }
         }
         recyclerView.adapter = adapter
@@ -165,10 +167,19 @@ class ChapterDetailActivity : AppCompatActivity() {
                 for (i in 0 until levelsArray.length()) {
                     val levelObject = levelsArray.getJSONObject(i)
                     val title = levelObject.getString("level_title")
+                    val levelId = levelObject.optString("level_id", null)
                     val summary = levelObject.getString("level_summary")
-                    val status = levelObject.getString("level_status")
-                    val contentFile = levelObject.optString("level_id", null)?.let { "chapter_${it.replace('.', '_')}.json" }
-                    val emoji = "${i + 1}." // Use serial number instead of lock icon
+
+                    val isUnlocked = isLevelUnlocked(levelId)
+
+                    val contentFile = if (isUnlocked) {
+                        levelId?.let { "chapter_${it.replace('.', '_')}.json" }
+                    } else {
+                        null // This will prevent the click from opening a new activity
+                    }
+
+                    val emoji = if (isUnlocked) "📖" else "🔒"
+
                     sectionList.add(ChapterSection(emoji, title, summary, false, null, contentFile))
                 }
             } else {
@@ -260,5 +271,23 @@ class ChapterDetailActivity : AppCompatActivity() {
         } catch (e: IOException) {
             false
         }
+    }
+
+    private fun isLevelUnlocked(levelId: String?): Boolean {
+        if (levelId == null) return false
+
+        val levelNumber = levelId.split('.').lastOrNull()?.toIntOrNull() ?: return false
+
+        // The first level is always unlocked
+        if (levelNumber <= 1) return true
+
+        // For subsequent levels, check if the previous level's quiz was perfected
+        val previousLevel = levelNumber - 1
+        val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
+        val highScore = sharedPref.getInt("high_score_level_$previousLevel", -1)
+        val totalQuestions = sharedPref.getInt("total_questions_level_$previousLevel", 0)
+
+        // The level is unlocked if there was a perfect score on the previous level's quiz
+        return highScore != -1 && totalQuestions > 0 && highScore == totalQuestions
     }
 }
