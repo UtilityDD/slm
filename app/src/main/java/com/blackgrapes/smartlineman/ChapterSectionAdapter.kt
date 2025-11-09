@@ -15,7 +15,7 @@ import io.noties.markwon.Markwon
 import java.io.IOException
 
 class ChapterSectionAdapter(
-    private val sections: List<ChapterSection>,
+    private var sections: List<ChapterSection>,
     private val markwon: Markwon,
     private val onSectionClick: (ChapterSection) -> Unit
 ) : RecyclerView.Adapter<ChapterSectionAdapter.ChapterSectionViewHolder>() {
@@ -32,6 +32,11 @@ class ChapterSectionAdapter(
     }
 
     override fun getItemCount(): Int = sections.size
+
+    fun updateSections(newSections: List<ChapterSection>) {
+        this.sections = newSections
+        notifyDataSetChanged()
+    }
 
     inner class ChapterSectionViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val emojiTextView: TextView = itemView.findViewById(R.id.section_emoji)

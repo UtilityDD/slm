@@ -44,6 +44,14 @@ class ChapterDetailActivity : AppCompatActivity() {
         }
     }
 
+    private val chapterContentResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
+        // This is called when we return from a chapter detail screen (after a quiz).
+        // We need to reload the list to reflect the new "completed" status.
+        val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME)
+        sections = loadSectionsFromJson(contentFileName!!).toMutableList()
+        adapter.updateSections(sections)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -83,7 +91,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                     putExtra(EXTRA_TITLE, section.title)
                     putExtra(EXTRA_CONTENT_FILE_NAME, section.contentFile)
                 }
-                startActivity(intent)
+                chapterContentResultLauncher.launch(intent)
             } else {
                 Toast.makeText(this, "আগের লেভেলের কুইজটি সম্পূর্ণ করে এটি আনলক করুন!", Toast.LENGTH_LONG).show()
                 recyclerView.findViewHolderForAdapterPosition(sections.indexOf(section))?.itemView?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
