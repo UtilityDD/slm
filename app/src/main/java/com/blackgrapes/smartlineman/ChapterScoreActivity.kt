@@ -1,0 +1,67 @@
+package com.blackgrapes.smartlineman
+
+import android.os.Bundle
+import android.widget.Button
+import android.widget.TextView
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
+import nl.dionsegijn.konfetti.core.Party
+import nl.dionsegijn.konfetti.core.emitter.Emitter
+import nl.dionsegijn.konfetti.xml.KonfettiView
+import java.util.concurrent.TimeUnit
+
+class ChapterScoreActivity : AppCompatActivity() {
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_chapter_score) // We'll create this layout next
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_chapter_score)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
+        }
+
+        val score = intent.getIntExtra(GameActivity.EXTRA_SCORE, 0)
+        val totalQuestions = intent.getIntExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, 0)
+
+        val scoreTextView = findViewById<TextView>(R.id.score_text)
+        val feedbackEmojiTextView = findViewById<TextView>(R.id.feedback_emoji)
+        val feedbackMessageTextView = findViewById<TextView>(R.id.feedback_message_text)
+        val finishButton = findViewById<Button>(R.id.finish_button)
+
+        scoreTextView.text = "$score / $totalQuestions"
+
+        val percentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
+
+        val (feedbackMessage, emoji) = when {
+            percentage == 100 -> {
+                startConfetti()
+                "চমৎকার! আপনি এই অধ্যায়টি আয়ত্ত করেছেন। এবার পরের অধ্যায়ে যেতে পারেন।" to "🏆"
+            }
+            percentage >= 50 -> "ভালো প্রচেষ্টা! অধ্যায়টি আবার পর্যালোচনা করে দেখুন।" to "👍"
+            else -> "অধ্যায়টি মনোযোগ দিয়ে আবার পড়ুন এবং পুনরায় চেষ্টা করুন।" to "💪"
+        }
+
+        feedbackMessageTextView.text = feedbackMessage
+        feedbackEmojiTextView.text = emoji
+
+        finishButton.setOnClickListener {
+            finish() // Simply close this screen and return to the chapter detail page
+        }
+    }
+
+    private fun startConfetti() {
+        val konfettiView = findViewById<KonfettiView>(R.id.konfetti_view)
+        konfettiView.start(
+            Party(
+                speed = 0f,
+                maxSpeed = 30f,
+                damping = 0.9f,
+                spread = 360,
+                emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100)
+            )
+        )
+    }
+}

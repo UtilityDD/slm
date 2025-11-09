@@ -123,8 +123,8 @@ class ChapterDetailActivity : AppCompatActivity() {
 
                     startQuizButton.setOnClickListener {
                         if (isQuizButtonActive) {
-                            val intent = Intent(this, GameActivity::class.java).apply {
-                                putExtra(GameActivity.EXTRA_LEVEL, levelNumber)
+                            val intent = Intent(this, ChapterQuizActivity::class.java).apply {
+                                putExtra(ChapterQuizActivity.EXTRA_LEVEL_ID, chapterLevelId)
                             }
                             startActivity(intent)
                         } else {

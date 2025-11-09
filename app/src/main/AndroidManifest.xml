@@ -48,6 +48,12 @@
             <activity
                 android:name=".ImageZoomActivity"
                         android:exported="false" />
+            <activity
+                android:name=".ChapterQuizActivity"
+                android:exported="false" />
+            <activity
+                android:name=".ChapterScoreActivity"
+                android:exported="false" />
             
     </application>
 
