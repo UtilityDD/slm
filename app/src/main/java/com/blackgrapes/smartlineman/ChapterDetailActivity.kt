@@ -6,6 +6,7 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
 import androidx.core.view.ViewCompat
+import android.view.View
 import android.content.Intent
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -16,6 +17,7 @@ import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONObject
 import org.json.JSONException
 import android.widget.Toast
+import android.widget.Button
 import android.widget.ImageView
 import java.io.IOException
 
@@ -28,6 +30,8 @@ class ChapterDetailActivity : AppCompatActivity() {
 
     private lateinit var sections: MutableList<ChapterSection>
     private lateinit var adapter: ChapterSectionAdapter
+    private lateinit var startQuizButton: Button
+    private var chapterLevelId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +52,8 @@ class ChapterDetailActivity : AppCompatActivity() {
         supportActionBar?.title = intent.getStringExtra(EXTRA_TITLE) ?: "প্রথম দিনের ইউনিফর্ম ও পিপিই" // Use a specific title for the default case
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
+
+        startQuizButton = findViewById(R.id.start_quiz_button)
 
         if (contentFileName != null) {
             sections = loadSectionsFromJson(contentFileName).toMutableList()
@@ -79,6 +85,32 @@ class ChapterDetailActivity : AppCompatActivity() {
         try {
             val jsonString = assets.open(fileName).bufferedReader().use { it.readText() }
             val chapterJson = JSONObject(jsonString)
+
+            // Extract level_id to use for the quiz button
+            chapterLevelId = chapterJson.optString("level_id", null)
+
+            // Check if a quiz exists for this chapter and set up the button
+            chapterLevelId?.let { levelId ->
+                val levelNumber = levelId.split('.').lastOrNull()?.toIntOrNull()
+                if (levelNumber != null && hasQuizForLevel(levelNumber)) {
+                    startQuizButton.visibility = View.VISIBLE
+                    startQuizButton.setOnClickListener {
+                        val intent = Intent(this, GameActivity::class.java).apply {
+                            putExtra(GameActivity.EXTRA_LEVEL, levelNumber)
+                        }
+                        startActivity(intent)
+                    }
+                } else {
+                    startQuizButton.visibility = View.GONE
+                }
+            } ?: run {
+                // If there's no level_id (e.g., it's a list of chapters), hide the button.
+                startQuizButton.visibility = View.GONE
+            }
+
+
+
+
 
             // Check if this is a chapter list (old format) or detailed content (new format)
             if (chapterJson.has("levels")) {
@@ -171,5 +203,16 @@ class ChapterDetailActivity : AppCompatActivity() {
             Toast.makeText(this, "Error parsing chapter data.", Toast.LENGTH_LONG).show()
         }
         return sectionList
+    }
+
+    private fun hasQuizForLevel(level: Int): Boolean {
+        val levelId = "1.$level"
+        val quizFileName = "questions_${levelId.replace('.', '_')}.json"
+        return try {
+            assets.open(quizFileName).close() // Check if file exists
+            true
+        } catch (e: IOException) {
+            false
+        }
     }
 }
