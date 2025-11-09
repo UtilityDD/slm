@@ -317,8 +317,10 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun loadQuestionsFromJson(level: Int): List<Question> {
+        val levelId = "1.$level"
+        val fileName = "questions_${levelId.replace('.', '_')}.json"
+
         val questionList = mutableListOf<Question>()
-        val fileName = "questions_level$level.json"
         try {
             // A more robust way to read from the assets folder
             val jsonString: String = application.assets.open(fileName).use { inputStream ->

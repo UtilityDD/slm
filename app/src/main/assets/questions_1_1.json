@@ -18,16 +18,5 @@
     "questionText": "What is the unit of electrical resistance?",
     "options": [ "Volt", "Ampere", "Ohm", "Watt" ],
     "correctAnswerIndex": 2
-  },
-  {
-    "questionText": "Identify this electrical safety device.",
-    "imageName": "fuse.jpg",
-    "options": [
-      "Switch",
-      "Fuse",
-      "Resistor",
-      "Capacitor"
-    ],
-    "correctAnswerIndex": 1
   }
 ]

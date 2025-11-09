@@ -137,7 +137,8 @@ class ScoreActivity : AppCompatActivity() {
     }
 
     private fun hasNextLevel(currentLevel: Int): Boolean {
-        val nextLevelFileName = "questions_level${currentLevel + 1}.json"
+        val nextLevelId = "1.${currentLevel + 1}"
+        val nextLevelFileName = "questions_${nextLevelId.replace('.', '_')}.json"
         return try {
             assets.open(nextLevelFileName).close() // Check if file exists and can be opened
             true
