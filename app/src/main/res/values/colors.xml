@@ -36,4 +36,5 @@
     <color name="pastel_peach">#FFE0B2</color>
     <color name="pastel_butter">#FFF9C4</color>
     <color name="pastel_sky">#E1F5FE</color>
+    <color name="myth_buster_bg">#F3E5F5</color> <!-- Light purple for Myth Buster -->
 </resources>

@@ -74,11 +74,17 @@ class ChapterSectionAdapter(
                 divider.visibility = View.GONE
             }
 
-            // Change card color if the chapter quiz is completed
-            if (section.isCompleted) {
-                cardView.setCardBackgroundColor(itemView.context.getColor(R.color.pastel_mint))
-            } else {
-                cardView.setCardBackgroundColor(itemView.context.getColor(R.color.card_bg_light))
+            // Set card background color based on its type
+            when {
+                section.emoji == "👻" -> { // Myth Buster card
+                    cardView.setCardBackgroundColor(itemView.context.getColor(R.color.myth_buster_bg))
+                }
+                section.isCompleted -> { // Completed chapter card
+                    cardView.setCardBackgroundColor(itemView.context.getColor(R.color.pastel_mint))
+                }
+                else -> { // Default card color
+                    cardView.setCardBackgroundColor(itemView.context.getColor(R.color.card_bg_light))
+                }
             }
 
             if (section.imageName != null) {
