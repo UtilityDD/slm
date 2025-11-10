@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.BitmapFactory
 import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
+import android.net.Uri
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
@@ -47,6 +48,7 @@ class ChapterSectionAdapter(
         private val cardView: CardView = itemView as CardView
         private val imageContainer: View = itemView.findViewById(R.id.image_container)
         private val divider: View = itemView.findViewById(R.id.section_divider)
+        private val linkButton: View = itemView.findViewById(R.id.section_link_button)
 
         init {
             itemView.setOnClickListener {
@@ -111,6 +113,18 @@ class ChapterSectionAdapter(
             } else {
                 imageContainer.visibility = View.GONE
                 imageContainer.setOnClickListener(null) // Remove listener if no image
+            }
+
+            // Handle the source link button
+            if (section.sourceLink != null) {
+                linkButton.visibility = View.VISIBLE
+                linkButton.setOnClickListener {
+                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(section.sourceLink))
+                    itemView.context.startActivity(intent)
+                }
+            } else {
+                linkButton.visibility = View.GONE
+                linkButton.setOnClickListener(null)
             }
         }
     }

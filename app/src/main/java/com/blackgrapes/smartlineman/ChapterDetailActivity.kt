@@ -232,8 +232,8 @@ class ChapterDetailActivity : AppCompatActivity() {
                                 .append("- **গুরুত্ব:** ${point.getString("importance")}\n")
                                 .append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
 
-                            // Create a single ChapterSection for the entire point
-                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption))
+                            // Create a single ChapterSection for the entire point, passing null for sourceLink
+                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption, null))
                         }
                     }
                 }
@@ -242,11 +242,12 @@ class ChapterDetailActivity : AppCompatActivity() {
                 chapterJson.optJSONObject("pro_tip")?.let { proTipObject ->
                     val proTipTitle = proTipObject.getString("title")
                     val proTipContentArray = proTipObject.getJSONArray("content")
+                    val sourceLink = proTipObject.optString("source_link", null)
                     val proTipContent = StringBuilder()
                     for (i in 0 until proTipContentArray.length()) {
                         proTipContent.append("- ${proTipContentArray.getString(i)}\n")
                     }
-                    sectionList.add(ChapterSection("💡", proTipTitle, proTipContent.toString()))
+                    sectionList.add(ChapterSection("💡", proTipTitle, proTipContent.toString(), false, null, null, null, sourceLink))
                 }
 
                 // 4. Myth Buster Card
@@ -254,16 +255,18 @@ class ChapterDetailActivity : AppCompatActivity() {
                     val mythBusterTitle = mythBusterObject.getString("title")
                     val mythsArray = mythBusterObject.getJSONArray("myths")
                     val mythBusterContent = StringBuilder()
+                    val sourceLink = mythBusterObject.optString("source_link", null)
                     for (i in 0 until mythsArray.length()) {
                         val myth = mythsArray.getJSONObject(i)
                         mythBusterContent.append("**মিথ:** ${myth.getString("myth")}\n")
                         mythBusterContent.append("> **বাস্তবতা:** ${myth.getString("reality")}\n\n")
                     }
-                    sectionList.add(ChapterSection("👻", mythBusterTitle, mythBusterContent.toString()))
+                    sectionList.add(ChapterSection("👻", mythBusterTitle, mythBusterContent.toString(), false, null, null, null, sourceLink))
                 }
 
                 // 5. Advanced Facts Card
                 chapterJson.optJSONObject("advanced_section")?.let { advancedSectionObject ->
+                    val sourceLink = advancedSectionObject.optString("source_link", null)
                     val advancedTitle = advancedSectionObject.getString("title")
                     val factsArray = advancedSectionObject.getJSONArray("facts")
                     val advancedContent = StringBuilder()
@@ -272,7 +275,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                         advancedContent.append("#### ${fact.getString("title")}\n")
                         advancedContent.append("${fact.getString("content")}\n\n")
                     }
-                    sectionList.add(ChapterSection("🔬", advancedTitle, advancedContent.toString()))
+                    sectionList.add(ChapterSection("🔬", advancedTitle, advancedContent.toString(), false, null, null, null, sourceLink))
                 }
             }
 

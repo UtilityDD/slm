@@ -112,6 +112,20 @@
             android:lineSpacingExtra="5dp"
             tools:text="Electricity is the flow of electric charge. This section introduces you to the basic concept of current, voltage, and resistance..." />
 
+        <!-- Source Link Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/section_link_button"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginTop="16dp"
+            android:text="Know more?"
+            android:visibility="gone"
+            android:textColor="?attr/colorOnSurface"
+            app:icon="@drawable/ic_link"
+            tools:visibility="visible" />
+
     </LinearLayout>
 
 </com.google.android.material.card.MaterialCardView>
