@@ -62,8 +62,11 @@ class ChapterSectionAdapter(
             if (section.summary.isNotBlank()) {
                 contentTextView.visibility = View.VISIBLE
                 divider.visibility = View.VISIBLE
-                contentTextView.movementMethod = LinkMovementMethod.getInstance()
                 markwon.setMarkdown(contentTextView, section.summary)
+                // Ensure the text view itself isn't clickable, so the card's listener is used.
+                contentTextView.setOnClickListener(null)
+                contentTextView.isClickable = false // Redundant but safe
+                contentTextView.movementMethod = null // Explicitly remove movement method
             } else {
                 contentTextView.visibility = View.GONE
                 divider.visibility = View.GONE
