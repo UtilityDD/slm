@@ -215,30 +215,25 @@ class ChapterDetailActivity : AppCompatActivity() {
                         val ppeSection = ppeSectionsArray.getJSONObject(j)
                         // This is the main image for the whole section, if it exists
                         val sectionImage = ppeSection.optString("image_name", null)
+                        val sectionImageCaption = ppeSection.optString("image_caption", null)
                         val sectionTitle = ppeSection.getString("title")
                         // Add a card for the main section title and its image
-                        sectionList.add(ChapterSection("🛡️", sectionTitle, "", false, sectionImage))
+                        sectionList.add(ChapterSection("🛡️", sectionTitle, "", false, sectionImage, null, sectionImageCaption))
 
                         val ppePointsArray = ppeSection.getJSONArray("points")
                         for (k in 0 until ppePointsArray.length()) {
                             val point = ppePointsArray.getJSONObject(k)
                             val pointTitle = point.getString("item_name")
+                            val pointImage = point.optString("image_name", null)
+                            val pointImageCaption = point.optString("image_caption", null)
+
                             val pointContent = StringBuilder()
                                 .append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
-                            
-                            // Add the title and specifications as one section
-                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString()))
-
-                            // If there's an image, add it as a separate section right after specifications
-                            point.optString("image_name", null)?.let { pointImage ->
-                                sectionList.add(ChapterSection("", "", "", false, pointImage))
-                            }
-
-                            // Add the rest of the content as another section
-                            val remainingContent = StringBuilder()
                                 .append("- **গুরুত্ব:** ${point.getString("importance")}\n")
                                 .append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
-                            sectionList.add(ChapterSection("", "", remainingContent.toString()))
+
+                            // Create a single ChapterSection for the entire point
+                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption))
                         }
                     }
                 }

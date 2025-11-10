@@ -43,6 +43,7 @@ class ChapterSectionAdapter(
         private val titleTextView: TextView = itemView.findViewById(R.id.section_title)
         private val contentTextView: TextView = itemView.findViewById(R.id.section_content)
         private val sectionImageView: ImageView = itemView.findViewById(R.id.section_image)
+        private val captionTextView: TextView = itemView.findViewById(R.id.section_image_caption)
         private val cardView: CardView = itemView as CardView
         private val imageContainer: View = itemView.findViewById(R.id.image_container)
 
@@ -85,6 +86,14 @@ class ChapterSectionAdapter(
                         putExtra(ImageZoomActivity.EXTRA_IMAGE_NAME, section.imageName)
                     }
                     itemView.context.startActivity(intent)
+                }
+
+                // Handle the caption
+                if (section.imageCaption != null) {
+                    captionTextView.visibility = View.VISIBLE
+                    captionTextView.text = section.imageCaption
+                } else {
+                    captionTextView.visibility = View.GONE
                 }
 
             } else {

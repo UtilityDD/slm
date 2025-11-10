@@ -6,5 +6,6 @@ data class ChapterSection(
     val summary: String,
     val isCompleted: Boolean = false,
     val imageName: String? = null,
-    val contentFile: String? = null
+    val contentFile: String? = null,
+    val imageCaption: String? = null
 )
