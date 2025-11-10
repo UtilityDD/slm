@@ -46,6 +46,7 @@ class ChapterSectionAdapter(
         private val captionTextView: TextView = itemView.findViewById(R.id.section_image_caption)
         private val cardView: CardView = itemView as CardView
         private val imageContainer: View = itemView.findViewById(R.id.image_container)
+        private val divider: View = itemView.findViewById(R.id.section_divider)
 
         init {
             itemView.setOnClickListener {
@@ -57,8 +58,16 @@ class ChapterSectionAdapter(
             emojiTextView.text = section.emoji
             titleTextView.text = section.title
 
-            contentTextView.movementMethod = LinkMovementMethod.getInstance()
-            markwon.setMarkdown(contentTextView, section.summary)
+            // Only show content and divider if there is summary text
+            if (section.summary.isNotBlank()) {
+                contentTextView.visibility = View.VISIBLE
+                divider.visibility = View.VISIBLE
+                contentTextView.movementMethod = LinkMovementMethod.getInstance()
+                markwon.setMarkdown(contentTextView, section.summary)
+            } else {
+                contentTextView.visibility = View.GONE
+                divider.visibility = View.GONE
+            }
 
             // Change card color if the chapter quiz is completed
             if (section.isCompleted) {
