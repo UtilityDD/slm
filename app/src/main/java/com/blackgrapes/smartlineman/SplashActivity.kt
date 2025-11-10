@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.activity.enableEdgeToEdge
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.WindowCompat
 import androidx.core.view.ViewCompat
@@ -15,14 +16,19 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Force system icons to be dark, making them invisible on a dark background
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = true
-        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = true
+        // Set system icons to be light to be visible on a dark background
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightStatusBars = false
+        WindowCompat.getInsetsController(window, window.decorView).isAppearanceLightNavigationBars = false
 
         setContentView(R.layout.activity_splash)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_splash)) { v, insets ->
+
+        val mainView = findViewById<View>(R.id.main_splash)
+        // Set the new background color
+        mainView.setBackgroundColor(getColor(R.color.splash_background))
+
+        ViewCompat.setOnApplyWindowInsetsListener(mainView) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            v.setPadding(0, 0, 0, 0) // Remove padding to make it fully edge-to-edge
             insets
         }
 
