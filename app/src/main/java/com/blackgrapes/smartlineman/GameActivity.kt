@@ -233,7 +233,14 @@ class GameActivity : AppCompatActivity() {
             it.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
 
-        submitButton.text = "NEXT QUESTION"
+        submitButton.text = "" // Remove text
+        val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
+        submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
+        // Post a runnable to calculate padding after the button is laid out
+        submitButton.post {
+            val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
+            submitButton.setPadding(padding, 0, 0, 0)
+        }
     }
 
     private fun showNextButton() {
@@ -301,6 +308,13 @@ class GameActivity : AppCompatActivity() {
             it.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
         showNextButton()
+        submitButton.text = "" // Remove text
+        val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
+        submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
+        submitButton.post {
+            val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
+            submitButton.setPadding(padding, 0, 0, 0)
+        }
     }
     private fun resetButtonState(button: Button) {
         // Reset background tint based on the button's ID
