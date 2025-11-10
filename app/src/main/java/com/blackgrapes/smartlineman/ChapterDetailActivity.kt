@@ -223,12 +223,22 @@ class ChapterDetailActivity : AppCompatActivity() {
                         for (k in 0 until ppePointsArray.length()) {
                             val point = ppePointsArray.getJSONObject(k)
                             val pointTitle = point.getString("item_name")
-                            val pointImage = point.optString("image_name", null)
                             val pointContent = StringBuilder()
                                 .append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
+                            
+                            // Add the title and specifications as one section
+                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString()))
+
+                            // If there's an image, add it as a separate section right after specifications
+                            point.optString("image_name", null)?.let { pointImage ->
+                                sectionList.add(ChapterSection("", "", "", false, pointImage))
+                            }
+
+                            // Add the rest of the content as another section
+                            val remainingContent = StringBuilder()
                                 .append("- **গুরুত্ব:** ${point.getString("importance")}\n")
                                 .append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
-                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage))
+                            sectionList.add(ChapterSection("", "", remainingContent.toString()))
                         }
                     }
                 }
