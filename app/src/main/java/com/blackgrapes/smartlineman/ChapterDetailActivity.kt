@@ -93,7 +93,6 @@ class ChapterDetailActivity : AppCompatActivity() {
                 }
                 chapterContentResultLauncher.launch(intent)
             } else {
-                Toast.makeText(this, "আগের লেভেলের কুইজটি সম্পূর্ণ করে এটি আনলক করুন!", Toast.LENGTH_LONG).show()
                 recyclerView.findViewHolderForAdapterPosition(sections.indexOf(section))?.itemView?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
             }
         }
