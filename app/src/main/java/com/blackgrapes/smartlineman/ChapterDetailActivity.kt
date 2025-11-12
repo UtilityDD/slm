@@ -228,9 +228,16 @@ class ChapterDetailActivity : AppCompatActivity() {
                             val pointImageCaption = point.optString("image_caption", null)
 
                             val pointContent = StringBuilder()
-                                .append("- **স্পেসিফিকেশন:** ${point.getString("specifications")}\n")
-                                .append("- **গুরুত্ব:** ${point.getString("importance")}\n")
-                                .append("- **দৈনিক পরীক্ষা:** ${point.getString("daily_check")}\n\n")
+                                .append("- **স্পেসিফিকেশন:** ${point.optString("specifications")}\n")
+                                .append("- **গুরুত্ব:** ${point.optString("importance")}\n")
+
+                            // Handle both "daily_check" and "golden_rule" gracefully
+                            point.optString("daily_check").takeIf { it.isNotEmpty() }?.let {
+                                pointContent.append("- **দৈনিক পরীক্ষা:** $it\n")
+                            }
+                            point.optString("golden_rule").takeIf { it.isNotEmpty() }?.let {
+                                pointContent.append("- **গোল্ডেন রুল:** $it\n")
+                            }
 
                             // Create a single ChapterSection for the entire point, passing null for sourceLink
                             sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption, null))
