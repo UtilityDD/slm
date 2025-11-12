@@ -282,20 +282,19 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadProgress(animate: Boolean) {
         val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
-        var highestLevelPlayed = 0
-        // A level is only considered "played" or "completed" if a perfect score was achieved.
+        var highestLevelCompleted = 0
+        // A level is only considered "completed" if a perfect score was achieved.
         for (i in 1..100) { // Check up to 100 levels
             val highScore = sharedPref.getInt("high_score_level_$i", -1)
             val totalQuestions = sharedPref.getInt("total_questions_level_$i", 0)
-            // Only advance if the level was passed with a perfect score.
             if (highScore != -1 && highScore == totalQuestions) {
-                highestLevelPlayed = i
+                highestLevelCompleted = i
             } else {
-                break // Stop when we find a level without a high score
+                break // Stop when we find a level that wasn't completed perfectly.
             }
         }
-        currentLevel = highestLevelPlayed + 1
-        updateLinemanPosition(highestLevelPlayed, animate) // Position based on the highest level played
+        currentLevel = highestLevelCompleted + 1
+        updateLinemanPosition(highestLevelCompleted, animate) // Position based on the highest level completed
     }
 
     private fun onScrollIdle() {
