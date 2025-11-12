@@ -36,6 +36,7 @@ class GameActivity : AppCompatActivity() {
     companion object {
         const val EXTRA_LEVEL = "LEVEL"
         const val EXTRA_SCORE = "SCORE"
+        const val EXTRA_LEVEL_ID = "LEVEL_ID" // New constant
         const val EXTRA_TOTAL_QUESTIONS = "TOTAL_QUESTIONS"
         const val EXTRA_TOTAL_TIME = "TOTAL_TIME"
     }
@@ -55,6 +56,7 @@ class GameActivity : AppCompatActivity() {
     private var currentCorrectAnswerIndex: Int = 0
     private var isAnswerSubmitted = false
     private var level = 1
+    private var levelId: String? = null
     private var totalTimeTakenInMillis: Long = 0
     private var countDownTimer: CountDownTimer? = null
     private val questionTimeInMillis: Long = 15000 // 15 seconds per question
@@ -76,7 +78,8 @@ class GameActivity : AppCompatActivity() {
         }
 
         level = intent.getIntExtra(EXTRA_LEVEL, 1)
-        val allQuestions = loadQuestionsFromJson(level).shuffled()
+        levelId = intent.getStringExtra(EXTRA_LEVEL_ID)
+        val allQuestions = loadQuestionsFromJson(levelId).shuffled()
         questions = allQuestions.take(10)
 
         initializeViews()
@@ -188,6 +191,7 @@ class GameActivity : AppCompatActivity() {
                         putExtra(EXTRA_SCORE, score)
                         putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
                         putExtra(EXTRA_LEVEL, level)
+                        putExtra(EXTRA_LEVEL_ID, levelId)
                         putExtra(EXTRA_TOTAL_TIME, totalTimeTakenInMillis)
                     }
                     scoreActivityResultLauncher.launch(scoreIntent)
@@ -331,9 +335,8 @@ class GameActivity : AppCompatActivity() {
         countDownTimer?.cancel()
     }
 
-    private fun loadQuestionsFromJson(level: Int): List<Question> {
-        val levelId = "1.$level"
-        val fileName = "questions_${levelId.replace('.', '_')}.json"
+    private fun loadQuestionsFromJson(levelId: String?): List<Question> {
+        val fileName = "questions_${levelId?.replace('.', '_')}.json"
 
         val questionList = mutableListOf<Question>()
         try {

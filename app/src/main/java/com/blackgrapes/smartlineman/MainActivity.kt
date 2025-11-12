@@ -155,7 +155,15 @@ class MainActivity : AppCompatActivity() {
 
     private fun startGame(level: Int) {
         val intent = Intent(this, GameActivity::class.java)
-        intent.putExtra("LEVEL", level)
+        intent.putExtra(GameActivity.EXTRA_LEVEL, level)
+
+        // Determine the correct levelId string (e.g., "1.1", "2.3")
+        // This is a simple mapping for now. You might need a more complex one later.
+        val majorLevel = ((level - 1) / 7) + 1
+        val minorLevel = ((level - 1) % 7) + 1
+        val levelId = "$majorLevel.$minorLevel"
+
+        intent.putExtra(GameActivity.EXTRA_LEVEL_ID, levelId)
         gameActivityResultLauncher.launch(intent)
     }
 
