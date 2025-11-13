@@ -51,7 +51,8 @@ class ChapterQuizActivity : AppCompatActivity() {
 
     private lateinit var questions: List<Question>
     private val timerProgressDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background) }
-    private val timerWarningDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background_warning) }
+    // Use a different color for the chapter quiz timer
+    private val timerWarningDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background_warning_cyan) }
 
     private val chapterScoreResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         // When ChapterScoreActivity finishes, pass its result back to ChapterDetailActivity.
@@ -308,7 +309,8 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     private fun resetButtonState(button: Button) {
-        button.backgroundTintList = ContextCompat.getColorStateList(this, R.color.answer_option_default)
+        // Use a different default button color for chapter quizzes
+        button.backgroundTintList = ContextCompat.getColorStateList(this, R.color.answer_option_chapter_quiz)
         button.isEnabled = true
         button.setTextColor(ContextCompat.getColor(this, R.color.white))
     }
