@@ -237,6 +237,9 @@ class ChapterDetailActivity : AppCompatActivity() {
                             point.optString("golden_rule").takeIf { it.isNotEmpty() }?.let {
                                 pointContent.append("- **গোল্ডেন রুল:** $it\n")
                             }
+                            point.optString("safety_tip").takeIf { it.isNotEmpty() }?.let {
+                                pointContent.append("- **নিরাপত্তা টিপ:** $it\n")
+                            }
 
                             // Create a single ChapterSection for the entire point, passing null for sourceLink
                             sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption, null))
