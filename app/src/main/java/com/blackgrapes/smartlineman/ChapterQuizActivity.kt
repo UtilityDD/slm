@@ -31,6 +31,7 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     private lateinit var questionCounterText: TextView
+    private lateinit var levelText: TextView
     private lateinit var questionText: TextView
     private lateinit var answerButtons: List<Button>
     private lateinit var submitButton: Button
@@ -93,6 +94,8 @@ class ChapterQuizActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         questionCounterText = findViewById(R.id.question_counter_text)
+        levelText = findViewById(R.id.level_text)
+        levelText.text = "Chapter $levelId"
         questionText = findViewById(R.id.question_text)
         submitButton = findViewById(R.id.submit_button)
         questionCard = findViewById(R.id.question_card)

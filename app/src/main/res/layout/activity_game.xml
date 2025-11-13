@@ -9,6 +9,23 @@
     tools:context=".GameActivity">
 
     <TextView
+        android:id="@+id/level_text"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/level_marker_background"
+        android:gravity="center"
+        android:paddingHorizontal="12dp"
+        android:textColor="@color/midnight_blue"
+        android:textSize="14sp"
+        android:textStyle="bold"
+        app:layout_constraintHorizontal_bias="0.05"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="Level 1" />
+
+    <TextView
         android:id="@+id/question_counter_text"
         android:layout_width="wrap_content"
         android:layout_height="32dp"
