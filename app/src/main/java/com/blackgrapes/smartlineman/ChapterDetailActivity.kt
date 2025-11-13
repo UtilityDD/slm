@@ -10,6 +10,8 @@ import androidx.core.view.ViewCompat
 import android.view.View
 import android.content.Intent
 import androidx.core.view.WindowInsetsCompat
+import android.view.Menu
+import androidx.appcompat.widget.SearchView
 import android.content.Context
 import android.view.animation.AnimationUtils
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,12 +24,14 @@ import org.json.JSONObject
 import org.json.JSONException
 import android.widget.Toast
 import android.widget.Button
+import java.util.Locale
 import android.widget.ImageView
 import java.io.IOException
 
 class ChapterDetailActivity : AppCompatActivity() {
 
     companion object {
+        const val EXTRA_IS_KNOWLEDGE_BASE = "EXTRA_IS_KNOWLEDGE_BASE"
         const val EXTRA_TITLE = "EXTRA_TITLE"
         const val EXTRA_CONTENT_FILE_NAME = "EXTRA_CONTENT_FILE_NAME"
     }
@@ -35,6 +39,7 @@ class ChapterDetailActivity : AppCompatActivity() {
     private lateinit var sections: MutableList<ChapterSection>
     private lateinit var adapter: ChapterSectionAdapter
     private lateinit var startQuizButton: Button
+    private lateinit var allSections: List<ChapterSection> // To hold the original, unfiltered list
     private var chapterLevelId: String? = null
     private var isQuizButtonActive = false
     private var isChapterListView = false // To distinguish between chapter list and chapter detail
@@ -48,8 +53,9 @@ class ChapterDetailActivity : AppCompatActivity() {
     private val chapterContentResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
         // This is called when we return from a chapter detail screen (after a quiz).
         // We need to reload the list to reflect the new "completed" status.
-        val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME)
-        sections = loadSectionsFromJson(contentFileName!!).toMutableList()
+        val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME)!!
+        allSections = loadSectionsFromJson(contentFileName)
+        sections = allSections.toMutableList()
         adapter.updateSections(sections)
     }
 
@@ -76,7 +82,8 @@ class ChapterDetailActivity : AppCompatActivity() {
         startQuizButton = findViewById(R.id.start_quiz_button)
 
         if (contentFileName != null) {
-            sections = loadSectionsFromJson(contentFileName).toMutableList()
+            allSections = loadSectionsFromJson(contentFileName)
+            sections = allSections.toMutableList()
             setupRecyclerView()
         }
     }
@@ -123,6 +130,44 @@ class ChapterDetailActivity : AppCompatActivity() {
                 }
             }
         })
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.menu_search, menu)
+        return true
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu): Boolean {
+        val searchItem = menu.findItem(R.id.action_search)
+        // Only show the search menu if this is a chapter list view (Knowledge Base)
+        if (isChapterListView) {
+            searchItem.isVisible = true
+            // Setup animation on the custom action view
+            val actionView = searchItem.actionView
+            actionView?.setOnClickListener {
+                val pulse = AnimationUtils.loadAnimation(this, R.anim.search_icon_pulse)
+                it.startAnimation(pulse)
+                // TODO: Add logic to expand the search view here later.
+                Toast.makeText(this, "Search is coming soon!", Toast.LENGTH_SHORT).show()
+            }
+        } else {
+            searchItem.isVisible = false
+        }
+        return super.onPrepareOptionsMenu(menu)
+    }
+
+    private fun filter(query: String?) {
+        val filteredList = if (query.isNullOrEmpty()) {
+            allSections
+        } else {
+            val searchQuery = query.lowercase(Locale.getDefault())
+            allSections.filter { section ->
+                section.title.lowercase(Locale.getDefault()).contains(searchQuery) ||
+                        section.summary.lowercase(Locale.getDefault()).contains(searchQuery)
+            }
+        }
+        adapter.updateSections(filteredList)
     }
 
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
