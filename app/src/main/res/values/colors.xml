@@ -28,6 +28,9 @@
     <color name="incorrect_red">#F44336</color>
     <color name="answer_option_default">#3F51B5</color>
     <color name="answer_option_chapter_quiz">#00838F</color> <!-- A deep cyan for chapter quiz buttons -->
+    <!-- Chapter Quiz Background Gradient -->
+    <color name="chapter_quiz_bg_start">#006064</color> <!-- Darker Cyan -->
+    <color name="chapter_quiz_bg_end">#00838F</color>   <!-- Matches button color -->
 
     <color name="card_background">#1C2541</color>
     <color name="text_on_light_card">#212121</color>

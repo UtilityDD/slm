@@ -66,6 +66,10 @@ class ChapterQuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_game) // We can reuse the same layout
+
+        // Set the custom background for the chapter quiz
+        findViewById<View>(R.id.main_game).setBackgroundResource(R.drawable.chapter_quiz_background_gradient)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_game)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
