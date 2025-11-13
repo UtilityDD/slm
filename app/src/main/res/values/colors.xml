@@ -12,6 +12,7 @@
     <color name="sky_blue_dark">#1C2541</color>
     <color name="electric_cyan">#00FFFF</color>
     <color name="golden_light">#FFD700</color>
+    <color name="ribbon_background_color">#CCFFD700</color> <!-- 80% transparent golden light -->
     <color name="light_gray">#D3D3D3</color>
     <color name="very_light_gray">#EAEAEA</color>
     <color name="eci_violet">#6A5AE0</color>
