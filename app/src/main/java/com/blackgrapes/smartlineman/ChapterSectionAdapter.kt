@@ -49,6 +49,7 @@ class ChapterSectionAdapter(
         private val imageContainer: View = itemView.findViewById(R.id.image_container)
         private val divider: View = itemView.findViewById(R.id.section_divider)
         private val linkButton: View = itemView.findViewById(R.id.section_link_button)
+        private val chapterNumberBadge: TextView = itemView.findViewById(R.id.chapter_number_badge)
 
         init {
             itemView.setOnClickListener {
@@ -59,6 +60,14 @@ class ChapterSectionAdapter(
         fun bind(section: ChapterSection) {
             emojiTextView.text = section.emoji
             titleTextView.text = section.title
+
+            // Display the chapter number badge if it exists
+            if (section.levelId != null) {
+                chapterNumberBadge.visibility = View.VISIBLE
+                chapterNumberBadge.text = section.levelId
+            } else {
+                chapterNumberBadge.visibility = View.GONE
+            }
 
             // Only show content and divider if there is summary text
             if (section.summary.isNotBlank()) {

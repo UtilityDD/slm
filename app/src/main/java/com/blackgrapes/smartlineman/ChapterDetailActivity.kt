@@ -209,7 +209,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                         else -> "🔒"
                     }
 
-                    sectionList.add(ChapterSection(emoji, title, summary, isCompleted, null, contentFile))
+                    sectionList.add(ChapterSection(emoji, title, summary, isCompleted, null, contentFile, null, null, levelId))
                 }
             } else {
                 isChapterListView = false // This is a detailed chapter view

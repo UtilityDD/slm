@@ -8,5 +8,6 @@ data class ChapterSection(
     val imageName: String? = null,
     val contentFile: String? = null,
     val imageCaption: String? = null,
-    val sourceLink: String? = null
+    val sourceLink: String? = null,
+    val levelId: String? = null // To display chapter numbers like "1.1"
 )
