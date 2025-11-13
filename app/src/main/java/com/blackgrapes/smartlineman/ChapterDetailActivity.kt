@@ -93,11 +93,16 @@ class ChapterDetailActivity : AppCompatActivity() {
                     putExtra(EXTRA_CONTENT_FILE_NAME, section.contentFile)
                 }
                 chapterContentResultLauncher.launch(intent)
-            } else if (isChapterListView) {
-                // Only show the "locked" message if we are in a chapter list view.
-                // Otherwise, do nothing for non-clickable cards inside a chapter.
-                Toast.makeText(this, "আরে বন্ধু! 🚦 আগের পাঠটি ভালো করে না বুঝলে সামনে এগোনো মুশকিল। আগে ওটা শেষ করুন! 😉", Toast.LENGTH_LONG).show()
-                recyclerView.findViewHolderForAdapterPosition(sections.indexOf(section))?.itemView?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
+            } else {
+                // This is a non-clickable item. Start the shake animation.
+                val itemView = recyclerView.findViewHolderForAdapterPosition(sections.indexOf(section))?.itemView
+                itemView?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
+
+                if (isChapterListView) {
+                    // If it's a locked chapter in a list, also show the toast message.
+                    Toast.makeText(this, "আরে বন্ধু! 🚦 আগের পাঠটি ভালো করে না বুঝলে সামনে এগোনো মুশকিল। আগে ওটা শেষ করুন! 😉", Toast.LENGTH_LONG).show()
+                }
+                // For non-interactive cards inside a chapter, only the animation will play.
             }
         }
         recyclerView.adapter = adapter
