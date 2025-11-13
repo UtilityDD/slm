@@ -37,6 +37,7 @@ class ChapterDetailActivity : AppCompatActivity() {
     private lateinit var startQuizButton: Button
     private var chapterLevelId: String? = null
     private var isQuizButtonActive = false
+    private var isChapterListView = false // To distinguish between chapter list and chapter detail
 
     private val chapterQuizResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -92,7 +93,10 @@ class ChapterDetailActivity : AppCompatActivity() {
                     putExtra(EXTRA_CONTENT_FILE_NAME, section.contentFile)
                 }
                 chapterContentResultLauncher.launch(intent)
-            } else {
+            } else if (isChapterListView) {
+                // Only show the "locked" message if we are in a chapter list view.
+                // Otherwise, do nothing for non-clickable cards inside a chapter.
+                Toast.makeText(this, "আরে বন্ধু! 🚦 আগের পাঠটি ভালো করে না বুঝলে সামনে এগোনো মুশকিল। আগে ওটা শেষ করুন! 😉", Toast.LENGTH_LONG).show()
                 recyclerView.findViewHolderForAdapterPosition(sections.indexOf(section))?.itemView?.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
             }
         }
@@ -176,6 +180,7 @@ class ChapterDetailActivity : AppCompatActivity() {
 
             // Check if this is a chapter list (old format) or detailed content (new format)
             if (chapterJson.has("levels")) {
+                isChapterListView = true // This is a list of chapters
                 // --- PARSE OLD FORMAT (List of chapters/levels) ---
                 val levelsArray = chapterJson.getJSONArray("levels")
                 for (i in 0 until levelsArray.length()) {
@@ -202,6 +207,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                     sectionList.add(ChapterSection(emoji, title, summary, isCompleted, null, contentFile))
                 }
             } else {
+                isChapterListView = false // This is a detailed chapter view
                 // --- PARSE NEW FORMAT (Detailed single chapter content) ---
                 // 1. Mission Briefing Card
                 chapterJson.optString("mission_briefing").takeIf { it.isNotEmpty() }?.let {
