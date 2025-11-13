@@ -12,17 +12,22 @@
     app:strokeColor="@color/card_stroke_light"
     app:strokeWidth="0.8dp">
 
-    <!-- Wrap with FrameLayout to allow overlaying the badge -->
-    <FrameLayout
+    <!-- Use ConstraintLayout for more precise positioning of the badge -->
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="18dp"
-        android:background="@drawable/card_inner_bg">
+            android:id="@+id/content_container"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/card_inner_bg"
+            android:orientation="vertical"
+            android:padding="18dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
         <!-- Header -->
         <LinearLayout
@@ -131,24 +136,28 @@
             app:icon="@drawable/ic_link"
             tools:visibility="visible" />
 
-        </LinearLayout>
+    </LinearLayout>
 
-        <!-- Chapter Number Badge -->
+        <!-- Chapter Number Badge - positioned as a corner ribbon -->
         <TextView
             android:id="@+id/chapter_number_badge"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="top|end"
-            android:layout_margin="8dp"
-            android:background="@drawable/level_marker_background"
-            android:paddingHorizontal="8dp"
-            android:paddingVertical="4dp"
+            android:layout_height="24dp"
+            android:background="@drawable/ribbon_background"
+            android:elevation="5dp"
+            android:gravity="center"
+            android:minWidth="80dp"
+            android:rotation="45"
             android:textColor="@color/midnight_blue"
             android:textSize="12sp"
             android:textStyle="bold"
+            android:translationX="24dp"
+            android:translationY="12dp"
             android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
             tools:text="1.1"
             tools:visibility="visible" />
-    </FrameLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
