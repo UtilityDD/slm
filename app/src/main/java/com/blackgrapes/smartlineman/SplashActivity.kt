@@ -32,6 +32,9 @@ class SplashActivity : AppCompatActivity() {
             insets
         }
 
+        // Initialize the LevelManager with the application context
+        LevelManager.initialize(applicationContext)
+
         Handler(Looper.getMainLooper()).postDelayed({
             startActivity(Intent(this, MainActivity::class.java))
             finish()

@@ -146,6 +146,9 @@ class MainActivity : AppCompatActivity() {
                 // Save the new currentLevel
                 saveProgress(currentLevel)
                 updateLinemanPosition(currentLevel - 1, true)
+            } else {
+                // Level was not passed, but we still need to refresh the UI to show the new score.
+                updateLevelColors()
             }
         } else {
             // Even if the level wasn't passed, refresh the colors and scores
@@ -157,11 +160,8 @@ class MainActivity : AppCompatActivity() {
         val intent = Intent(this, GameActivity::class.java)
         intent.putExtra(GameActivity.EXTRA_LEVEL, level)
 
-        // Determine the correct levelId string (e.g., "1.1", "2.3")
-        // This is a simple mapping for now. You might need a more complex one later.
-        val majorLevel = ((level - 1) / 7) + 1
-        val minorLevel = ((level - 1) % 7) + 1
-        val levelId = "$majorLevel.$minorLevel"
+        // Use the LevelManager to get the dynamic level ID
+        val levelId = LevelManager.getLevelId(level)
 
         intent.putExtra(GameActivity.EXTRA_LEVEL_ID, levelId)
         gameActivityResultLauncher.launch(intent)
