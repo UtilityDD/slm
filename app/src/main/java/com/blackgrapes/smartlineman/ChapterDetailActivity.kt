@@ -226,19 +226,23 @@ class ChapterDetailActivity : AppCompatActivity() {
                             val pointImage = point.optString("image_name", null)
                             val pointImageCaption = point.optString("image_caption", null)
 
+                            // Define a map of extra fields to their Bengali labels.
+                            // To support a new field, just add it to this map.
+                            val extraFieldLabels = mapOf(
+                                "daily_check" to "দৈনিক পরীক্ষা",
+                                "golden_rule" to "গোল্ডেন রুল",
+                                "safety_tip" to "নিরাপত্তা টিপ"
+                            )
+
                             val pointContent = StringBuilder()
                                 .append("- **স্পেসিফিকেশন:** ${point.optString("specifications")}\n")
                                 .append("- **গুরুত্ব:** ${point.optString("importance")}\n")
 
-                            // Handle both "daily_check" and "golden_rule" gracefully
-                            point.optString("daily_check").takeIf { it.isNotEmpty() }?.let {
-                                pointContent.append("- **দৈনিক পরীক্ষা:** $it\n")
-                            }
-                            point.optString("golden_rule").takeIf { it.isNotEmpty() }?.let {
-                                pointContent.append("- **গোল্ডেন রুল:** $it\n")
-                            }
-                            point.optString("safety_tip").takeIf { it.isNotEmpty() }?.let {
-                                pointContent.append("- **নিরাপত্তা টিপ:** $it\n")
+                            // Loop through the map to handle any extra fields generically.
+                            extraFieldLabels.forEach { (key, label) ->
+                                point.optString(key).takeIf { it.isNotEmpty() }?.let {
+                                    pointContent.append("- **$label:** $it\n")
+                                }
                             }
 
                             // Create a single ChapterSection for the entire point, passing null for sourceLink
