@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.media.MediaPlayer
 import android.os.Build
 import android.text.Html
 import android.os.Bundle
@@ -36,6 +37,9 @@ class MainActivity : AppCompatActivity() {
 
     // Floating Action Button menu state
     private lateinit var fabMain: FloatingActionButton
+
+    // Background music player
+    private var mediaPlayer: MediaPlayer? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -113,12 +117,23 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupFabMenu()
+
+        // Initialize and start background music
+        mediaPlayer = MediaPlayer.create(this, R.raw.background)
+        mediaPlayer?.isLooping = true
     }
 
     override fun onResume() {
         super.onResume()
         // Refresh the progress and UI in case it was reset in another activity
         loadProgress(false) // Don't animate on a regular resume
+        // Start or resume the music if it's not already playing
+        mediaPlayer?.takeIf { !it.isPlaying }?.start()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        mediaPlayer?.takeIf { it.isPlaying }?.pause()
     }
 
     private val menuActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
@@ -293,5 +308,12 @@ class MainActivity : AppCompatActivity() {
             // Smoothly scroll back to the bottom (lineman's position)
             ObjectAnimator.ofInt(scrollView, "scrollY", lastScrollY, targetScrollY).setDuration(400).start()
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.stop()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 }
