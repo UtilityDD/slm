@@ -1,6 +1,7 @@
 package com.blackgrapes.smartlineman
 
 import android.app.Activity
+import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.view.View
@@ -78,6 +79,8 @@ class GameActivity : AppCompatActivity() {
     private var levelPassedSoundId: Int = 0
     private var levelFailedSoundId: Int = 0
 
+    private var isSfxMuted = false
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,6 +96,10 @@ class GameActivity : AppCompatActivity() {
         levelId = intent.getStringExtra(EXTRA_LEVEL_ID)
         val allQuestions = loadQuestionsFromJson(levelId).shuffled()
         questions = allQuestions.take(10)
+
+        // Load mute preferences
+        val prefs = getSharedPreferences("GameSettings", Context.MODE_PRIVATE)
+        isSfxMuted = prefs.getBoolean("sfx_muted", false)
 
         // Initialize SoundPool for sound effects
         val audioAttributes = AudioAttributes.Builder()
@@ -218,9 +225,9 @@ class GameActivity : AppCompatActivity() {
                 } else {
                     // End of the quiz, play final sound
                     if (score == questions.size) {
-                        soundPool.play(levelPassedSoundId, 1f, 1f, 0, 0, 1f)
+                        playSfx(levelPassedSoundId)
                     } else {
-                        soundPool.play(levelFailedSoundId, 1f, 1f, 0, 0, 1f)
+                        playSfx(levelFailedSoundId)
                     }
 
                     // Delay to allow the sound to play before moving to the next screen
@@ -255,12 +262,12 @@ class GameActivity : AppCompatActivity() {
 
         if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
-            soundPool.play(correctSoundId, 1f, 1f, 0, 0, 1f)
+            playSfx(correctSoundId)
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(true)
         } else {
             // Mark the incorrect answer red
-            soundPool.play(wrongSoundId, 1f, 1f, 0, 0, 1f)
+            playSfx(wrongSoundId)
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.incorrect_red)
             selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
 
@@ -346,7 +353,7 @@ class GameActivity : AppCompatActivity() {
         isAnswerSubmitted = true
         totalTimeTakenInMillis += questionTimeInMillis
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
-        soundPool.play(wrongSoundId, 1f, 1f, 0, 0, 1f)
+        playSfx(wrongSoundId)
         animateFeedback(false) // Show incorrect feedback
         answerButtons[currentCorrectAnswerIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
         answerButtons.forEach {
@@ -362,6 +369,13 @@ class GameActivity : AppCompatActivity() {
             submitButton.setPadding(padding, 0, 0, 0)
         }
     }
+
+    private fun playSfx(soundId: Int) {
+        if (!isSfxMuted) {
+            soundPool.play(soundId, 1f, 1f, 0, 0, 1f)
+        }
+    }
+
     private fun resetButtonState(button: Button) {
         // Reset background tint based on the button's ID
 

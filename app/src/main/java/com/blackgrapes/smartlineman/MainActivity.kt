@@ -41,6 +41,12 @@ class MainActivity : AppCompatActivity() {
     // Background music player
     private var mediaPlayer: MediaPlayer? = null
 
+    // Mute buttons and state
+    private lateinit var muteMusicButton: ImageView
+    private lateinit var muteSfxButton: ImageView
+    private var isMusicMuted = false
+    private var isSfxMuted = false
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -117,6 +123,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         setupFabMenu()
+        setupMuteButtons()
 
         // Initialize and start background music
         mediaPlayer = MediaPlayer.create(this, R.raw.background)
@@ -127,8 +134,16 @@ class MainActivity : AppCompatActivity() {
         super.onResume()
         // Refresh the progress and UI in case it was reset in another activity
         loadProgress(false) // Don't animate on a regular resume
-        // Start or resume the music if it's not already playing
-        mediaPlayer?.takeIf { !it.isPlaying }?.start()
+
+        // Check mute state and manage music
+        val prefs = getSharedPreferences("GameSettings", Context.MODE_PRIVATE)
+        isMusicMuted = prefs.getBoolean("music_muted", false)
+        isSfxMuted = prefs.getBoolean("sfx_muted", false)
+        updateMuteButtonIcons()
+
+        if (!isMusicMuted) {
+            mediaPlayer?.takeIf { !it.isPlaying }?.start()
+        }
     }
 
     override fun onPause() {
@@ -149,6 +164,45 @@ class MainActivity : AppCompatActivity() {
         fabMain.setOnClickListener {
             val intent = Intent(this, MenuActivity::class.java)
             menuActivityResultLauncher.launch(intent)
+        }
+    }
+
+    private fun setupMuteButtons() {
+        muteMusicButton = findViewById(R.id.mute_music_button)
+        muteSfxButton = findViewById(R.id.mute_sfx_button)
+
+        muteMusicButton.setOnClickListener {
+            isMusicMuted = !isMusicMuted
+            getSharedPreferences("GameSettings", Context.MODE_PRIVATE).edit()
+                .putBoolean("music_muted", isMusicMuted)
+                .apply()
+            updateMuteButtonIcons()
+
+            if (isMusicMuted) {
+                mediaPlayer?.pause()
+            } else {
+                mediaPlayer?.start()
+            }
+        }
+
+        muteSfxButton.setOnClickListener {
+            isSfxMuted = !isSfxMuted
+            getSharedPreferences("GameSettings", Context.MODE_PRIVATE).edit()
+                .putBoolean("sfx_muted", isSfxMuted)
+                .apply()
+            updateMuteButtonIcons()
+            val message = if (isSfxMuted) "Sound effects muted" else "Sound effects unmuted"
+            Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun updateMuteButtonIcons() {
+        runOnUiThread {
+            val musicIcon = if (isMusicMuted) R.drawable.ic_music_off else R.drawable.ic_music_on
+            muteMusicButton.setImageResource(musicIcon)
+
+            val sfxIcon = if (isSfxMuted) R.drawable.ic_sfx_off else R.drawable.ic_sfx_on
+            muteSfxButton.setImageResource(sfxIcon)
         }
     }
 
