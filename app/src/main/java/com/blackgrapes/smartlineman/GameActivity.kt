@@ -8,6 +8,8 @@ import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.os.Bundle
 import android.os.CountDownTimer
+import android.os.Handler
+import android.os.Looper
 import android.widget.Button
 import android.widget.ImageView
 import android.media.AudioAttributes
@@ -73,6 +75,8 @@ class GameActivity : AppCompatActivity() {
     private lateinit var soundPool: SoundPool
     private var correctSoundId: Int = 0
     private var wrongSoundId: Int = 0
+    private var levelPassedSoundId: Int = 0
+    private var levelFailedSoundId: Int = 0
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -103,6 +107,8 @@ class GameActivity : AppCompatActivity() {
 
         correctSoundId = soundPool.load(this, R.raw.correct_answer, 1)
         wrongSoundId = soundPool.load(this, R.raw.wrong_answer, 1)
+        levelPassedSoundId = soundPool.load(this, R.raw.level_passed, 1)
+        levelFailedSoundId = soundPool.load(this, R.raw.level_failed, 1)
 
         initializeViews()
         if (questions.isNotEmpty()) {
@@ -210,15 +216,24 @@ class GameActivity : AppCompatActivity() {
                 if (currentQuestionIndex < questions.size) {
                     setupQuestion()
                 } else {
-                    // End of the quiz
-                    val scoreIntent = Intent(this, ScoreActivity::class.java).apply {
-                        putExtra(EXTRA_SCORE, score)
-                        putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
-                        putExtra(EXTRA_LEVEL, level)
-                        putExtra(EXTRA_LEVEL_ID, levelId)
-                        putExtra(EXTRA_TOTAL_TIME, totalTimeTakenInMillis)
+                    // End of the quiz, play final sound
+                    if (score == questions.size) {
+                        soundPool.play(levelPassedSoundId, 1f, 1f, 0, 0, 1f)
+                    } else {
+                        soundPool.play(levelFailedSoundId, 1f, 1f, 0, 0, 1f)
                     }
-                    scoreActivityResultLauncher.launch(scoreIntent)
+
+                    // Delay to allow the sound to play before moving to the next screen
+                    Handler(Looper.getMainLooper()).postDelayed({
+                        val scoreIntent = Intent(this, ScoreActivity::class.java).apply {
+                            putExtra(EXTRA_SCORE, score)
+                            putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
+                            putExtra(EXTRA_LEVEL, level)
+                            putExtra(EXTRA_LEVEL_ID, levelId)
+                            putExtra(EXTRA_TOTAL_TIME, totalTimeTakenInMillis)
+                        }
+                        scoreActivityResultLauncher.launch(scoreIntent)
+                    }, 1000) // 1-second delay
                 }
             }
         }

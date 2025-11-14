@@ -138,22 +138,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val gameActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-        if (result.resultCode == Activity.RESULT_OK) {
-            val levelPassed = result.data?.getIntExtra("level_passed", -1) ?: -1
-            if (levelPassed != -1 && levelPassed == currentLevel) {
-                // Level was passed, advance to the next one
-                currentLevel++
-                // Save the new currentLevel
-                saveProgress(currentLevel)
-                updateLinemanPosition(currentLevel - 1, true)
-            } else {
-                // Level was not passed, but we still need to refresh the UI to show the new score.
-                updateLevelColors()
-            }
-        } else {
-            // Even if the level wasn't passed, refresh the colors and scores
-            updateLevelColors()
-        }
+        // Regardless of the result (pass or fail), we need to reload the progress.
+        // loadProgress will determine the correct currentLevel and update the UI,
+        // including lineman position and score badges.
+        // Animate the lineman's movement if the level was passed.
+        val animate = result.resultCode == Activity.RESULT_OK
+        loadProgress(animate)
     }
 
     private fun startGame(level: Int) {
