@@ -52,6 +52,7 @@ class MainActivity : AppCompatActivity() {
     // UI Sound Effects
     private var uiSoundPool: SoundPool? = null
     private var unlockSoundId: Int = 0
+    private var lockedSoundId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -120,6 +121,8 @@ class MainActivity : AppCompatActivity() {
                     if (levelToStart <= currentLevel) {
                         startGame(levelToStart)
                     } else {
+                        // Play the "locked" sound effect
+                        if (!isSfxMuted) uiSoundPool?.play(lockedSoundId, 1f, 1f, 0, 0, 1f)
                         // Optionally, you can show a message that the level is locked
                         Toast.makeText(this, "Complete previous levels to unlock!", Toast.LENGTH_SHORT).show()
                     }
@@ -142,11 +145,12 @@ class MainActivity : AppCompatActivity() {
             .build()
 
         uiSoundPool = SoundPool.Builder()
-            .setMaxStreams(1)
+            .setMaxStreams(2) // Increased to 2 to allow for overlapping UI sounds if needed
             .setAudioAttributes(audioAttributes)
             .build()
 
         unlockSoundId = uiSoundPool!!.load(this, R.raw.unlock, 1)
+        lockedSoundId = uiSoundPool!!.load(this, R.raw.locked, 1)
     }
 
     override fun onResume() {
