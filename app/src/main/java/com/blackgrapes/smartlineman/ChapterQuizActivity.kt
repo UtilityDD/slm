@@ -10,6 +10,9 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.ImageView
+import android.media.AudioAttributes
+import android.media.SoundPool
+import android.content.Context
 import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
@@ -55,6 +58,12 @@ class ChapterQuizActivity : AppCompatActivity() {
     // Use a different color for the chapter quiz timer
     private val timerWarningDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background_warning_cyan) }
 
+    // Sound effects
+    private lateinit var soundPool: SoundPool
+    private var buttonTapSoundId: Int = 0
+    private var isSfxMuted = false
+
+
     private val chapterScoreResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         // When ChapterScoreActivity finishes, pass its result back to ChapterDetailActivity.
         setResult(result.resultCode)
@@ -85,6 +94,24 @@ class ChapterQuizActivity : AppCompatActivity() {
 
         val allQuestions = loadQuestionsFromJson(levelId!!).shuffled()
         questions = allQuestions.take(10)
+
+        // Load mute preferences
+        val prefs = getSharedPreferences("GameSettings", Context.MODE_PRIVATE)
+        isSfxMuted = prefs.getBoolean("sfx_muted", false)
+
+        // Initialize SoundPool for sound effects
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(2)
+            .setAudioAttributes(audioAttributes)
+            .build()
+
+        buttonTapSoundId = soundPool.load(this, R.raw.button_tap, 1)
+
 
         initializeViews()
         if (questions.isNotEmpty()) {
@@ -180,6 +207,8 @@ class ChapterQuizActivity : AppCompatActivity() {
 
     private fun handleAnswerSelection(index: Int) {
         if (isAnswerSubmitted) return
+
+        playSfx(buttonTapSoundId)
 
         countDownTimer?.cancel()
         isAnswerSubmitted = true
@@ -280,6 +309,12 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     // region Animations and UI Helpers
+    private fun playSfx(soundId: Int) {
+        if (!isSfxMuted) {
+            soundPool.play(soundId, 1f, 1f, 0, 0, 1f)
+        }
+    }
+
     private fun animateQuestionIn() {
         questionCard.translationY = -300f
         questionCard.animate().translationY(0f).setInterpolator(android.view.animation.OvershootInterpolator(1.2f)).setDuration(600).start()
@@ -324,6 +359,7 @@ class ChapterQuizActivity : AppCompatActivity() {
 
     override fun onDestroy() {
         super.onDestroy()
+        soundPool.release()
         countDownTimer?.cancel()
     }
     // endregion
