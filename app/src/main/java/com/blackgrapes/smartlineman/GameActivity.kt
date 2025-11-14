@@ -10,6 +10,8 @@ import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
 import android.widget.ImageView
+import android.media.AudioAttributes
+import android.media.SoundPool
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.activity.result.contract.ActivityResultContracts
@@ -67,6 +69,11 @@ class GameActivity : AppCompatActivity() {
     private val timerProgressDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background) }
     private val timerWarningDrawable by lazy { ContextCompat.getDrawable(this, R.drawable.timer_progress_background_warning) }
 
+    // Sound effects
+    private lateinit var soundPool: SoundPool
+    private var correctSoundId: Int = 0
+    private var wrongSoundId: Int = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +89,20 @@ class GameActivity : AppCompatActivity() {
         levelId = intent.getStringExtra(EXTRA_LEVEL_ID)
         val allQuestions = loadQuestionsFromJson(levelId).shuffled()
         questions = allQuestions.take(10)
+
+        // Initialize SoundPool for sound effects
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+
+        soundPool = SoundPool.Builder()
+            .setMaxStreams(2)
+            .setAudioAttributes(audioAttributes)
+            .build()
+
+        correctSoundId = soundPool.load(this, R.raw.correct_answer, 1)
+        wrongSoundId = soundPool.load(this, R.raw.wrong_answer, 1)
 
         initializeViews()
         if (questions.isNotEmpty()) {
@@ -219,10 +240,12 @@ class GameActivity : AppCompatActivity() {
 
         if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
+            soundPool.play(correctSoundId, 1f, 1f, 0, 0, 1f)
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(true)
         } else {
             // Mark the incorrect answer red
+            soundPool.play(wrongSoundId, 1f, 1f, 0, 0, 1f)
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.incorrect_red)
             selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
 
@@ -308,6 +331,7 @@ class GameActivity : AppCompatActivity() {
         isAnswerSubmitted = true
         totalTimeTakenInMillis += questionTimeInMillis
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
+        soundPool.play(wrongSoundId, 1f, 1f, 0, 0, 1f)
         animateFeedback(false) // Show incorrect feedback
         answerButtons[currentCorrectAnswerIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
         answerButtons.forEach {
@@ -335,6 +359,7 @@ class GameActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         // Cancel the timer to prevent memory leaks
+        soundPool.release()
         countDownTimer?.cancel()
     }
 
