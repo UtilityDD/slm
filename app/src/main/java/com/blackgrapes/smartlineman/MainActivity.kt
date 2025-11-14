@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Intent
 import android.animation.Animator
 import android.animation.ObjectAnimator
+import android.media.AudioAttributes
 import android.media.MediaPlayer
 import android.os.Build
 import android.text.Html
@@ -21,6 +22,7 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.content.Context
+import android.media.SoundPool
 import android.widget.ImageView
 import android.widget.Toast
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -46,6 +48,10 @@ class MainActivity : AppCompatActivity() {
     private lateinit var muteSfxButton: ImageView
     private var isMusicMuted = false
     private var isSfxMuted = false
+
+    // UI Sound Effects
+    private var uiSoundPool: SoundPool? = null
+    private var unlockSoundId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -128,6 +134,19 @@ class MainActivity : AppCompatActivity() {
         // Initialize and start background music
         mediaPlayer = MediaPlayer.create(this, R.raw.background)
         mediaPlayer?.isLooping = true
+
+        // Initialize SoundPool for UI sound effects
+        val audioAttributes = AudioAttributes.Builder()
+            .setUsage(AudioAttributes.USAGE_GAME)
+            .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+            .build()
+
+        uiSoundPool = SoundPool.Builder()
+            .setMaxStreams(1)
+            .setAudioAttributes(audioAttributes)
+            .build()
+
+        unlockSoundId = uiSoundPool!!.load(this, R.raw.unlock, 1)
     }
 
     override fun onResume() {
@@ -341,6 +360,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadProgress(animate: Boolean) {
         val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
+        val previousLevel = currentLevel
         var highestLevelCompleted = 0
         // A level is only considered "completed" if a perfect score was achieved.
         for (i in 1..100) { // Check up to 100 levels
@@ -353,6 +373,11 @@ class MainActivity : AppCompatActivity() {
             }
         }
         currentLevel = highestLevelCompleted + 1
+
+        if (currentLevel > previousLevel && previousLevel > 0) { // Play sound if a level was unlocked
+            if (!isSfxMuted) uiSoundPool?.play(unlockSoundId, 0.8f, 0.8f, 0, 0, 1f)
+        }
+
         updateLinemanPosition(highestLevelCompleted, animate) // Position based on the highest level completed
     }
 
@@ -369,5 +394,7 @@ class MainActivity : AppCompatActivity() {
         mediaPlayer?.stop()
         mediaPlayer?.release()
         mediaPlayer = null
+        uiSoundPool?.release()
+        uiSoundPool = null
     }
 }
