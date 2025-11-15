@@ -15,22 +15,23 @@ object LevelManager {
     fun initialize(context: Context) {
         if (isInitialized) return
 
-        // Assuming badge files are named B1.json, B2.json, etc.
-        for (i in 1..10) { // Check for up to 10 badge files
-            val fileName = "B$i.json"
-            try {
-                val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
-                val jsonObject = org.json.JSONObject(jsonString)
-                val badgeId = jsonObject.getString("badge_id")
-                val levelsArray = jsonObject.getJSONArray("levels")
-                badgeInfos.add(BadgeInfo(badgeId, levelsArray.length()))
-            } catch (e: IOException) {
-                // This is expected when we run out of badge files to find (e.g., B7.json doesn't exist)
-                break // Stop looking for more files
-            } catch (e: JSONException) {
-                Log.e("LevelManager", "Error parsing $fileName", e)
-                break
+        try {
+            // Dynamically find all badge files (B1.json, B2.json, etc.)
+            val badgeFiles = context.assets.list("")?.filter { it.matches(Regex("B\\d+\\.json")) }?.sorted()
+
+            badgeFiles?.forEach { fileName ->
+                try {
+                    val jsonString = context.assets.open(fileName).bufferedReader().use { it.readText() }
+                    val jsonObject = org.json.JSONObject(jsonString)
+                    val badgeId = jsonObject.getString("badge_id")
+                    val levelsArray = jsonObject.getJSONArray("levels")
+                    badgeInfos.add(BadgeInfo(badgeId, levelsArray.length()))
+                } catch (e: JSONException) {
+                    Log.e("LevelManager", "Error parsing $fileName", e)
+                }
             }
+        } catch (e: IOException) {
+            Log.e("LevelManager", "Error reading badge files from assets", e)
         }
         isInitialized = true
     }
@@ -46,10 +47,8 @@ object LevelManager {
             cumulativeLevels += badgeInfo.levelCount
         }
 
-        // Fallback for levels beyond the defined badges (or if initialization failed)
+        // Fallback for levels beyond the defined badges. This should ideally not be reached if all levels are covered by B*.json files.
         Log.w("LevelManager", "Level $level is outside the range of defined badges. Using fallback calculation.")
-        val majorLevel = ((level - 1) / 10) + 1
-        val minorLevel = ((level - 1) % 10) + 1
-        return "$majorLevel.$minorLevel"
+        return "?.?"
     }
 }
