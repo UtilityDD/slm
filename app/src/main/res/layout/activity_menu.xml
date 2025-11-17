@@ -8,117 +8,113 @@
     android:background="@drawable/game_background_gradient"
     tools:context=".MenuActivity">
 
-    <GridLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:columnCount="2"
-        android:padding="16dp">
+        android:layout_height="match_parent"
+        android:clipToPadding="false"
+        android:paddingVertical="16dp">
 
-        <!-- Resources Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_resources"
-            style="@style/Widget.App.MenuCard">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingHorizontal="16dp">
 
-            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
+            <!-- Resources Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_resources"
+                style="@style/Widget.App.MenuCard.FullWidth">
 
-                <ImageView
-                    style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_resources" />
+                <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
+                    <ImageView
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
+                        android:src="@drawable/ic_resources" />
+                    <TextView
+                        style="@style/Widget.App.MenuCard.TextView.Horizontal"
+                        android:text="Resources" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    style="@style/Widget.App.MenuCard.TextView"
-                    android:text="Resources" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <!-- Market Place Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_market_place"
+                style="@style/Widget.App.MenuCard.FullWidth">
 
-        <!-- Market Place Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_market_place"
-            style="@style/Widget.App.MenuCard">
+                <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
+                    <ImageView
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
+                        android:src="@drawable/marketplace"
+                        android:scaleType="centerCrop"/>
+                    <TextView
+                        style="@style/Widget.App.MenuCard.TextView.Horizontal"
+                        android:text="Market Place" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
+            <!-- Update Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_update"
+                style="@style/Widget.App.MenuCard.FullWidth">
 
-                <ImageView
-                    style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/marketplace" />
+                <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
+                    <ImageView
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
+                        android:src="@drawable/ic_update" />
+                    <TextView
+                        style="@style/Widget.App.MenuCard.TextView.Horizontal"
+                        android:text="Update" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    style="@style/Widget.App.MenuCard.TextView"
-                    android:text="Market Place" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <!-- Notice Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_notice"
+                style="@style/Widget.App.MenuCard.FullWidth">
 
-        <!-- Update Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_update"
-            style="@style/Widget.App.MenuCard">
+                <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
+                    <ImageView
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
+                        android:src="@drawable/ic_notice" />
+                    <TextView
+                        style="@style/Widget.App.MenuCard.TextView.Horizontal"
+                        android:text="Notice" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
+            <!-- Help Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_help"
+                style="@style/Widget.App.MenuCard.FullWidth">
 
-                <ImageView
-                    style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_update" />
+                <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
+                    <ImageView
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
+                        android:src="@drawable/ic_help" />
+                    <TextView
+                        style="@style/Widget.App.MenuCard.TextView.Horizontal"
+                        android:text="Help" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-                <TextView
-                    style="@style/Widget.App.MenuCard.TextView"
-                    android:text="Update" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
+            <!-- Reset Progress Card -->
+            <com.google.android.material.card.MaterialCardView
+                android:id="@+id/card_reset_progress"
+                style="@style/Widget.App.MenuCard.FullWidth">
 
-        <!-- Notice Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_notice"
-            style="@style/Widget.App.MenuCard">
+                <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
+                    <com.airbnb.lottie.LottieAnimationView
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
+                        app:lottie_rawRes="@raw/reset"
+                        app:lottie_autoPlay="true"
+                        app:lottie_loop="true" />
+                    <TextView
+                        style="@style/Widget.App.MenuCard.TextView.Horizontal"
+                        android:text="Reset Progress" />
+                </LinearLayout>
+            </com.google.android.material.card.MaterialCardView>
 
-            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
+        </LinearLayout>
 
-                <ImageView
-                    style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_notice" />
-
-                <TextView
-                    style="@style/Widget.App.MenuCard.TextView"
-                    android:text="Notice" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Help Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_help"
-            style="@style/Widget.App.MenuCard">
-
-            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
-
-                <ImageView
-                    style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_help" />
-
-                <TextView
-                    style="@style/Widget.App.MenuCard.TextView"
-                    android:text="Help" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-        <!-- Reset Progress Card -->
-        <com.google.android.material.card.MaterialCardView
-            android:id="@+id/card_reset_progress"
-            style="@style/Widget.App.MenuCard">
-
-            <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout">
-
-                <com.airbnb.lottie.LottieAnimationView
-                    style="@style/Widget.App.MenuCard.ImageView"
-                    app:lottie_rawRes="@raw/reset"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true" />
-
-                <TextView
-                    style="@style/Widget.App.MenuCard.TextView"
-                    android:text="Reset Progress" />
-            </LinearLayout>
-        </com.google.android.material.card.MaterialCardView>
-
-    </GridLayout>
+    </ScrollView>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
