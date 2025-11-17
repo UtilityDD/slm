@@ -28,7 +28,7 @@
                 <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
                     <ImageView
                         style="@style/Widget.App.MenuCard.ImageView.Horizontal"
-                        android:src="@drawable/ic_resources" />
+                        android:src="@drawable/ic_menu_book" />
                     <TextView
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
                         android:text="Resources" />
@@ -43,8 +43,7 @@
                 <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
                     <ImageView
                         style="@style/Widget.App.MenuCard.ImageView.Horizontal"
-                        android:src="@drawable/marketplace"
-                        android:scaleType="centerCrop"/>
+                        android:src="@drawable/ic_store" />
                     <TextView
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
                         android:text="Market Place" />
@@ -59,7 +58,7 @@
                 <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
                     <ImageView
                         style="@style/Widget.App.MenuCard.ImageView.Horizontal"
-                        android:src="@drawable/ic_update" />
+                        android:src="@drawable/ic_system_update" />
                     <TextView
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
                         android:text="Update" />
@@ -74,7 +73,7 @@
                 <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
                     <ImageView
                         style="@style/Widget.App.MenuCard.ImageView.Horizontal"
-                        android:src="@drawable/ic_notice" />
+                        android:src="@drawable/ic_notifications" />
                     <TextView
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
                         android:text="Notice" />
@@ -89,7 +88,7 @@
                 <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
                     <ImageView
                         style="@style/Widget.App.MenuCard.ImageView.Horizontal"
-                        android:src="@drawable/ic_help" />
+                        android:src="@drawable/ic_help_outline" />
                     <TextView
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
                         android:text="Help" />
@@ -103,10 +102,8 @@
 
                 <LinearLayout style="@style/Widget.App.MenuCard.LinearLayout.Horizontal">
                     <com.airbnb.lottie.LottieAnimationView
-                        style="@style/Widget.App.MenuCard.ImageView.Horizontal"
-                        app:lottie_rawRes="@raw/reset"
-                        app:lottie_autoPlay="true"
-                        app:lottie_loop="true" />
+                        android:id="@+id/reset_icon"
+                        style="@style/Widget.App.MenuCard.ImageView.Horizontal" />
                     <TextView
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
                         android:text="Reset Progress" />
