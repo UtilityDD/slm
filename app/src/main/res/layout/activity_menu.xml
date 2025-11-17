@@ -24,8 +24,7 @@
 
                 <ImageView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_resources"
-                    app:tint="?attr/colorPrimary" />
+                    android:src="@drawable/ic_resources" />
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
@@ -42,8 +41,7 @@
 
                 <ImageView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/marketplace"
-                    app:tint="?attr/colorPrimary" />
+                    android:src="@drawable/marketplace" />
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
@@ -60,8 +58,7 @@
 
                 <ImageView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_update"
-                    app:tint="?attr/colorPrimary" />
+                    android:src="@drawable/ic_update" />
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
@@ -78,8 +75,7 @@
 
                 <ImageView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_notice"
-                    app:tint="?attr/colorPrimary" />
+                    android:src="@drawable/ic_notice" />
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
@@ -96,8 +92,7 @@
 
                 <ImageView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_help"
-                    app:tint="?attr/colorPrimary" />
+                    android:src="@drawable/ic_help" />
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
@@ -116,8 +111,7 @@
                     style="@style/Widget.App.MenuCard.ImageView"
                     app:lottie_rawRes="@raw/reset"
                     app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_colorFilter="@color/white"/>
+                    app:lottie_loop="true" />
 
                 <TextView
                     style="@style/Widget.App.MenuCard.TextView"
