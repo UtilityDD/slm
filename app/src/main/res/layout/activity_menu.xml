@@ -42,7 +42,7 @@
 
                 <ImageView
                     style="@style/Widget.App.MenuCard.ImageView"
-                    android:src="@drawable/ic_market_place"
+                    android:src="@drawable/marketplace"
                     app:tint="?attr/colorPrimary" />
 
                 <TextView
