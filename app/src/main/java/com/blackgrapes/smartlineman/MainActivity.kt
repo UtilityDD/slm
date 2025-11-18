@@ -159,6 +159,8 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        // Ensure level buttons are positioned before updating progress/lineman
+        positionLevelButtons()
         // Refresh the progress and UI in case it was reset in another activity
         loadProgress(false) // Don't animate on a regular resume
 
@@ -239,6 +241,8 @@ class MainActivity : AppCompatActivity() {
         // including lineman position and score badges.
         // Animate the lineman's movement if the level was passed.
         val animate = result.resultCode == Activity.RESULT_OK
+        // Reposition buttons first to ensure level button coordinates are valid
+        positionLevelButtons()
         loadProgress(animate)
     }
 
