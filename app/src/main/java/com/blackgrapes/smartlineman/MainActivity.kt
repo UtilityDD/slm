@@ -95,6 +95,8 @@ class MainActivity : AppCompatActivity() {
 
         mainView.post {
             loadProgress(false)
+            // Ensure level buttons are positioned after the ladder image is laid out.
+            positionLevelButtons()
         }
 
         // Add a scroll listener to implement the elastic snap-back effect
@@ -382,6 +384,80 @@ class MainActivity : AppCompatActivity() {
                         i < currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_completed_background)
                         i == currentLevel -> levelButton.setBackgroundResource(R.drawable.level_marker_active_background)
                         else -> levelButton.setBackgroundResource(R.drawable.level_marker_disabled_background)
+                    }
+                }
+            }
+        }
+    }
+
+    /**
+     * Position level buttons programmatically so they are evenly spaced along the ladder
+     * and alternate left/right. This avoids relying on many hard-coded ConstraintLayout
+     * vertical_bias values which can cause overlap or out-of-range placements.
+     */
+    private fun positionLevelButtons() {
+        val ladder = findViewById<View>(R.id.ladder_image)
+        // Wait until ladder is measured and laid out
+        ladder.post {
+            val ladderX = ladder.x
+            val ladderY = ladder.y
+            val ladderWidth = ladder.width.toFloat()
+            val ladderHeight = ladder.height.toFloat()
+
+            // Number of logical levels to position. Use 100 to match other logic.
+            val totalLevels = 100f
+
+            // Reserve space above the ground base so level 1 appears above ground
+            val groundBase = findViewById<View>(R.id.ground_base)
+            val groundReserve = if (groundBase != null) groundBase.height.toFloat() else (80f * resources.displayMetrics.density)
+            val extraMarginDp = 20f
+            val extraMarginPx = extraMarginDp * resources.displayMetrics.density
+            val bottomReserve = groundReserve + extraMarginPx
+
+            for (i in 1..100) {
+                val levelId = resources.getIdentifier("level_${i}_button", "id", packageName)
+                if (levelId != 0) {
+                    val btn = findViewById<View>(levelId)
+                    btn?.let {
+                        // fraction 0 -> bottom, 1 -> top
+                        val fraction = ((i - 1).toFloat() / (totalLevels - 1f)).coerceIn(0f, 1f)
+
+                        // Y: place along ladder from bottom -> top, but keep bottomReserve free
+                        val usableHeight = (ladderHeight - bottomReserve).coerceAtLeast(1f)
+                        val y = ladderY + (usableHeight * (1f - fraction)) - (it.height / 2f)
+
+                        // X: alternate left/right using consistent horizontal bias
+                        val horizontalBias = if (i % 2 == 1) 0.15f else 0.85f
+                        val x = ladderX + (ladderWidth - it.width) * horizontalBias
+
+                        it.x = x
+                        it.y = y
+
+                        // Position any score badge (static or dynamic) centered above this level button
+                        // 1) static score TextView if present in layout
+                        val staticScoreId = resources.getIdentifier("level_${i}_score_text", "id", packageName)
+                        val staticScoreView = if (staticScoreId != 0) findViewById<View>(staticScoreId) as? TextView else null
+                        if (staticScoreView != null) {
+                            staticScoreView.post {
+                                val badgeX = x + (it.width - staticScoreView.width) / 2f
+                                val badgeY = y - staticScoreView.height - (8f * resources.displayMetrics.density)
+                                staticScoreView.x = badgeX
+                                staticScoreView.y = badgeY
+                            }
+                        }
+
+                        // 2) dynamic badge if previously created by updateLevelColors
+                        val dynamicTag = "dynamic_score_badge_$i"
+                        val parent = it.parent as? ViewGroup
+                        val dynamicBadge = parent?.findViewWithTag(dynamicTag) as? TextView
+                        if (dynamicBadge != null) {
+                            dynamicBadge.post {
+                                val badgeX = x + (it.width - dynamicBadge.width) / 2f
+                                val badgeY = y - dynamicBadge.height - (8f * resources.displayMetrics.density)
+                                dynamicBadge.x = badgeX
+                                dynamicBadge.y = badgeY
+                            }
+                        }
                     }
                 }
             }
