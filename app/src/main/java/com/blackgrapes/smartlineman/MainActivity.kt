@@ -22,6 +22,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
 import android.widget.TextView
 import android.content.Context
+import android.graphics.Typeface
+import android.view.ViewGroup
 import android.media.SoundPool
 import android.widget.ImageView
 import android.widget.Toast
@@ -321,8 +323,40 @@ class MainActivity : AppCompatActivity() {
             val levelId = resources.getIdentifier("level_${i}_button", "id", packageName)
             if (levelId != 0) {
                 findViewById<View>(levelId)?.let { levelButton ->
-                    val scoreTextViewId = resources.getIdentifier("level_${i}_score_text", "id", packageName)
-                    val scoreTextView = if (scoreTextViewId != 0) findViewById<TextView>(scoreTextViewId) else null
+                        val scoreTextViewId = resources.getIdentifier("level_${i}_score_text", "id", packageName)
+                        var scoreTextView: TextView? = if (scoreTextViewId != 0) findViewById<TextView>(scoreTextViewId) else null
+
+                        // Many level score TextViews are missing in layout after level 7.
+                        // If there is no static `level_X_score_text` TextView, create a simple
+                        // dynamic badge and position it above the level button so the badge
+                        // appears consistently for all levels.
+                        if (scoreTextView == null) {
+                            val dynamicTag = "dynamic_score_badge_$i"
+                            val parent = levelButton.parent as? ViewGroup
+                            scoreTextView = parent?.findViewWithTag(dynamicTag) as? TextView
+                            if (scoreTextView == null && parent != null) {
+                                val newBadge = TextView(this).apply {
+                                    tag = dynamicTag
+                                    id = View.generateViewId()
+                                    setBackgroundResource(R.drawable.score_badge_background)
+                                    setTextColor(resources.getColor(R.color.golden_light))
+                                    textSize = 14f
+                                    setTypeface(null, Typeface.BOLD)
+                                    visibility = View.GONE
+                                    setPadding(8, 4, 8, 4)
+                                }
+                                parent.addView(newBadge)
+                                scoreTextView = newBadge
+
+                                // Position the dynamically created badge after layout pass
+                                newBadge.post {
+                                    val x = levelButton.x + (levelButton.width - newBadge.width) / 2f
+                                    val y = levelButton.y - newBadge.height - 8f
+                                    newBadge.x = x
+                                    newBadge.y = y
+                                }
+                            }
+                        }
 
                     val sharedPref = getSharedPreferences("GameProgress", Context.MODE_PRIVATE)
                     val highScore = sharedPref.getInt("high_score_level_$i", -1)
