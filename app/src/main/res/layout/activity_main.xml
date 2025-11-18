@@ -89,6 +89,7 @@
                 android:layout_height="10000dp"
                 android:src="@drawable/ladder_vector"
                 android:scaleType="fitXY"
+                android:layout_marginTop="50dp"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
