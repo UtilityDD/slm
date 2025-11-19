@@ -137,7 +137,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_menu_book"
+                        android:src="@drawable/ic_resources"
                         android:tint="#1976D2" />
                         
                 </com.google.android.material.card.MaterialCardView>
@@ -527,7 +527,7 @@
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_reset"
+                        android:src="@drawable/ic_update"
                         android:tint="#0097A7" />
                         
                 </com.google.android.material.card.MaterialCardView>
