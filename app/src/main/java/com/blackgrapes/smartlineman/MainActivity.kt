@@ -3,6 +3,7 @@ package com.blackgrapes.smartlineman
 import android.app.Activity
 import android.content.Intent
 import android.animation.Animator
+import android.animation.AnimatorSet
 import android.animation.ObjectAnimator
 import android.media.AudioAttributes
 import android.media.MediaPlayer
@@ -12,6 +13,7 @@ import android.os.Bundle
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
+import android.view.animation.AccelerateDecelerateInterpolator
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
@@ -307,14 +309,52 @@ class MainActivity : AppCompatActivity() {
                     }
 
                     if (animate) {
-                        val distance = Math.abs(linemanCharacter.y - linemanTargetY)
-                        // Slower speed: 500ms per 100 pixels, with a min of 1.5s and max of 5s
-                        val duration = (distance / 100 * 500).toLong().coerceIn(1500, 5000)
-                        linemanCharacter.animate()
-                            .y(linemanTargetY)
-                            .setDuration(duration)
-                            .withEndAction { scrollView.smoothScrollTo(0, targetScrollY) }
-                            .start()
+                        // Enhanced Animation: Jump and Bounce
+                        val startY = linemanCharacter.y
+                        val distance = Math.abs(startY - linemanTargetY)
+
+                        // Set pivot to bottom center for realistic squash/stretch
+                        linemanCharacter.pivotX = linemanCharacter.width / 2f
+                        linemanCharacter.pivotY = linemanCharacter.height.toFloat()
+
+                        val animatorSet = AnimatorSet()
+
+                        // 1. Crouch (Anticipation)
+                        val crouchScaleX = ObjectAnimator.ofFloat(linemanCharacter, "scaleX", 1.0f, 1.15f).setDuration(150)
+                        val crouchScaleY = ObjectAnimator.ofFloat(linemanCharacter, "scaleY", 1.0f, 0.85f).setDuration(150)
+                        val crouchSet = AnimatorSet().apply { playTogether(crouchScaleX, crouchScaleY) }
+
+                        // 2. Jump (Move + Stretch)
+                        // Move faster than before to simulate a jump
+                        val jumpDuration = (distance / 100 * 200).toLong().coerceIn(400, 1000)
+                        val moveY = ObjectAnimator.ofFloat(linemanCharacter, "y", startY, linemanTargetY).setDuration(jumpDuration)
+                        moveY.interpolator = AccelerateDecelerateInterpolator()
+
+                        val stretchScaleX = ObjectAnimator.ofFloat(linemanCharacter, "scaleX", 1.15f, 0.9f).setDuration(jumpDuration)
+                        val stretchScaleY = ObjectAnimator.ofFloat(linemanCharacter, "scaleY", 0.85f, 1.1f).setDuration(jumpDuration)
+                        
+                        val jumpSet = AnimatorSet().apply {
+                            playTogether(moveY, stretchScaleX, stretchScaleY)
+                        }
+
+                        // 3. Land (Squash)
+                        val landScaleX = ObjectAnimator.ofFloat(linemanCharacter, "scaleX", 0.9f, 1.15f).setDuration(100)
+                        val landScaleY = ObjectAnimator.ofFloat(linemanCharacter, "scaleY", 1.1f, 0.85f).setDuration(100)
+                        val landSet = AnimatorSet().apply { playTogether(landScaleX, landScaleY) }
+
+                        // 4. Recover (Back to normal)
+                        val recoverScaleX = ObjectAnimator.ofFloat(linemanCharacter, "scaleX", 1.15f, 1.0f).setDuration(150)
+                        val recoverScaleY = ObjectAnimator.ofFloat(linemanCharacter, "scaleY", 0.85f, 1.0f).setDuration(150)
+                        val recoverSet = AnimatorSet().apply { playTogether(recoverScaleX, recoverScaleY) }
+
+                        animatorSet.playSequentially(crouchSet, jumpSet, landSet, recoverSet)
+                        animatorSet.addListener(object : android.animation.AnimatorListenerAdapter() {
+                            override fun onAnimationEnd(animation: Animator) {
+                                scrollView.smoothScrollTo(0, targetScrollY)
+                            }
+                        })
+                        animatorSet.start()
+
                     } else {
                         linemanCharacter.y = linemanTargetY
                         scrollView.post { scrollView.scrollTo(0, targetScrollY) }
