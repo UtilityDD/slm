@@ -43,8 +43,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_menu_book"
-                            app:tint="@color/white"/>
+                            android:src="@drawable/ic_menu_book" />
                     </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="0dp"
@@ -82,8 +81,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_store"
-                            app:tint="@color/white"/>
+                            android:src="@drawable/ic_store" />
                     </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="0dp"
@@ -121,8 +119,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_system_update"
-                            app:tint="@color/white"/>
+                            android:src="@drawable/ic_system_update" />
                     </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="0dp"
@@ -160,8 +157,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_notifications"
-                            app:tint="@color/white"/>
+                            android:src="@drawable/ic_notifications" />
                     </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="0dp"
@@ -199,8 +195,7 @@
                             android:layout_width="32dp"
                             android:layout_height="32dp"
                             android:layout_gravity="center"
-                            android:src="@drawable/ic_help_outline"
-                            app:tint="@color/white"/>
+                            android:src="@drawable/ic_help_outline" />
                     </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="0dp"
