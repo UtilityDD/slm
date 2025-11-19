@@ -24,7 +24,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_resources"
                 style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#E8EAF6">
+                app:cardBackgroundColor="#BBDEFB">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -63,7 +63,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_market_place"
                 style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#E3F2FD">
+                app:cardBackgroundColor="#C8E6C9">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,7 +102,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_update"
                 style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#E0F2F1">
+                app:cardBackgroundColor="#FFECB3">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -141,7 +141,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_notice"
                 style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#FCE4EC">
+                app:cardBackgroundColor="#FFCDD2">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -180,7 +180,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_help"
                 style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#F9FBE7">
+                app:cardBackgroundColor="#D1C4E9">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -219,7 +219,7 @@
             <com.google.android.material.card.MaterialCardView
                 android:id="@+id/card_reset_progress"
                 style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#FFF3E0">
+                app:cardBackgroundColor="#B2EBF2">
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
