@@ -28,30 +28,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/icon_background_resources"
+                    android:padding="24dp">
+                    <ImageView
+                        android:id="@+id/icon_resources"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="4dp"
+                        android:src="@drawable/ic_menu_book"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_menu_book" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintBottom_toBottomOf="parent" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Resources"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/icon_background_resources"
+                        app:layout_constraintStart_toEndOf="@id/icon_resources"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -66,30 +57,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/icon_background_market"
+                    android:padding="24dp">
+                    <ImageView
+                        android:id="@+id/icon_market"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="4dp"
+                        android:src="@drawable/ic_store"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_store" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintBottom_toBottomOf="parent" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Market Place"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/icon_background_market"
+                        app:layout_constraintStart_toEndOf="@id/icon_market"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -104,30 +86,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/icon_background_update"
+                    android:padding="24dp">
+                    <ImageView
+                        android:id="@+id/icon_update"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="4dp"
+                        android:src="@drawable/ic_system_update"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_system_update" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintBottom_toBottomOf="parent" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Update"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/icon_background_update"
+                        app:layout_constraintStart_toEndOf="@id/icon_update"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -142,30 +115,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/icon_background_notice"
+                    android:padding="24dp">
+                    <ImageView
+                        android:id="@+id/icon_notice"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="4dp"
+                        android:src="@drawable/ic_notifications"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_notifications" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintBottom_toBottomOf="parent" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Notice"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/icon_background_notice"
+                        app:layout_constraintStart_toEndOf="@id/icon_notice"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -180,30 +144,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/icon_background_help"
+                    android:padding="24dp">
+                    <ImageView
+                        android:id="@+id/icon_help"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="4dp"
+                        android:src="@drawable/ic_help_outline"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                        <ImageView
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_help_outline" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintBottom_toBottomOf="parent" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Help"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/icon_background_help"
+                        app:layout_constraintStart_toEndOf="@id/icon_help"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
@@ -218,31 +173,21 @@
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:padding="16dp">
-                    <com.google.android.material.card.MaterialCardView
-                        android:id="@+id/icon_background_reset"
+                    android:padding="24dp">
+                    <ImageView
+                        android:id="@+id/icon_reset"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="40dp"
-                        app:cardElevation="4dp"
+                        android:src="@drawable/ic_reset"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent">
-                        <ImageView
-                            android:id="@+id/reset_icon"
-                            android:layout_width="48dp"
-                            android:layout_height="48dp"
-                            android:layout_gravity="center"
-                            android:src="@drawable/ic_reset" />
-                    </com.google.android.material.card.MaterialCardView>
+                        app:layout_constraintBottom_toBottomOf="parent" />
                     <TextView
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:text="Reset Progress"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        android:layout_marginStart="16dp"
-                        app:layout_constraintStart_toEndOf="@id/icon_background_reset"
+                        app:layout_constraintStart_toEndOf="@id/icon_reset"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent"/>
