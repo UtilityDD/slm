@@ -229,11 +229,12 @@
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
-                        <com.airbnb.lottie.LottieAnimationView
+                        <ImageView
                             android:id="@+id/reset_icon"
                             android:layout_width="32dp"
                             android:layout_height="32dp"
-                            android:layout_gravity="center"/>
+                            android:layout_gravity="center"
+                            android:src="@drawable/ic_reset" />
                     </com.google.android.material.card.MaterialCardView>
                     <TextView
                         android:layout_width="0dp"
