@@ -19,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.NestedScrollView
 import androidx.core.view.ViewCompat
+import androidx.core.app.ActivityOptionsCompat
 import android.util.DisplayMetrics
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsCompat
@@ -194,7 +195,14 @@ class MainActivity : AppCompatActivity() {
 
         fabMain.setOnClickListener {
             val intent = Intent(this, MenuActivity::class.java)
-            menuActivityResultLauncher.launch(intent)
+            val options = ActivityOptionsCompat.makeScaleUpAnimation(
+                fabMain,
+                0,
+                0,
+                fabMain.width,
+                fabMain.height
+            )
+            menuActivityResultLauncher.launch(intent, options)
         }
     }
 
