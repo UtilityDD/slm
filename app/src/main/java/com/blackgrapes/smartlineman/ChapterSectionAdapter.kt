@@ -2,7 +2,6 @@ package com.blackgrapes.smartlineman
 
 import android.content.Intent
 import android.graphics.BitmapFactory
-import android.text.method.LinkMovementMethod
 import android.view.LayoutInflater
 import android.net.Uri
 import android.view.View
@@ -47,7 +46,6 @@ class ChapterSectionAdapter(
         private val captionTextView: TextView = itemView.findViewById(R.id.section_image_caption)
         private val cardView: CardView = itemView as CardView
         private val imageContainer: View = itemView.findViewById(R.id.image_container)
-        private val divider: View = itemView.findViewById(R.id.section_divider)
         private val linkButton: View = itemView.findViewById(R.id.section_link_button)
         private val chapterNumberBadge: TextView = itemView.findViewById(R.id.chapter_number_badge)
 
@@ -69,10 +67,9 @@ class ChapterSectionAdapter(
                 chapterNumberBadge.visibility = View.GONE
             }
 
-            // Only show content and divider if there is summary text
+            // Only show content if there is summary text
             if (section.summary.isNotBlank()) {
                 contentTextView.visibility = View.VISIBLE
-                divider.visibility = View.VISIBLE
                 markwon.setMarkdown(contentTextView, section.summary)
                 // Ensure the text view itself isn't clickable, so the card's listener is used.
                 contentTextView.setOnClickListener(null)
@@ -80,7 +77,6 @@ class ChapterSectionAdapter(
                 contentTextView.movementMethod = null // Explicitly remove movement method
             } else {
                 contentTextView.visibility = View.GONE
-                divider.visibility = View.GONE
             }
 
             // Set card background color based on its type
