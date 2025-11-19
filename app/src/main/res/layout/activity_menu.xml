@@ -20,179 +20,215 @@
             android:orientation="vertical"
             android:paddingHorizontal="16dp">
 
-            <!-- Resources Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_resources"
-                style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#BBDEFB">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp">
-                    <ImageView
-                        android:id="@+id/icon_resources"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_menu_book"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipChildren="false">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_resources"
+                    style="@style/Widget.App.MenuCard.FullWidth"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#BBDEFB"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Resources"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        app:layout_constraintStart_toEndOf="@id/icon_resources"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="120dp"
+                        android:paddingEnd="16dp"
+                        android:text="Resources" />
+                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_menu_book"
+                    app:layout_constraintBottom_toTopOf="@id/card_resources"
+                    app:layout_constraintStart_toStartOf="@id/card_resources"
+                    app:layout_constraintTop_toTopOf="@id/card_resources" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Market Place Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_market_place"
-                style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#C8E6C9">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp">
-                    <ImageView
-                        android:id="@+id/icon_market"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_store"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipChildren="false">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_market_place"
+                    style="@style/Widget.App.MenuCard.FullWidth"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#C8E6C9"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Market Place"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        app:layout_constraintStart_toEndOf="@id/icon_market"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="120dp"
+                        android:paddingEnd="16dp"
+                        android:text="Market Place" />
+                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_store"
+                    app:layout_constraintBottom_toTopOf="@id/card_market_place"
+                    app:layout_constraintStart_toStartOf="@id/card_market_place"
+                    app:layout_constraintTop_toTopOf="@id/card_market_place" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Update Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_update"
-                style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#FFECB3">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp">
-                    <ImageView
-                        android:id="@+id/icon_update"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_system_update"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipChildren="false">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_update"
+                    style="@style/Widget.App.MenuCard.FullWidth"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#FFECB3"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Update"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        app:layout_constraintStart_toEndOf="@id/icon_update"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="120dp"
+                        android:paddingEnd="16dp"
+                        android:text="Update" />
+                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_system_update"
+                    app:layout_constraintBottom_toTopOf="@id/card_update"
+                    app:layout_constraintStart_toStartOf="@id/card_update"
+                    app:layout_constraintTop_toTopOf="@id/card_update" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Notice Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_notice"
-                style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#FFCDD2">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp">
-                    <ImageView
-                        android:id="@+id/icon_notice"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_notifications"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipChildren="false">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_notice"
+                    style="@style/Widget.App.MenuCard.FullWidth"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#FFCDD2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Notice"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        app:layout_constraintStart_toEndOf="@id/icon_notice"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="120dp"
+                        android:paddingEnd="16dp"
+                        android:text="Notice" />
+                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_notifications"
+                    app:layout_constraintBottom_toTopOf="@id/card_notice"
+                    app:layout_constraintStart_toStartOf="@id/card_notice"
+                    app:layout_constraintTop_toTopOf="@id/card_notice" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Help Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_help"
-                style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#D1C4E9">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp">
-                    <ImageView
-                        android:id="@+id/icon_help"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_help_outline"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipChildren="false">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_help"
+                    style="@style/Widget.App.MenuCard.FullWidth"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#D1C4E9"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Help"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        app:layout_constraintStart_toEndOf="@id/icon_help"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="120dp"
+                        android:paddingEnd="16dp"
+                        android:text="Help" />
+                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_help_outline"
+                    app:layout_constraintBottom_toTopOf="@id/card_help"
+                    app:layout_constraintStart_toStartOf="@id/card_help"
+                    app:layout_constraintTop_toTopOf="@id/card_help" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <!-- Reset Progress Card -->
-            <com.google.android.material.card.MaterialCardView
-                android:id="@+id/card_reset_progress"
-                style="@style/Widget.App.MenuCard.FullWidth"
-                app:cardBackgroundColor="#B2EBF2">
-                <androidx.constraintlayout.widget.ConstraintLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="24dp">
-                    <ImageView
-                        android:id="@+id/icon_reset"
-                        android:layout_width="80dp"
-                        android:layout_height="80dp"
-                        android:src="@drawable/ic_reset"
-                        app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent" />
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="12dp"
+                android:clipChildren="false">
+                <com.google.android.material.card.MaterialCardView
+                    android:id="@+id/card_reset_progress"
+                    style="@style/Widget.App.MenuCard.FullWidth"
+                    android:layout_height="80dp"
+                    android:layout_marginTop="32dp"
+                    app:cardBackgroundColor="#B2EBF2"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent">
                     <TextView
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:text="Reset Progress"
                         style="@style/Widget.App.MenuCard.TextView.Horizontal"
-                        app:layout_constraintStart_toEndOf="@id/icon_reset"
-                        app:layout_constraintEnd_toEndOf="parent"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintBottom_toBottomOf="parent"/>
-                </androidx.constraintlayout.widget.ConstraintLayout>
-            </com.google.android.material.card.MaterialCardView>
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:paddingStart="120dp"
+                        android:paddingEnd="16dp"
+                        android:text="Reset Progress" />
+                </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_marginStart="24dp"
+                    android:elevation="8dp"
+                    android:src="@drawable/ic_reset"
+                    app:layout_constraintBottom_toTopOf="@id/card_reset_progress"
+                    app:layout_constraintStart_toStartOf="@id/card_reset_progress"
+                    app:layout_constraintTop_toTopOf="@id/card_reset_progress" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
         </LinearLayout>
 
