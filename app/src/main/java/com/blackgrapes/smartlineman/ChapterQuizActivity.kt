@@ -26,6 +26,7 @@ import org.json.JSONArray
 import android.graphics.BitmapFactory
 import org.json.JSONException
 import java.io.IOException
+import com.google.android.material.button.MaterialButton
 
 class ChapterQuizActivity : AppCompatActivity() {
 
@@ -36,8 +37,8 @@ class ChapterQuizActivity : AppCompatActivity() {
     private lateinit var questionCounterText: TextView
     private lateinit var levelText: TextView
     private lateinit var questionText: TextView
-    private lateinit var answerButtons: List<Button>
-    private lateinit var submitButton: Button
+    private lateinit var answerButtons: List<com.google.android.material.button.MaterialButton>
+    private lateinit var submitButton: com.google.android.material.button.MaterialButton
     private lateinit var timerProgressBar: ProgressBar
     private lateinit var questionCard: View
     private lateinit var feedbackIcon: ImageView
@@ -145,7 +146,7 @@ class ChapterQuizActivity : AppCompatActivity() {
         isAnswerSubmitted = false
         selectedAnswerIndex = null
         val currentQuestion = questions[currentQuestionIndex]
-        questionCounterText.text = "Question ${currentQuestionIndex + 1}/${questions.size}"
+        questionCounterText.text = "${currentQuestionIndex + 1}/${questions.size}"
         questionText.text = currentQuestion.questionText
         submitButton.visibility = View.INVISIBLE
         feedbackIcon.visibility = View.GONE
@@ -221,20 +222,19 @@ class ChapterQuizActivity : AppCompatActivity() {
 
         if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
-            selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
+            setButtonState(selectedButton, R.color.correct_green, R.color.white, R.color.correct_green)
             animateFeedback(true)
         } else {
-            selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.incorrect_red)
+            setButtonState(selectedButton, R.color.incorrect_red, R.color.white, R.color.incorrect_red)
             selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
             val correctButton = answerButtons[currentCorrectAnswerIndex]
-            correctButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
+            setButtonState(correctButton, R.color.correct_green, R.color.white, R.color.correct_green)
             animateFeedback(false)
         }
 
         showNextButton()
         answerButtons.forEach {
             it.isEnabled = false
-            it.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
 
         submitButton.text = "" // Remove text
@@ -268,10 +268,12 @@ class ChapterQuizActivity : AppCompatActivity() {
         totalTimeTakenInMillis += questionTimeInMillis
         Toast.makeText(this, "Time's up!", Toast.LENGTH_SHORT).show()
         animateFeedback(false)
-        answerButtons[currentCorrectAnswerIndex].backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
+        
+        val correctButton = answerButtons[currentCorrectAnswerIndex]
+        setButtonState(correctButton, R.color.correct_green, R.color.white, R.color.correct_green)
+        
         answerButtons.forEach {
             it.isEnabled = false
-            it.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
         showNextButton()
         submitButton.text = "" // Remove text
@@ -350,11 +352,19 @@ class ChapterQuizActivity : AppCompatActivity() {
         feedbackIcon.startAnimation(fadeIn)
     }
 
-    private fun resetButtonState(button: Button) {
-        // Use a different default button color for chapter quizzes
-        button.backgroundTintList = ContextCompat.getColorStateList(this, R.color.answer_option_chapter_quiz)
+    private fun resetButtonState(button: com.google.android.material.button.MaterialButton) {
+        // Default state: Outlined, Midnight Blue text/stroke, Transparent background
+        button.backgroundTintList = ContextCompat.getColorStateList(this, android.R.color.transparent)
+        button.strokeColor = ContextCompat.getColorStateList(this, R.color.midnight_blue)
+        button.strokeWidth = (1 * resources.displayMetrics.density).toInt() // 1dp
+        button.setTextColor(ContextCompat.getColor(this, R.color.midnight_blue))
         button.isEnabled = true
-        button.setTextColor(ContextCompat.getColor(this, R.color.white))
+    }
+
+    private fun setButtonState(button: com.google.android.material.button.MaterialButton, backgroundColorRes: Int, textColorRes: Int, strokeColorRes: Int) {
+        button.backgroundTintList = ContextCompat.getColorStateList(this, backgroundColorRes)
+        button.strokeColor = ContextCompat.getColorStateList(this, strokeColorRes)
+        button.setTextColor(ContextCompat.getColor(this, textColorRes))
     }
 
     override fun onDestroy() {
