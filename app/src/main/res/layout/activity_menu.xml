@@ -31,17 +31,17 @@
                     android:padding="16dp">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/icon_background_resources"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="32dp"
+                        app:cardCornerRadius="40dp"
                         app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_menu_book" />
                     </com.google.android.material.card.MaterialCardView>
@@ -69,17 +69,17 @@
                     android:padding="16dp">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/icon_background_market"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="32dp"
+                        app:cardCornerRadius="40dp"
                         app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_store" />
                     </com.google.android.material.card.MaterialCardView>
@@ -107,17 +107,17 @@
                     android:padding="16dp">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/icon_background_update"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="32dp"
+                        app:cardCornerRadius="40dp"
                         app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_system_update" />
                     </com.google.android.material.card.MaterialCardView>
@@ -145,17 +145,17 @@
                     android:padding="16dp">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/icon_background_notice"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="32dp"
+                        app:cardCornerRadius="40dp"
                         app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_notifications" />
                     </com.google.android.material.card.MaterialCardView>
@@ -183,17 +183,17 @@
                     android:padding="16dp">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/icon_background_help"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="32dp"
+                        app:cardCornerRadius="40dp"
                         app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_help_outline" />
                     </com.google.android.material.card.MaterialCardView>
@@ -221,18 +221,18 @@
                     android:padding="16dp">
                     <com.google.android.material.card.MaterialCardView
                         android:id="@+id/icon_background_reset"
-                        android:layout_width="64dp"
-                        android:layout_height="64dp"
+                        android:layout_width="80dp"
+                        android:layout_height="80dp"
                         app:cardBackgroundColor="@color/eci_violet"
-                        app:cardCornerRadius="32dp"
+                        app:cardCornerRadius="40dp"
                         app:cardElevation="4dp"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintBottom_toBottomOf="parent">
                         <ImageView
                             android:id="@+id/reset_icon"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="48dp"
+                            android:layout_height="48dp"
                             android:layout_gravity="center"
                             android:src="@drawable/ic_reset" />
                     </com.google.android.material.card.MaterialCardView>
