@@ -301,10 +301,11 @@ class ChapterDetailActivity : AppCompatActivity() {
 
                             // Format specifications to have line breaks instead of sub-bullets.
                             val specifications = point.optString("specifications").replace("\n", "<br>")
+                            val importance = point.optString("importance").replace("\n", "<br>")
 
                             val pointContent = StringBuilder()
                                 .append("- **স্পেসিফিকেশন:** $specifications\n")
-                                .append("- **গুরুত্ব:** ${point.optString("importance")}\n")
+                                .append("- **গুরুত্ব:** $importance\n")
 
                             // Loop through the map to handle any extra fields generically.
                             extraFieldLabels.forEach { (key, label) ->
