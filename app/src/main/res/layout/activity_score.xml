@@ -5,114 +5,125 @@
     android:id="@+id/main_score"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_background_gradient"
+    android:background="@drawable/score_card_background"
     tools:context=".ScoreActivity">
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfetti_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:elevation="10dp" />
 
-    <TextView
-        android:id="@+id/well_done_text"
-        android:layout_width="wrap_content"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/score_card"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="@string/well_done"
-        android:textColor="@color/white"
-        android:textSize="36sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/feedback_emoji"
+        android:layout_marginHorizontal="32dp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/play_again_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed" />
+        app:layout_constraintVertical_bias="0.4">
 
-    <TextView
-        android:id="@+id/feedback_emoji"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:textSize="80sp"
-        app:layout_constraintBottom_toTopOf="@id/your_score_label"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/well_done_text"
-        tools:text="🏆" />
-
-    <TextView
-        android:id="@+id/your_score_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:text="@string/your_score"
-        android:textColor="@color/pearl_white"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toTopOf="@id/score_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/feedback_emoji" />
-
-    <TextView
-        android:id="@+id/score_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textColor="@color/white"
-        android:textSize="48sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/play_again_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/your_score_label"
-        tools:text="10 / 10" />
-
-    <LinearLayout
-        android:id="@+id/avg_time_container"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/score_text">
-
-        <TextView
-            android:id="@+id/avg_time_text"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/white"
-            android:textSize="24sp"
-            android:textStyle="bold"
-            tools:text="2.5s" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Avg. Time / Question"
-            android:textColor="@color/pearl_white"
-            android:textSize="14sp" />
-    </LinearLayout>
+            <TextView
+                android:id="@+id/feedback_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="80sp"
+                tools:text="🏆" />
+
+            <TextView
+                android:id="@+id/well_done_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/well_done"
+                android:textColor="@color/midnight_blue"
+                android:textSize="28sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/your_score_label"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/your_score"
+                android:textColor="#757575"
+                android:textSize="16sp" />
+
+            <TextView
+                android:id="@+id/score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:textColor="@color/midnight_blue"
+                android:textSize="48sp"
+                android:textStyle="bold"
+                tools:text="10 / 10" />
+
+            <LinearLayout
+                android:id="@+id/avg_time_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/avg_time_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/midnight_blue"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                    tools:text="2.5s" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Avg. Time / Question"
+                    android:textColor="#757575"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <Button
         android:id="@+id/play_again_button"
-        style="@style/Widget.App.Button.Answer"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="16dp"
+        android:backgroundTint="@color/white"
         android:text="@string/play_again"
+        android:textColor="@color/midnight_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/next_level_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/next_level_button"
-        style="@style/Widget.AppCompat.Button"
+        style="@style/Widget.Material3.Button"
         android:layout_width="0dp"
         android:layout_height="60dp"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginBottom="32dp"
-        android:background="@drawable/next_button_gradient"
+        android:layout_marginBottom="48dp"
+        android:backgroundTint="@color/midnight_blue"
         android:text="NEXT LEVEL"
         android:textColor="@color/white"
         android:textSize="16sp"

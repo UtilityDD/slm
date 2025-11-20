@@ -5,68 +5,83 @@
     android:id="@+id/main_chapter_score"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/game_background_gradient"
+    android:background="@drawable/score_card_background"
     tools:context=".ChapterScoreActivity">
 
     <nl.dionsegijn.konfetti.xml.KonfettiView
         android:id="@+id/konfetti_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:elevation="10dp" />
 
-    <TextView
-        android:id="@+id/feedback_emoji"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="80sp"
-        app:layout_constraintBottom_toTopOf="@+id/score_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="packed"
-        tools:text="🏆" />
-
-    <TextView
-        android:id="@+id/score_text"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/score_badge_background"
-        android:paddingHorizontal="24dp"
-        android:paddingVertical="12dp"
-        android:textColor="@color/white"
-        android:textSize="34sp"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/feedback_message_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/feedback_emoji"
-        tools:text="10 / 10" />
-
-    <TextView
-        android:id="@+id/feedback_message_text"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/score_card"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="32dp"
-        android:layout_marginTop="24dp"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="18sp"
+        app:cardBackgroundColor="#FFFFFF"
+        app:cardCornerRadius="24dp"
+        app:cardElevation="8dp"
         app:layout_constraintBottom_toTopOf="@+id/finish_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/score_text"
-        tools:text="চমৎকার! আপনি এই অধ্যায়টি আয়ত্ত করেছেন।" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.4">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="32dp">
+
+            <TextView
+                android:id="@+id/feedback_emoji"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="80sp"
+                tools:text="🏆" />
+
+            <TextView
+                android:id="@+id/score_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:background="@drawable/badge_background_pill"
+                android:backgroundTint="#10000000"
+                android:paddingHorizontal="24dp"
+                android:paddingVertical="12dp"
+                android:textColor="@color/midnight_blue"
+                android:textSize="34sp"
+                android:textStyle="bold"
+                tools:text="10 / 10" />
+
+            <TextView
+                android:id="@+id/feedback_message_text"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:gravity="center"
+                android:textColor="@color/midnight_blue"
+                android:textSize="18sp"
+                tools:text="চমৎকার! আপনি এই অধ্যায়টি আয়ত্ত করেছেন।" />
+
+        </LinearLayout>
+
+    </com.google.android.material.card.MaterialCardView>
 
     <Button
         android:id="@+id/finish_button"
-        style="@style/Widget.App.Button.Answer"
+        style="@style/Widget.Material3.Button.TonalButton"
         android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="40dp"
+        android:layout_height="60dp"
+        android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="48dp"
-        android:backgroundTint="@color/golden_light"
+        android:backgroundTint="@color/white"
         android:text="অধ্যায়ে ফিরে যান"
         android:textColor="@color/midnight_blue"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

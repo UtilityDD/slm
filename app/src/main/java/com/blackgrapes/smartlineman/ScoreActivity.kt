@@ -5,6 +5,7 @@ import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -37,8 +38,24 @@ class ScoreActivity : AppCompatActivity() {
         val scoreTextView = findViewById<TextView>(R.id.score_text)
         val feedbackEmojiTextView = findViewById<TextView>(R.id.feedback_emoji)
         val wellDoneTextView = findViewById<TextView>(R.id.well_done_text)
+        val scoreCard = findViewById<View>(R.id.score_card)
 
-        scoreTextView.text = "$score / $totalQuestions"
+        // Animate Card
+        scoreCard.alpha = 0f
+        scoreCard.scaleX = 0.8f
+        scoreCard.scaleY = 0.8f
+        scoreCard.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(500)
+            .setInterpolator(OvershootInterpolator())
+            .start()
+
+        // Animate Score
+        val finalScore = score * 10
+        val maxScore = totalQuestions * 10
+        animateScore(scoreTextView, finalScore, maxScore)
 
         saveHighScore(level, score, totalQuestions, totalTime)
 
@@ -69,6 +86,17 @@ class ScoreActivity : AppCompatActivity() {
 
         wellDoneTextView.text = feedbackMessage
         feedbackEmojiTextView.text = emoji
+        
+        // Animate Emoji
+        feedbackEmojiTextView.scaleX = 0f
+        feedbackEmojiTextView.scaleY = 0f
+        feedbackEmojiTextView.animate()
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(600)
+            .setStartDelay(300)
+            .setInterpolator(OvershootInterpolator())
+            .start()
 
         // Show "Next Level" button if the player scored perfectly
         // Also, check if there is a next level to go to.
@@ -108,6 +136,15 @@ class ScoreActivity : AppCompatActivity() {
                 emitter = Emitter(duration = 100, TimeUnit.MILLISECONDS).max(100)
             )
         )
+    }
+
+    private fun animateScore(textView: TextView, score: Int, maxScore: Int) {
+        val animator = ValueAnimator.ofInt(0, score)
+        animator.duration = 1000
+        animator.addUpdateListener { animation ->
+            textView.text = "${animation.animatedValue} / $maxScore"
+        }
+        animator.start()
     }
 
     private fun animateAverageTime(avgTime: Float) {

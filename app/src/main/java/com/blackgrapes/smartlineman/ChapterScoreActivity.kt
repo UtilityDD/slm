@@ -2,8 +2,11 @@ package com.blackgrapes.smartlineman
 
 import android.content.Context
 import android.app.Activity
+import android.animation.ValueAnimator
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -34,8 +37,24 @@ class ChapterScoreActivity : AppCompatActivity() {
         val feedbackEmojiTextView = findViewById<TextView>(R.id.feedback_emoji)
         val feedbackMessageTextView = findViewById<TextView>(R.id.feedback_message_text)
         val finishButton = findViewById<Button>(R.id.finish_button)
+        val scoreCard = findViewById<View>(R.id.score_card)
 
-        scoreTextView.text = "$score / $totalQuestions"
+        // Animate Card
+        scoreCard.alpha = 0f
+        scoreCard.scaleX = 0.8f
+        scoreCard.scaleY = 0.8f
+        scoreCard.animate()
+            .alpha(1f)
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(500)
+            .setInterpolator(OvershootInterpolator())
+            .start()
+
+        // Animate Score
+        val finalScore = score * 10
+        val maxScore = totalQuestions * 10
+        animateScore(scoreTextView, finalScore, maxScore)
 
         val percentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
 
@@ -80,6 +99,26 @@ class ChapterScoreActivity : AppCompatActivity() {
 
         feedbackMessageTextView.text = feedbackMessage
         feedbackEmojiTextView.text = emoji
+        
+        // Animate Emoji
+        feedbackEmojiTextView.scaleX = 0f
+        feedbackEmojiTextView.scaleY = 0f
+        feedbackEmojiTextView.animate()
+            .scaleX(1f)
+            .scaleY(1f)
+            .setDuration(600)
+            .setStartDelay(300)
+            .setInterpolator(OvershootInterpolator())
+            .start()
+    }
+
+    private fun animateScore(textView: TextView, score: Int, maxScore: Int) {
+        val animator = ValueAnimator.ofInt(0, score)
+        animator.duration = 1000
+        animator.addUpdateListener { animation ->
+            textView.text = "${animation.animatedValue} / $maxScore"
+        }
+        animator.start()
     }
 
     private fun saveChapterQuizCompletion(levelId: String) {
