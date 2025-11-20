@@ -361,6 +361,10 @@ class ChapterDetailActivity : AppCompatActivity() {
                 }
             }
 
+            // Add a "Learn More" button at the end of every chapter detail view.
+            // We use a special emoji to identify it in the adapter.
+            if (!isChapterListView) sectionList.add(ChapterSection("🔗", "আরও জানুন", ""))
+
         } catch (e: IOException) {
             Log.e("ChapterDetailActivity", "IOException: Error reading $fileName", e)
             // Optionally, show an error message to the user

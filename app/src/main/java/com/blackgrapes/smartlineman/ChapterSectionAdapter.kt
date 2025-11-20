@@ -96,6 +96,11 @@ class ChapterSectionAdapter(
                 section.isCompleted -> { // Completed chapter card
                     cardView.setCardBackgroundColor(itemView.context.getColor(R.color.pastel_mint))
                 }
+                section.emoji == "🔗" -> { // "Learn More" button
+                    cardView.setCardBackgroundColor(itemView.context.getColor(R.color.purple_200))
+                    titleTextView.setTextColor(itemView.context.getColor(R.color.white))
+                    emojiTextView.setTextColor(itemView.context.getColor(R.color.white))
+                }
                 else -> { // Default card color
                     cardView.setCardBackgroundColor(itemView.context.getColor(R.color.card_bg_light))
                 }
