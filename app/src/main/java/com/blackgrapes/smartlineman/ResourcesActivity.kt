@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.IOException
+import com.blackgrapes.smartlineman.util.JsonHelper
 
 class ResourcesActivity : AppCompatActivity() {
 
@@ -58,23 +59,25 @@ class ResourcesActivity : AppCompatActivity() {
         val sections = mutableListOf<ResourceSection>()
         val fileName = "resource_sections.json"
         try {
-            val jsonString: String = assets.open(fileName).bufferedReader().use { it.readText() }
-            val jsonArray = JSONArray(jsonString)
+            val jsonString = JsonHelper.loadJSON(this, fileName)
+            if (jsonString != null) {
+                val jsonArray = JSONArray(jsonString)
 
-            for (i in 0 until jsonArray.length()) {
-                val sectionObject = jsonArray.getJSONObject(i)
-                val title = sectionObject.getString("title")
-                val id = sectionObject.getString("id")
-                val iconName = sectionObject.getString("iconName")
-                val contentFile = sectionObject.optString("contentFile", null)
+                for (i in 0 until jsonArray.length()) {
+                    val sectionObject = jsonArray.getJSONObject(i)
+                    val title = sectionObject.getString("title")
+                    val id = sectionObject.getString("id")
+                    val iconName = sectionObject.getString("iconName")
+                    val contentFile = sectionObject.optString("contentFile", null)
 
-                var iconResId = resources.getIdentifier(iconName, "drawable", packageName)
-                if (iconResId == 0) {
-                    Log.w("ResourcesActivity", "Icon not found for: $iconName. Using default.")
-                    iconResId = R.drawable.ic_resources // Fallback to a default icon
+                    var iconResId = resources.getIdentifier(iconName, "drawable", packageName)
+                    if (iconResId == 0) {
+                        Log.w("ResourcesActivity", "Icon not found for: $iconName. Using default.")
+                        iconResId = R.drawable.ic_resources // Fallback to a default icon
+                    }
+
+                    sections.add(ResourceSection(id, title, iconResId, contentFile))
                 }
-
-                sections.add(ResourceSection(id, title, iconResId, contentFile))
             }
         } catch (e: IOException) {
             Log.e("ResourcesActivity", "IOException: Error reading $fileName", e)
@@ -83,6 +86,7 @@ class ResourcesActivity : AppCompatActivity() {
         }
         return sections
     }
+
     private fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }

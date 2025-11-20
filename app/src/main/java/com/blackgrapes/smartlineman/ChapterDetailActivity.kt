@@ -27,6 +27,7 @@ import android.widget.Button
 import java.util.Locale
 import android.widget.ImageView
 import java.io.IOException
+import com.blackgrapes.smartlineman.util.JsonHelper
 
 class ChapterDetailActivity : AppCompatActivity() {
 
@@ -173,7 +174,10 @@ class ChapterDetailActivity : AppCompatActivity() {
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
         val sectionList = mutableListOf<ChapterSection>()
         try {
-            val jsonString = assets.open(fileName).bufferedReader().use { it.readText() }
+            val jsonString = JsonHelper.loadJSON(this, fileName)
+            if (jsonString == null) {
+                throw IOException("File not found: $fileName")
+            }
             val chapterJson = JSONObject(jsonString)
 
             // Extract level_id to use for the quiz button
@@ -224,9 +228,6 @@ class ChapterDetailActivity : AppCompatActivity() {
                     }
                 }
             }
-
-
-
 
             // Check if this is a chapter list (old format) or detailed content (new format)
             if (chapterJson.has("levels")) {

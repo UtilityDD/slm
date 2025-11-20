@@ -59,7 +59,11 @@ class MarketplaceActivity : AppCompatActivity() {
 
     private fun loadMarketplaceData() {
         try {
-            val jsonString = assets.open("marketplace_items.json").bufferedReader().use { it.readText() }
+            val jsonString = com.blackgrapes.smartlineman.util.JsonHelper.loadJSON(this, "marketplace_items.json")
+            if (jsonString == null) {
+                showEmptyState()
+                return
+            }
             val jsonObject = JSONObject(jsonString)
             val categoriesArray = jsonObject.getJSONArray("categories")
 

@@ -26,10 +26,44 @@ class MenuActivity : AppCompatActivity() {
         // Set click listeners for each card
         findViewById<View>(R.id.card_resources).setOnClickListener { startActivity(Intent(this, ResourcesActivity::class.java)) }
         findViewById<View>(R.id.card_market_place).setOnClickListener { startActivity(Intent(this, MarketplaceActivity::class.java)) }
-        findViewById<View>(R.id.card_update).setOnClickListener { showToast("Update Clicked") }
+        findViewById<View>(R.id.card_update).setOnClickListener { performSync() }
         findViewById<View>(R.id.card_notice).setOnClickListener { showToast("Notice Clicked") }
         findViewById<View>(R.id.card_help).setOnClickListener { showToast("Help Clicked") }
         findViewById<View>(R.id.card_reset_progress).setOnClickListener { showResetConfirmationDialog() }
+    }
+
+    private fun performSync() {
+        val progressDialog = android.app.ProgressDialog(this)
+        progressDialog.setTitle("Syncing Data")
+        progressDialog.setMessage("Connecting to server...")
+        progressDialog.setCancelable(false)
+        progressDialog.show()
+
+        com.blackgrapes.smartlineman.data.SyncRepository.syncFiles(this,
+            onProgress = { message ->
+                runOnUiThread {
+                    progressDialog.setMessage(message)
+                }
+            },
+            onComplete = { success, message ->
+                runOnUiThread {
+                    progressDialog.dismiss()
+                    if (success) {
+                        AlertDialog.Builder(this)
+                            .setTitle("Sync Complete")
+                            .setMessage(message)
+                            .setPositiveButton("OK", null)
+                            .show()
+                    } else {
+                        AlertDialog.Builder(this)
+                            .setTitle("Sync Failed")
+                            .setMessage(message)
+                            .setPositiveButton("OK", null)
+                            .show()
+                    }
+                }
+            }
+        )
     }
 
     private fun showToast(message: String) {
