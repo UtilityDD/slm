@@ -35,6 +35,7 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     private lateinit var questionCounterText: TextView
+    private lateinit var scoreText: TextView
     private lateinit var levelText: TextView
     private lateinit var questionText: TextView
     private lateinit var answerButtons: List<com.google.android.material.button.MaterialButton>
@@ -126,6 +127,7 @@ class ChapterQuizActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         questionCounterText = findViewById(R.id.question_counter_text)
+        scoreText = findViewById(R.id.score_text)
         levelText = findViewById(R.id.level_text)
         levelText.text = "Chapter $levelId"
         questionText = findViewById(R.id.question_text)
@@ -222,6 +224,7 @@ class ChapterQuizActivity : AppCompatActivity() {
 
         if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
+            scoreText.text = "Score: ${score * 10}"
             setButtonState(selectedButton, R.color.correct_green, R.color.white, R.color.correct_green)
             animateFeedback(true)
         } else {

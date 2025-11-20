@@ -38,6 +38,20 @@
             android:layout_weight="1" />
 
         <TextView
+            android:id="@+id/score_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/badge_background_pill"
+            android:backgroundTint="#20000000"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="8dp"
+            android:text="Score: 0"
+            android:textColor="@color/midnight_blue"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium" />
+
+        <TextView
             android:id="@+id/question_counter_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
