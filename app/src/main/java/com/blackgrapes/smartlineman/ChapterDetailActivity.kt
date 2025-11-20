@@ -299,8 +299,11 @@ class ChapterDetailActivity : AppCompatActivity() {
                                 "safety_tip" to "নিরাপত্তা টিপ"
                             )
 
+                            // Format specifications to have line breaks instead of sub-bullets.
+                            val specifications = point.optString("specifications").replace("\n", "<br>")
+
                             val pointContent = StringBuilder()
-                                .append("- **স্পেসিফিকেশন:** ${point.optString("specifications")}\n")
+                                .append("- **স্পেসিফিকেশন:** $specifications\n")
                                 .append("- **গুরুত্ব:** ${point.optString("importance")}\n")
 
                             // Loop through the map to handle any extra fields generically.
