@@ -278,9 +278,18 @@ class ChapterDetailActivity : AppCompatActivity() {
                         val ppePointsArray = ppeSection.getJSONArray("points")
                         for (k in 0 until ppePointsArray.length()) {
                             val point = ppePointsArray.getJSONObject(k)
-                            val pointTitle = point.getString("item_name")
+                            var pointTitle = point.getString("item_name")
                             val pointImage = point.optString("image_name", null)
                             val pointImageCaption = point.optString("image_caption", null)
+
+                            // Extract serial number from title to use as the "emoji"
+                            var serialNumber = (k + 1).toString() // Fallback to loop index
+                            val regex = "^(\\d+)\\.\\s*".toRegex()
+                            val matchResult = regex.find(pointTitle)
+                            if (matchResult != null) {
+                                serialNumber = matchResult.groupValues[1]
+                                pointTitle = regex.replace(pointTitle, "") // Remove serial from title
+                            }
 
                             // Define a map of extra fields to their Bengali labels.
                             // To support a new field, just add it to this map.
@@ -302,7 +311,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                             }
 
                             // Create a single ChapterSection for the entire point, passing null for sourceLink
-                            sectionList.add(ChapterSection("🔹", pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption, null))
+                            sectionList.add(ChapterSection(serialNumber, pointTitle, pointContent.toString(), false, pointImage, null, pointImageCaption, null))
                         }
                     }
                 }
