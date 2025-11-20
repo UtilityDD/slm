@@ -47,6 +47,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private lateinit var questionCounterText: TextView
+    private lateinit var scoreText: TextView
     private lateinit var levelText: TextView
     private lateinit var questionText: TextView
     private lateinit var answerButtons: List<Button>
@@ -129,6 +130,7 @@ class GameActivity : AppCompatActivity() {
 
     private fun initializeViews() {
         questionCounterText = findViewById(R.id.question_counter_text)
+        scoreText = findViewById(R.id.score_text)
         levelText = findViewById(R.id.level_text)
         levelText.text = "Level $level"
         questionText = findViewById(R.id.question_text)
@@ -153,6 +155,9 @@ class GameActivity : AppCompatActivity() {
         questionText.text = currentQuestion.questionText
         submitButton.visibility = View.INVISIBLE
         feedbackIcon.visibility = View.GONE
+        
+        // Set initial score text
+        scoreText.text = "Score: ${score * 10}"
 
         // Handle the question image
         if (currentQuestion.imageName != null) {
@@ -262,6 +267,7 @@ class GameActivity : AppCompatActivity() {
 
         if (selectedAnswerIndex == currentCorrectAnswerIndex) {
             score++
+            scoreText.text = "Score: ${score * 10}"
             playSfx(correctSoundId)
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(true)
