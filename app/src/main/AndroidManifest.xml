@@ -43,17 +43,24 @@
         <activity
             android:name=".MainActivity"
             android:exported="false" />
-            <activity android:name=".ChapterContentActivity" 
-                        android:exported="false" />
-            <activity
-                android:name=".ImageZoomActivity"
-                        android:exported="false" />
-            <activity
-                android:name=".ChapterQuizActivity"
-                android:exported="false" />
-            <activity
-                android:name=".ChapterScoreActivity"
-                android:exported="false" />
+        <activity 
+            android:name=".ChapterContentActivity" 
+            android:exported="false" />
+        <activity
+            android:name=".ImageZoomActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChapterQuizActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ChapterScoreActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MarketplaceActivity"
+            android:exported="false" />
+        <activity
+            android:name=".MarketplaceDetailActivity"
+            android:exported="false" />
             
     </application>
 

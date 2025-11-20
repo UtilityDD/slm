@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="12dp"
+    app:cardBackgroundColor="@color/white"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Header Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Equipment Icon -->
+            <TextView
+                android:id="@+id/equipment_icon"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="@drawable/emoji_circle_bg"
+                android:backgroundTint="@color/pastel_blue"
+                android:gravity="center"
+                android:text="🛠️"
+                android:textSize="24sp" />
+
+            <!-- Name and Category -->
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/equipment_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:ellipsize="end"
+                    android:maxLines="2"
+                    android:textColor="@color/midnight_blue"
+                    android:textSize="16sp"
+                    android:textStyle="bold"
+                    tools:text="Safety Helmet Class E" />
+
+                <TextView
+                    android:id="@+id/equipment_category"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:background="@drawable/badge_background_pill"
+                    android:backgroundTint="@color/pastel_mint"
+                    android:paddingHorizontal="8dp"
+                    android:paddingVertical="2dp"
+                    android:textColor="@color/midnight_blue"
+                    android:textSize="11sp"
+                    tools:text="Safety Gear" />
+            </LinearLayout>
+
+            <!-- Arrow Icon -->
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_marginStart="8dp"
+                android:src="@drawable/ic_arrow_down"
+                android:rotation="270"
+                app:tint="@color/midnight_blue" />
+        </LinearLayout>
+
+        <!-- Description -->
+        <TextView
+            android:id="@+id/equipment_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:maxLines="2"
+            android:textColor="#757575"
+            android:textSize="14sp"
+            tools:text="High-voltage electrical work helmet with superior dielectric protection..." />
+
+        <!-- Price and Standards Row -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <!-- Price -->
+            <TextView
+                android:id="@+id/equipment_price"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/midnight_blue"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                tools:text="₹800 - ₹1500" />
+
+            <!-- Safety Standards Badge -->
+            <TextView
+                android:id="@+id/equipment_standards"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/badge_background_pill"
+                android:backgroundTint="#E3F2FD"
+                android:drawablePadding="4dp"
+                android:paddingHorizontal="8dp"
+                android:paddingVertical="4dp"
+                android:textColor="@color/midnight_blue"
+                android:textSize="11sp"
+                app:drawableStartCompat="@drawable/ic_safety"
+                tools:text="IS 2925" />
+        </LinearLayout>
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>

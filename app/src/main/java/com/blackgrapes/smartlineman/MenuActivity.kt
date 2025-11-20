@@ -23,9 +23,9 @@ class MenuActivity : AppCompatActivity() {
             insets
         }
 
-        // Set click listeners for each card - for now, they just show a toast.
+        // Set click listeners for each card
         findViewById<View>(R.id.card_resources).setOnClickListener { startActivity(Intent(this, ResourcesActivity::class.java)) }
-        findViewById<View>(R.id.card_market_place).setOnClickListener { showToast("Market Place Clicked") }
+        findViewById<View>(R.id.card_market_place).setOnClickListener { startActivity(Intent(this, MarketplaceActivity::class.java)) }
         findViewById<View>(R.id.card_update).setOnClickListener { showToast("Update Clicked") }
         findViewById<View>(R.id.card_notice).setOnClickListener { showToast("Notice Clicked") }
         findViewById<View>(R.id.card_help).setOnClickListener { showToast("Help Clicked") }

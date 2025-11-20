@@ -1,0 +1,184 @@
+{
+    "categories": [
+        {
+            "id": "safety_gear",
+            "name": "Safety Gear",
+            "items": [
+                {
+                    "id": "helmet_001",
+                    "name": "Safety Helmet Class E",
+                    "description": "High-voltage electrical work helmet with superior dielectric protection. Designed for linemen working on high-voltage power lines. Features adjustable suspension system for comfort during extended wear.",
+                    "price_range": "₹800 - ₹1500",
+                    "image_name": null,
+                    "category": "Safety Gear",
+                    "safety_standards": "IS 2925, ANSI Z89.1 Class E",
+                    "supplier_contact": "safety@linemanequip.com"
+                },
+                {
+                    "id": "harness_001",
+                    "name": "Full Body Safety Harness",
+                    "description": "Professional-grade full body harness for working at heights. Multiple attachment points, padded leg straps, and quick-connect buckles. Suitable for pole climbing and tower work.",
+                    "price_range": "₹2500 - ₹4500",
+                    "image_name": null,
+                    "category": "Safety Gear",
+                    "safety_standards": "IS 3521, ANSI Z359.11",
+                    "supplier_contact": "safety@linemanequip.com"
+                },
+                {
+                    "id": "boots_001",
+                    "name": "Electrical Hazard Safety Boots",
+                    "description": "Steel toe safety boots with electrical hazard protection. Oil-resistant, slip-resistant sole. Provides protection against electrical shock up to 18,000V.",
+                    "price_range": "₹1800 - ₹3500",
+                    "image_name": null,
+                    "category": "Safety Gear",
+                    "safety_standards": "IS 15298, ASTM F2413",
+                    "supplier_contact": "safety@linemanequip.com"
+                }
+            ]
+        },
+        {
+            "id": "gloves",
+            "name": "Protective Gloves",
+            "items": [
+                {
+                    "id": "gloves_class0",
+                    "name": "Insulated Gloves Class 0",
+                    "description": "Rubber insulating gloves for low voltage work up to 1000V AC. Tested and certified for electrical safety. Includes leather protector gloves.",
+                    "price_range": "₹1200 - ₹2000",
+                    "image_name": null,
+                    "category": "Protective Gloves",
+                    "safety_standards": "IS 4770, ASTM D120 Class 0",
+                    "supplier_contact": "gloves@linemanequip.com"
+                },
+                {
+                    "id": "gloves_class2",
+                    "name": "Insulated Gloves Class 2",
+                    "description": "High-voltage rubber insulating gloves rated for 17,000V AC. Essential for medium voltage distribution work. Comes with leather protector gloves and storage bag.",
+                    "price_range": "₹3500 - ₹6000",
+                    "image_name": null,
+                    "category": "Protective Gloves",
+                    "safety_standards": "IS 4770, ASTM D120 Class 2",
+                    "supplier_contact": "gloves@linemanequip.com"
+                },
+                {
+                    "id": "gloves_leather",
+                    "name": "Leather Protector Gloves",
+                    "description": "Heavy-duty leather protector gloves worn over rubber insulating gloves. Protects against cuts, abrasions, and punctures. Available in multiple sizes.",
+                    "price_range": "₹400 - ₹800",
+                    "image_name": null,
+                    "category": "Protective Gloves",
+                    "safety_standards": "ASTM F696",
+                    "supplier_contact": "gloves@linemanequip.com"
+                }
+            ]
+        },
+        {
+            "id": "tools",
+            "name": "Insulated Tools",
+            "items": [
+                {
+                    "id": "tool_pliers",
+                    "name": "Insulated Combination Pliers",
+                    "description": "1000V rated insulated pliers for electrical work. Ergonomic handles with two-color insulation for easy identification. Hardened cutting edges.",
+                    "price_range": "₹600 - ₹1200",
+                    "image_name": null,
+                    "category": "Insulated Tools",
+                    "safety_standards": "IEC 60900, IS 12640",
+                    "supplier_contact": "tools@linemanequip.com"
+                },
+                {
+                    "id": "tool_screwdriver_set",
+                    "name": "Insulated Screwdriver Set",
+                    "description": "Complete set of 7 insulated screwdrivers (flathead and Phillips). 1000V rated. Includes carrying case. Essential for electrical panel work.",
+                    "price_range": "₹1500 - ₹2500",
+                    "image_name": null,
+                    "category": "Insulated Tools",
+                    "safety_standards": "IEC 60900, IS 12640",
+                    "supplier_contact": "tools@linemanequip.com"
+                },
+                {
+                    "id": "tool_voltage_detector",
+                    "name": "Non-Contact Voltage Detector",
+                    "description": "Digital voltage detector with LED and audible alerts. Detects AC voltage from 90V to 1000V. Pocket clip and built-in flashlight. Battery included.",
+                    "price_range": "₹500 - ₹1000",
+                    "image_name": null,
+                    "category": "Insulated Tools",
+                    "safety_standards": "IEC 61243-3, CAT III 1000V",
+                    "supplier_contact": "tools@linemanequip.com"
+                },
+                {
+                    "id": "tool_hotline",
+                    "name": "Hot Line Tool Kit",
+                    "description": "Telescopic hot stick with universal head attachments. Extends from 3ft to 12ft. Fiberglass construction. Includes hook, eye, and disconnect attachments.",
+                    "price_range": "₹8000 - ₹15000",
+                    "image_name": null,
+                    "category": "Insulated Tools",
+                    "safety_standards": "IEC 60855, ASTM F711",
+                    "supplier_contact": "tools@linemanequip.com"
+                }
+            ]
+        },
+        {
+            "id": "arc_flash",
+            "name": "Arc Flash Protection",
+            "items": [
+                {
+                    "id": "arc_suit",
+                    "name": "Arc Flash Protection Suit",
+                    "description": "Complete arc-rated protective suit including jacket, bib overalls, and hood. 40 cal/cm² protection. Flame-resistant fabric with reflective trim.",
+                    "price_range": "₹15000 - ₹25000",
+                    "image_name": null,
+                    "category": "Arc Flash Protection",
+                    "safety_standards": "NFPA 70E, ASTM F1506, CAT 4",
+                    "supplier_contact": "arcflash@linemanequip.com"
+                },
+                {
+                    "id": "arc_face_shield",
+                    "name": "Arc Flash Face Shield",
+                    "description": "Arc-rated face shield with 12 cal/cm² protection. Clear polycarbonate visor with anti-fog coating. Adjustable headgear for comfort.",
+                    "price_range": "₹2500 - ₹4000",
+                    "image_name": null,
+                    "category": "Arc Flash Protection",
+                    "safety_standards": "ASTM F2178, NFPA 70E",
+                    "supplier_contact": "arcflash@linemanequip.com"
+                }
+            ]
+        },
+        {
+            "id": "testing",
+            "name": "Testing Equipment",
+            "items": [
+                {
+                    "id": "test_multimeter",
+                    "name": "Digital Multimeter CAT IV",
+                    "description": "Professional-grade digital multimeter rated for CAT IV 600V. Measures voltage, current, resistance, capacitance, frequency. True RMS. Includes test leads and carrying case.",
+                    "price_range": "₹3500 - ₹7000",
+                    "image_name": null,
+                    "category": "Testing Equipment",
+                    "safety_standards": "IEC 61010, CAT IV 600V",
+                    "supplier_contact": "testing@linemanequip.com"
+                },
+                {
+                    "id": "test_clamp_meter",
+                    "name": "AC/DC Clamp Meter",
+                    "description": "True RMS clamp meter for current measurement up to 1000A. Measures AC/DC voltage and current. CAT III 1000V rated. Large LCD display with backlight.",
+                    "price_range": "₹4500 - ₹9000",
+                    "image_name": null,
+                    "category": "Testing Equipment",
+                    "safety_standards": "IEC 61010, CAT III 1000V",
+                    "supplier_contact": "testing@linemanequip.com"
+                },
+                {
+                    "id": "test_earth_tester",
+                    "name": "Digital Earth Resistance Tester",
+                    "description": "Measures earth resistance, soil resistivity, and ground voltage. 3-pole and 4-pole testing methods. Data storage and USB connectivity for reports.",
+                    "price_range": "₹12000 - ₹20000",
+                    "image_name": null,
+                    "category": "Testing Equipment",
+                    "safety_standards": "IEC 61557",
+                    "supplier_contact": "testing@linemanequip.com"
+                }
+            ]
+        }
+    ]
+}
