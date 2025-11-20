@@ -19,7 +19,7 @@ class ChapterScoreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_chapter_score) // We'll create this layout next
+        setContentView(R.layout.activity_chapter_score)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_chapter_score)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
@@ -45,19 +45,41 @@ class ChapterScoreActivity : AppCompatActivity() {
                 if (levelId != null) {
                     saveChapterQuizCompletion(levelId)
                 }
+                finishButton.text = "Finish"
+                finishButton.setOnClickListener {
+                    setResult(Activity.RESULT_OK)
+                    finish()
+                }
                 "চমৎকার! আপনি এই অধ্যায়টি আয়ত্ত করেছেন। এবার পরের অধ্যায়ে যেতে পারেন।" to "🏆"
             }
-            percentage >= 50 -> "ভালো প্রচেষ্টা! অধ্যায়টি আবার পর্যালোচনা করে দেখুন।" to "👍"
-            else -> "অধ্যায়টি মনোযোগ দিয়ে আবার পড়ুন এবং পুনরায় চেষ্টা করুন।" to "💪"
+            percentage >= 50 -> {
+                finishButton.text = "Try Again"
+                finishButton.setOnClickListener {
+                    if (levelId != null) {
+                        val intent = Intent(this, ChapterQuizActivity::class.java)
+                        intent.putExtra(ChapterQuizActivity.EXTRA_LEVEL_ID, levelId)
+                        startActivity(intent)
+                    }
+                    finish()
+                }
+                "ভালো প্রচেষ্টা! অধ্যায়টি আবার পর্যালোচনা করে দেখুন।" to "👍"
+            }
+            else -> {
+                finishButton.text = "Try Again"
+                finishButton.setOnClickListener {
+                    if (levelId != null) {
+                        val intent = Intent(this, ChapterQuizActivity::class.java)
+                        intent.putExtra(ChapterQuizActivity.EXTRA_LEVEL_ID, levelId)
+                        startActivity(intent)
+                    }
+                    finish()
+                }
+                "অধ্যায়টি মনোযোগ দিয়ে আবার পড়ুন এবং পুনরায় চেষ্টা করুন।" to "💪"
+            }
         }
 
         feedbackMessageTextView.text = feedbackMessage
         feedbackEmojiTextView.text = emoji
-
-        finishButton.setOnClickListener {
-            setResult(Activity.RESULT_OK)
-            finish()
-        }
     }
 
     private fun saveChapterQuizCompletion(levelId: String) {

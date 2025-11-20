@@ -27,6 +27,8 @@ import android.graphics.BitmapFactory
 import org.json.JSONException
 import java.io.IOException
 import com.google.android.material.button.MaterialButton
+import android.os.Handler
+import android.os.Looper
 
 class ChapterQuizActivity : AppCompatActivity() {
 
@@ -196,13 +198,7 @@ class ChapterQuizActivity : AppCompatActivity() {
                 if (currentQuestionIndex < questions.size) {
                     setupQuestion()
                 } else {
-                    // End of the quiz, launch ChapterScoreActivity
-                    val scoreIntent = Intent(this, ChapterScoreActivity::class.java).apply {
-                        putExtra(GameActivity.EXTRA_SCORE, score)
-                        putExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, questions.size)
-                        putExtra(EXTRA_LEVEL_ID, levelId) // Pass the level ID to the score screen
-                    }
-                    chapterScoreResultLauncher.launch(scoreIntent)
+                    navigateToScoreActivity()
                 }
             }
         }
@@ -227,26 +223,35 @@ class ChapterQuizActivity : AppCompatActivity() {
             scoreText.text = "Score: ${score * 10}"
             setButtonState(selectedButton, R.color.correct_green, R.color.white, R.color.correct_green)
             animateFeedback(true)
+            
+            showNextButton()
+            answerButtons.forEach {
+                it.isEnabled = false
+            }
+            
+            submitButton.text = "" // Remove text
+            val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
+            submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
+            // Post a runnable to calculate padding after the button is laid out
+            submitButton.post {
+                val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
+                submitButton.setPadding(padding, 0, 0, 0)
+            }
         } else {
             setButtonState(selectedButton, R.color.incorrect_red, R.color.white, R.color.incorrect_red)
             selectedButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
             val correctButton = answerButtons[currentCorrectAnswerIndex]
             setButtonState(correctButton, R.color.correct_green, R.color.white, R.color.correct_green)
             animateFeedback(false)
-        }
-
-        showNextButton()
-        answerButtons.forEach {
-            it.isEnabled = false
-        }
-
-        submitButton.text = "" // Remove text
-        val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
-        submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
-        // Post a runnable to calculate padding after the button is laid out
-        submitButton.post {
-            val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
-            submitButton.setPadding(padding, 0, 0, 0)
+            
+            answerButtons.forEach {
+                it.isEnabled = false
+            }
+            
+            // Delay and then fail
+            Handler(Looper.getMainLooper()).postDelayed({
+                navigateToScoreActivity()
+            }, 1500)
         }
     }
 
@@ -278,14 +283,20 @@ class ChapterQuizActivity : AppCompatActivity() {
         answerButtons.forEach {
             it.isEnabled = false
         }
-        showNextButton()
-        submitButton.text = "" // Remove text
-        val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
-        submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
-        submitButton.post {
-            val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
-            submitButton.setPadding(padding, 0, 0, 0)
+        
+        // Delay and then fail
+        Handler(Looper.getMainLooper()).postDelayed({
+            navigateToScoreActivity()
+        }, 1500)
+    }
+
+    private fun navigateToScoreActivity() {
+        val scoreIntent = Intent(this, ChapterScoreActivity::class.java).apply {
+            putExtra(GameActivity.EXTRA_SCORE, score)
+            putExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, questions.size)
+            putExtra(EXTRA_LEVEL_ID, levelId)
         }
+        chapterScoreResultLauncher.launch(scoreIntent)
     }
 
     private fun loadQuestionsFromJson(levelId: String): List<Question> {
