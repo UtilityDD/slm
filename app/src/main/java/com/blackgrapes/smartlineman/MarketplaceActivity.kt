@@ -101,8 +101,14 @@ class MarketplaceActivity : AppCompatActivity() {
             val chip = Chip(this).apply {
                 text = name
                 isCheckable = true
-                setChipBackgroundColorResource(R.color.pastel_mint)
-                setTextColor(getColor(R.color.midnight_blue))
+                
+                // Set color selectors for checked/unchecked states
+                setChipBackgroundColorResource(R.color.chip_background_selector)
+                setTextColor(getColorStateList(R.color.chip_text_selector))
+                
+                // Set checked icon tint
+                checkedIconTint = getColorStateList(R.color.white)
+                
                 tag = id
             }
             chipGroup.addView(chip)

@@ -44,8 +44,9 @@
                 android:layout_height="wrap_content"
                 android:checked="true"
                 android:text="All Items"
-                android:textColor="@color/midnight_blue"
-                app:chipBackgroundColor="@color/pastel_mint" />
+                android:textColor="@color/chip_text_selector"
+                app:chipBackgroundColor="@color/chip_background_selector"
+                app:checkedIconTint="@color/white" />
 
         </com.google.android.material.chip.ChipGroup>
     </HorizontalScrollView>
