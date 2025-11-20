@@ -32,6 +32,7 @@ class ScoreActivity : AppCompatActivity() {
         val totalQuestions = intent.getIntExtra(GameActivity.EXTRA_TOTAL_QUESTIONS, 0)
         val level = intent.getIntExtra(GameActivity.EXTRA_LEVEL, 1)
         val totalTime = intent.getLongExtra(GameActivity.EXTRA_TOTAL_TIME, 0)
+        val levelId = intent.getStringExtra(GameActivity.EXTRA_LEVEL_ID)
 
         val scoreTextView = findViewById<TextView>(R.id.score_text)
         val feedbackEmojiTextView = findViewById<TextView>(R.id.feedback_emoji)
@@ -47,21 +48,27 @@ class ScoreActivity : AppCompatActivity() {
         }
         val percentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
 
+        val nextLevelButton = findViewById<Button>(R.id.next_level_button)
+        val playAgainButton = findViewById<Button>(R.id.play_again_button)
+
         val (feedbackMessage, emoji) = when {
             percentage == 100 -> {
                 startConfetti()
+                playAgainButton.text = "Play Again"
                 "Perfect!" to "🏆"
             }
-            percentage >= 50 -> "Good Effort!" to "👍"
-            else -> "Try Again!" to "💪"
+            percentage >= 50 -> {
+                playAgainButton.text = "Try Again"
+                "Good Effort!" to "👍"
+            }
+            else -> {
+                playAgainButton.text = "Try Again"
+                "Try Again!" to "💪"
+            }
         }
 
         wellDoneTextView.text = feedbackMessage
         feedbackEmojiTextView.text = emoji
-
-
-        val nextLevelButton = findViewById<Button>(R.id.next_level_button)
-        val playAgainButton = findViewById<Button>(R.id.play_again_button)
 
         // Show "Next Level" button if the player scored perfectly
         // Also, check if there is a next level to go to.
@@ -77,12 +84,12 @@ class ScoreActivity : AppCompatActivity() {
             nextLevelButton.visibility = View.GONE
         }
 
-
-
-
         playAgainButton.setOnClickListener {
-            // Simply finish and go back to MainActivity
-            finish() // Finish the ScoreActivity
+            val intent = Intent(this, GameActivity::class.java)
+            intent.putExtra(GameActivity.EXTRA_LEVEL, level)
+            intent.putExtra(GameActivity.EXTRA_LEVEL_ID, levelId)
+            startActivity(intent)
+            finish()
         }
 
         nextLevelButton.setOnClickListener {

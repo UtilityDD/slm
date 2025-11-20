@@ -265,6 +265,23 @@ class GameActivity : AppCompatActivity() {
             playSfx(correctSoundId)
             selectedButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(true)
+            
+            // Animate and show the next button only if correct
+            showNextButton()
+            // Disable all answer buttons after submission
+            answerButtons.forEach {
+                it.isEnabled = false
+                it.setTextColor(ContextCompat.getColor(this, R.color.white))
+            }
+
+            submitButton.text = "" // Remove text
+            val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
+            submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
+            // Post a runnable to calculate padding after the button is laid out
+            submitButton.post {
+                val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
+                submitButton.setPadding(padding, 0, 0, 0)
+            }
         } else {
             // Mark the incorrect answer red
             playSfx(wrongSoundId)
@@ -275,23 +292,17 @@ class GameActivity : AppCompatActivity() {
             val correctButton = answerButtons[currentCorrectAnswerIndex]
             correctButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.correct_green)
             animateFeedback(false)
-        }
-
-        // Animate and show the next button
-        showNextButton()
-        // Disable all answer buttons after submission
-        answerButtons.forEach {
-            it.isEnabled = false
-            it.setTextColor(ContextCompat.getColor(this, R.color.white))
-        }
-
-        submitButton.text = "" // Remove text
-        val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
-        submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
-        // Post a runnable to calculate padding after the button is laid out
-        submitButton.post {
-            val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
-            submitButton.setPadding(padding, 0, 0, 0)
+            
+            // Disable all answer buttons
+            answerButtons.forEach {
+                it.isEnabled = false
+                it.setTextColor(ContextCompat.getColor(this, R.color.white))
+            }
+            
+            // Delay and then fail
+            Handler(Looper.getMainLooper()).postDelayed({
+                navigateToScoreActivity()
+            }, 1500)
         }
     }
 
@@ -360,14 +371,22 @@ class GameActivity : AppCompatActivity() {
             it.isEnabled = false
             it.setTextColor(ContextCompat.getColor(this, R.color.white))
         }
-        showNextButton()
-        submitButton.text = "" // Remove text
-        val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
-        submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
-        submitButton.post {
-            val padding = (submitButton.width - (nextDrawable?.intrinsicWidth ?: 0)) / 2
-            submitButton.setPadding(padding, 0, 0, 0)
+        
+        // Delay and then fail
+        Handler(Looper.getMainLooper()).postDelayed({
+            navigateToScoreActivity()
+        }, 1500)
+    }
+
+    private fun navigateToScoreActivity() {
+        val scoreIntent = Intent(this, ScoreActivity::class.java).apply {
+            putExtra(EXTRA_SCORE, score)
+            putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
+            putExtra(EXTRA_LEVEL, level)
+            putExtra(EXTRA_LEVEL_ID, levelId)
+            putExtra(EXTRA_TOTAL_TIME, totalTimeTakenInMillis)
         }
+        scoreActivityResultLauncher.launch(scoreIntent)
     }
 
     private fun playSfx(soundId: Int) {
