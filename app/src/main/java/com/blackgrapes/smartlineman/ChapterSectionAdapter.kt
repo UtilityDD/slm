@@ -59,6 +59,15 @@ class ChapterSectionAdapter(
             emojiTextView.text = section.emoji
             titleTextView.text = section.title
 
+            // Check if the emoji is a number (our serial number)
+            if (section.emoji.all { it.isDigit() }) {
+                // It's a serial number, let's style it to match the theme.
+                emojiTextView.setTextColor(itemView.context.getColor(R.color.purple_700))
+            } else {
+                // It's a real emoji, reset to default text color in case of view recycling.
+                emojiTextView.setTextColor(itemView.context.getColor(android.R.color.black))
+            }
+
             // Display the chapter number badge if it exists
             if (section.levelId != null) {
                 chapterNumberBadge.visibility = View.VISIBLE
