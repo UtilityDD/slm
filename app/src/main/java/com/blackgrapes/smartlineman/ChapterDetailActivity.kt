@@ -144,14 +144,18 @@ class ChapterDetailActivity : AppCompatActivity() {
         // Only show the search menu if this is a chapter list view (Knowledge Base)
         if (isChapterListView) {
             searchItem.isVisible = true
-            // Setup animation on the custom action view
-            val actionView = searchItem.actionView
-            actionView?.setOnClickListener {
-                val pulse = AnimationUtils.loadAnimation(this, R.anim.search_icon_pulse)
-                it.startAnimation(pulse)
-                // TODO: Add logic to expand the search view here later.
-                Toast.makeText(this, "Search is coming soon!", Toast.LENGTH_SHORT).show()
-            }
+            val searchView = searchItem.actionView as SearchView
+            searchView.queryHint = "Search..."
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return false
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    filter(newText)
+                    return true
+                }
+            })
         } else {
             searchItem.isVisible = false
         }
