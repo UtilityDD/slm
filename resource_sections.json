@@ -1,0 +1,50 @@
+[
+  {
+    "id": "B1",
+    "title": "সুরক্ষা কবচ",
+    "iconName": "shield_icon",
+    "contentFile": "B1.json"
+  },
+  {
+    "id": "B2",
+    "title": "হাতিয়ারের ওস্তাদ",
+    "iconName": "tools_icon",
+    "contentFile": "B2.json"
+  },
+  {
+    "id": "B3",
+    "title": "লাইন চেনার জাদুকর",
+    "iconName": "line_wizard_icon",
+    "contentFile": "B3.json"
+  },
+  {
+    "id": "B4",
+    "title": "কাজের কারিগর",
+    "iconName": "craftsman_icon",
+    "contentFile": "B4.json"
+  },
+  {
+    "id": "B5",
+    "title": "ফল্ট ফাইন্ডার",
+    "iconName": "detective_icon",
+    "contentFile": "B5.json"
+  },
+  {
+    "id": "B6",
+    "title": "যন্ত্র গুরু (Equipment Guru)",
+    "iconName": "guru_icon",
+    "contentFile": "B6.json"
+  },
+  {
+    "id": "B7",
+    "title": "আইন কি বলে?",
+    "iconName": "law_icon",
+    "contentFile": "B7.json"
+  },
+  {
+    "id": "B8",
+    "title": "জরুরী রেগুলেশন",
+    "iconName": "regulation_icon",
+    "contentFile": "B8.json"
+  }
+]
