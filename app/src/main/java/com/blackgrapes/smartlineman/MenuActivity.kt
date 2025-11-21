@@ -26,13 +26,24 @@ class MenuActivity : AppCompatActivity() {
         // Set click listeners for each card
         findViewById<View>(R.id.card_resources).setOnClickListener { startActivity(Intent(this, ResourcesActivity::class.java)) }
         findViewById<View>(R.id.card_market_place).setOnClickListener { startActivity(Intent(this, MarketplaceActivity::class.java)) }
-        findViewById<View>(R.id.card_update).setOnClickListener { performSync() }
+        findViewById<View>(R.id.card_update).setOnClickListener { showUpdateConfirmationDialog() }
         findViewById<View>(R.id.card_notice).setOnClickListener { showToast("Notice Clicked") }
         findViewById<View>(R.id.card_help).setOnClickListener { showToast("Help Clicked") }
         findViewById<View>(R.id.card_reset_progress).setOnClickListener { showResetConfirmationDialog() }
     }
 
-    private fun performSync() {
+    private fun showUpdateConfirmationDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Update Content")
+            .setMessage("This will download the latest content from the server. It may take a few moments.\n\nDo you want to continue?")
+            .setPositiveButton("Update") { _, _ ->
+                startSync()
+            }
+            .setNegativeButton("Cancel", null)
+            .show()
+    }
+
+    private fun startSync() {
         val progressDialog = android.app.ProgressDialog(this)
         progressDialog.setTitle("Updating Data")
         progressDialog.setMessage("Connecting to server...")
@@ -50,13 +61,13 @@ class MenuActivity : AppCompatActivity() {
                     progressDialog.dismiss()
                     if (success) {
                         AlertDialog.Builder(this)
-                            .setTitle("Sync Complete")
+                            .setTitle("Update Complete")
                             .setMessage(message)
                             .setPositiveButton("OK", null)
                             .show()
                     } else {
                         AlertDialog.Builder(this)
-                            .setTitle("Sync Failed")
+                            .setTitle("Update Failed")
                             .setMessage(message)
                             .setPositiveButton("OK", null)
                             .show()
