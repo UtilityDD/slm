@@ -44,6 +44,7 @@ class ChapterDetailActivity : AppCompatActivity() {
     private var chapterLevelId: String? = null
     private var isQuizButtonActive = false
     private var isChapterListView = false // To distinguish between chapter list and chapter detail
+    private val chapterContentMap = mutableMapOf<String, String>() // Map to store content file name -> full text content
 
     private val chapterQuizResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -86,7 +87,106 @@ class ChapterDetailActivity : AppCompatActivity() {
             allSections = loadSectionsFromJson(contentFileName)
             sections = allSections.toMutableList()
             setupRecyclerView()
+
+            // If this is a chapter list, preload the content for deep search
+            if (isChapterListView) {
+                preloadChapterContent()
+            }
         }
+    }
+
+    private fun preloadChapterContent() {
+        Thread {
+            allSections.forEach { section ->
+                section.contentFile?.let { fileName ->
+                    try {
+                        val jsonString = JsonHelper.loadJSON(this, fileName)
+                        if (jsonString != null) {
+                            val fullText = extractTextFromChapterJson(jsonString)
+                            chapterContentMap[fileName] = fullText
+                        }
+                    } catch (e: Exception) {
+                        Log.e("ChapterDetailActivity", "Error preloading content for $fileName", e)
+                    }
+                }
+            }
+        }.start()
+    }
+
+    private fun extractTextFromChapterJson(jsonString: String): String {
+        val sb = StringBuilder()
+        try {
+            val json = JSONObject(jsonString)
+
+            // 1. Mission Briefing
+            sb.append(json.optString("mission_briefing", "")).append(" ")
+
+            // 2. Sections & Points
+            val sectionsArray = json.optJSONArray("sections")
+            if (sectionsArray != null) {
+                for (i in 0 until sectionsArray.length()) {
+                    val section = sectionsArray.getJSONObject(i)
+                    sb.append(section.optString("title", "")).append(" ")
+                    
+                    val pointsArray = section.optJSONArray("points")
+                    if (pointsArray != null) {
+                        for (j in 0 until pointsArray.length()) {
+                            val point = pointsArray.getJSONObject(j)
+                            sb.append(point.optString("item_name", "")).append(" ")
+                            sb.append(point.optString("specifications", "")).append(" ")
+                            sb.append(point.optString("importance", "")).append(" ")
+                            sb.append(point.optString("daily_check", "")).append(" ")
+                            sb.append(point.optString("golden_rule", "")).append(" ")
+                            sb.append(point.optString("safety_tip", "")).append(" ")
+                        }
+                    }
+                }
+            }
+
+            // 3. Pro Tip
+            val proTip = json.optJSONObject("pro_tip")
+            if (proTip != null) {
+                sb.append(proTip.optString("title", "")).append(" ")
+                val contentArray = proTip.optJSONArray("content")
+                if (contentArray != null) {
+                    for (i in 0 until contentArray.length()) {
+                        sb.append(contentArray.getString(i)).append(" ")
+                    }
+                }
+            }
+
+            // 4. Myth Buster
+            val mythBuster = json.optJSONObject("myth_buster")
+            if (mythBuster != null) {
+                sb.append(mythBuster.optString("title", "")).append(" ")
+                val mythsArray = mythBuster.optJSONArray("myths")
+                if (mythsArray != null) {
+                    for (i in 0 until mythsArray.length()) {
+                        val myth = mythsArray.getJSONObject(i)
+                        sb.append(myth.optString("myth", "")).append(" ")
+                        sb.append(myth.optString("reality", "")).append(" ")
+                    }
+                }
+            }
+
+            // 5. Advanced Section
+            val advancedSection = json.optJSONObject("advanced_section")
+            if (advancedSection != null) {
+                sb.append(advancedSection.optString("title", "")).append(" ")
+                val factsArray = advancedSection.optJSONArray("facts")
+                if (factsArray != null) {
+                    for (i in 0 until factsArray.length()) {
+                        val fact = factsArray.getJSONObject(i)
+                        sb.append(fact.optString("title", "")).append(" ")
+                        sb.append(fact.optString("content", "")).append(" ")
+                    }
+                }
+            }
+
+        } catch (e: JSONException) {
+            Log.e("ChapterDetailActivity", "Error extracting text from JSON", e)
+        }
+        return sb.toString().lowercase(Locale.getDefault())
     }
 
     private fun setupRecyclerView() {
@@ -167,10 +267,74 @@ class ChapterDetailActivity : AppCompatActivity() {
             allSections
         } else {
             val searchQuery = query.lowercase(Locale.getDefault())
-            allSections.filter { section ->
-                section.title.lowercase(Locale.getDefault()).contains(searchQuery) ||
-                        section.summary.lowercase(Locale.getDefault()).contains(searchQuery)
+            val resultList = mutableListOf<ChapterSection>()
+            // Use Bengali locale for better word breaking
+            val breakIterator = java.text.BreakIterator.getWordInstance(Locale("bn", "BD"))
+
+            for (section in allSections) {
+                val titleMatch = section.title.lowercase(Locale.getDefault()).contains(searchQuery)
+                val summaryMatch = section.summary.lowercase(Locale.getDefault()).contains(searchQuery)
+                
+                if (titleMatch || summaryMatch) {
+                    // Direct match in title or summary, add as is
+                    resultList.add(section)
+                } else {
+                    // Check deep content
+                    val contentFileName = section.contentFile
+                    if (contentFileName != null && chapterContentMap.containsKey(contentFileName)) {
+                        val content = chapterContentMap[contentFileName] ?: ""
+                        val lowerContent = content.lowercase(Locale.getDefault())
+                        val matchIndex = lowerContent.indexOf(searchQuery)
+                        
+                        if (matchIndex != -1) {
+                            // Found in content! Create a smart snippet.
+                            breakIterator.setText(content)
+                            
+                            // Find a good start position (approx 40 chars before)
+                            var start = (matchIndex - 40).coerceAtLeast(0)
+                            if (start > 0) {
+                                // Align to word boundary
+                                val boundary = breakIterator.preceding(start)
+                                if (boundary != java.text.BreakIterator.DONE) {
+                                    start = boundary
+                                }
+                            }
+
+                            // Find a good end position (approx 60 chars after match end)
+                            var end = (matchIndex + searchQuery.length + 60).coerceAtMost(content.length)
+                            if (end < content.length) {
+                                // Align to word boundary
+                                val boundary = breakIterator.following(end)
+                                if (boundary != java.text.BreakIterator.DONE) {
+                                    end = boundary
+                                }
+                            }
+                            
+                            val rawSnippet = content.substring(start, end).trim()
+                            
+                            // Add ellipsis if needed
+                            val prefix = if (start > 0) "..." else ""
+                            val suffix = if (end < content.length) "..." else ""
+                            
+                            var snippet = "$prefix$rawSnippet$suffix"
+
+                            // Highlight the match. 
+                            val regex = searchQuery.toRegex(RegexOption.IGNORE_CASE)
+                            snippet = regex.replace(snippet) { "**${it.value}**" }
+
+                            // Create a new section object with the snippet as summary.
+                            // We hide the image to make it more compact.
+                            val newSection = section.copy(
+                                summary = snippet,
+                                imageName = null, // Hide image for compact look
+                                imageCaption = null
+                            )
+                            resultList.add(newSection)
+                        }
+                    }
+                }
             }
+            resultList
         }
         adapter.updateSections(filteredList)
     }
