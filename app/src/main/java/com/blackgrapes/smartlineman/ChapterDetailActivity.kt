@@ -185,8 +185,7 @@ class ChapterDetailActivity : AppCompatActivity() {
 
             // Check if a quiz exists for this chapter and set up the button
             chapterLevelId?.let { levelId ->
-                val levelNumber = levelId.split('.').lastOrNull()?.toIntOrNull()
-                if (levelNumber != null && hasQuizForLevel(levelNumber)) {
+                if (hasQuizForLevel(levelId)) {
                     startQuizButton.visibility = View.VISIBLE
                     isQuizButtonActive = false
                     // Set a distinct "disabled" look
@@ -377,8 +376,7 @@ class ChapterDetailActivity : AppCompatActivity() {
         return sectionList
     }
 
-    private fun hasQuizForLevel(level: Int): Boolean {
-        val levelId = "1.$level"
+    private fun hasQuizForLevel(levelId: String): Boolean {
         val quizFileName = "questions_${levelId.replace('.', '_')}.json"
         return try {
             assets.open(quizFileName).close() // Check if file exists
