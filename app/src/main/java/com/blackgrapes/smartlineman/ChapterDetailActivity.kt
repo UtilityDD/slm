@@ -35,6 +35,7 @@ class ChapterDetailActivity : AppCompatActivity() {
         const val EXTRA_IS_KNOWLEDGE_BASE = "EXTRA_IS_KNOWLEDGE_BASE"
         const val EXTRA_TITLE = "EXTRA_TITLE"
         const val EXTRA_CONTENT_FILE_NAME = "EXTRA_CONTENT_FILE_NAME"
+        const val EXTRA_SEARCH_QUERY = "EXTRA_SEARCH_QUERY"
     }
 
     private lateinit var sections: MutableList<ChapterSection>
@@ -45,6 +46,7 @@ class ChapterDetailActivity : AppCompatActivity() {
     private var isQuizButtonActive = false
     private var isChapterListView = false // To distinguish between chapter list and chapter detail
     private val chapterContentMap = mutableMapOf<String, String>() // Map to store content file name -> full text content
+    private var currentSearchQuery: String? = null
 
     private val chapterQuizResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
         if (result.resultCode == RESULT_OK) {
@@ -91,6 +93,54 @@ class ChapterDetailActivity : AppCompatActivity() {
             // If this is a chapter list, preload the content for deep search
             if (isChapterListView) {
                 preloadChapterContent()
+            } else {
+                // Check if we have a search query to highlight and scroll to
+                val searchQuery = intent.getStringExtra(EXTRA_SEARCH_QUERY)
+                if (!searchQuery.isNullOrEmpty()) {
+                    highlightAndScrollToQuery(searchQuery)
+                }
+            }
+        }
+    }
+
+    private fun highlightAndScrollToQuery(query: String) {
+        val lowerQuery = query.lowercase(Locale.getDefault())
+        var scrollPosition = -1
+
+        // Create a new list to avoid concurrent modification if we were iterating directly
+        val updatedSections = sections.toMutableList()
+
+        for (i in updatedSections.indices) {
+            val section = updatedSections[i]
+            val titleMatch = section.title.lowercase(Locale.getDefault()).contains(lowerQuery)
+            val summaryMatch = section.summary.lowercase(Locale.getDefault()).contains(lowerQuery)
+
+            if (titleMatch || summaryMatch) {
+                scrollPosition = i
+                
+                // Highlight the match in the summary
+                if (summaryMatch) {
+                    val regex = query.toRegex(RegexOption.IGNORE_CASE)
+                    val highlightedSummary = regex.replace(section.summary) { 
+                        // Using bold and italic for highlighting as it is standard markdown
+                        "***${it.value}***" 
+                    }
+                    
+                    updatedSections[i] = section.copy(summary = highlightedSummary)
+                }
+                
+                // We found the first match, so we can stop looking for the *scroll position*
+                break 
+            }
+        }
+
+        if (scrollPosition != -1) {
+            sections = updatedSections
+            adapter.updateSections(sections)
+            
+            val recyclerView: RecyclerView = findViewById(R.id.chapter_recycler_view)
+            recyclerView.post {
+                (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(scrollPosition, 0)
             }
         }
     }
@@ -199,6 +249,10 @@ class ChapterDetailActivity : AppCompatActivity() {
                 val intent = Intent(this, ChapterDetailActivity::class.java).apply {
                     putExtra(EXTRA_TITLE, section.title)
                     putExtra(EXTRA_CONTENT_FILE_NAME, section.contentFile)
+                    // Pass the search query if available
+                    if (!currentSearchQuery.isNullOrEmpty()) {
+                        putExtra(EXTRA_SEARCH_QUERY, currentSearchQuery)
+                    }
                 }
                 chapterContentResultLauncher.launch(intent)
             } else {
@@ -263,6 +317,7 @@ class ChapterDetailActivity : AppCompatActivity() {
     }
 
     private fun filter(query: String?) {
+        currentSearchQuery = query // Update the current query
         val filteredList = if (query.isNullOrEmpty()) {
             allSections
         } else {
