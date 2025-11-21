@@ -46,5 +46,11 @@
     "title": "জরুরী রেগুলেশন",
     "iconName": "regulation_icon",
     "contentFile": "B8.json"
+  },
+  {
+    "id": "B9",
+    "title": "যন্ত্রের স্বাস্থ্য পরীক্ষা (Testing Manual)",
+    "iconName": "testing_icon",
+    "contentFile": "B9.json"
   }
 ]
