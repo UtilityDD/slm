@@ -34,7 +34,7 @@ class MenuActivity : AppCompatActivity() {
 
     private fun performSync() {
         val progressDialog = android.app.ProgressDialog(this)
-        progressDialog.setTitle("Syncing Data")
+        progressDialog.setTitle("Updating Data")
         progressDialog.setMessage("Connecting to server...")
         progressDialog.setCancelable(false)
         progressDialog.show()
