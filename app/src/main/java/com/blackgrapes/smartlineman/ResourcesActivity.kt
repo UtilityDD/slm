@@ -92,12 +92,19 @@ class ResourcesActivity : AppCompatActivity() {
             val resultList = mutableListOf<ResourceSection>()
             val breakIterator = java.text.BreakIterator.getWordInstance(java.util.Locale("bn", "BD"))
 
+            // Create a regex for highlighting
+            val highlightRegex = query.toRegex(RegexOption.IGNORE_CASE)
+
             for (section in allSections) {
                 val titleMatch = section.title.lowercase(java.util.Locale.getDefault()).contains(searchQuery)
                 
                 if (titleMatch) {
-                    resultList.add(section)
+                    // Highlight the match in the title
+                    val highlightedTitle = highlightRegex.replace(section.title) { "**${it.value}**" }
+                    val newSection = section.copy(title = highlightedTitle, summary = null) // Clear summary for title matches
+                    resultList.add(newSection)
                 } else {
+                    // If no title match, search in the content
                     val contentFileName = section.contentFile
                     if (contentFileName != null && chapterContentMap.containsKey(contentFileName)) {
                         val content = chapterContentMap[contentFileName] ?: ""
@@ -127,10 +134,8 @@ class ResourcesActivity : AppCompatActivity() {
                             val prefix = if (start > 0) "..." else ""
                             val suffix = if (end < content.length) "..." else ""
                             var snippet = "$prefix$rawSnippet$suffix"
-
-                            val regex = searchQuery.toRegex(RegexOption.IGNORE_CASE)
-                            snippet = regex.replace(snippet) { "**${it.value}**" }
-
+                            
+                            snippet = highlightRegex.replace(snippet) { "**${it.value}**" }
                             val newSection = section.copy(summary = snippet)
                             resultList.add(newSection)
                         }
@@ -139,7 +144,14 @@ class ResourcesActivity : AppCompatActivity() {
             }
             resultList
         }
-        adapter.updateSections(filteredList)
+
+        // We need to map the original titles back if the query is cleared
+        val displayList = if (query.isNullOrEmpty()) {
+            allSections
+        } else {
+            filteredList
+        }
+        adapter.updateSections(displayList)
     }
 
     private fun preloadChapterContent() {
