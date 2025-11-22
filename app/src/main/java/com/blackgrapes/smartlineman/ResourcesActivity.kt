@@ -125,7 +125,7 @@ class ResourcesActivity : AppCompatActivity() {
                 
                 if (titleMatch) {
                     // Highlight the match in the title
-                    val highlightedTitle = highlightRegex.replace(section.title) { "**${it.value}**" }
+                    val highlightedTitle = highlightRegex.replace(section.title) { "<mark>${it.value}</mark>" }
                     val newSection = section.copy(title = highlightedTitle, summary = null) // Clear summary for title matches
                     resultList.add(newSection)
                 }
@@ -164,7 +164,7 @@ class ResourcesActivity : AppCompatActivity() {
                             val suffix = if (end < content.length) "..." else ""
                             var snippet = "$prefix$rawSnippet$suffix"
                             
-                            snippet = highlightRegex.replace(snippet) { "**${it.value}**" }
+                            snippet = highlightRegex.replace(snippet) { "<mark>${it.value}</mark>" }
                             val newSection = section.copy(summary = snippet)
                             resultList.add(newSection)
                         }

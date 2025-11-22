@@ -57,7 +57,7 @@ class ChapterSectionAdapter(
 
         fun bind(section: ChapterSection) {
             emojiTextView.text = section.emoji
-            titleTextView.text = section.title
+            markwon.setMarkdown(titleTextView, section.title)
 
             // Check if the emoji is a number (our serial number)
             if (section.emoji.all { it.isDigit() }) {

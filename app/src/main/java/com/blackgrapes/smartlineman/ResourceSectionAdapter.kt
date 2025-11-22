@@ -40,7 +40,7 @@ class ResourceSectionAdapter(
         val section = sections[position]
         val context = holder.itemView.context
         
-        holder.title.text = section.title
+        markwon.setMarkdown(holder.title, section.title)
 
         if (!section.summary.isNullOrEmpty()) {
             holder.summary.visibility = View.VISIBLE

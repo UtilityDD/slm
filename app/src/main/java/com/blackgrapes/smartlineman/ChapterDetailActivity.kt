@@ -138,8 +138,8 @@ class ChapterDetailActivity : AppCompatActivity() {
                 if (summaryMatch) {
                     val regex = query.toRegex(RegexOption.IGNORE_CASE)
                     val highlightedSummary = regex.replace(section.summary) { 
-                        // Using bold and italic for highlighting as it is standard markdown
-                        "***${it.value}***" 
+                        // Use <mark> tag for yellow background highlighting
+                        "<mark>${it.value}</mark>" 
                     }
                     
                     updatedSections[i] = section.copy(summary = highlightedSummary)
@@ -402,7 +402,7 @@ class ChapterDetailActivity : AppCompatActivity() {
 
                             // Highlight the match. 
                             val regex = searchQuery.toRegex(RegexOption.IGNORE_CASE)
-                            snippet = regex.replace(snippet) { "**${it.value}**" }
+                            snippet = regex.replace(snippet) { "<mark>${it.value}</mark>" }
 
                             // Create a new section object with the snippet as summary.
                             // We hide the image to make it more compact.
