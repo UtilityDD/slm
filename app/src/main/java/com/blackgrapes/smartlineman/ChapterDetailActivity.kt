@@ -24,6 +24,7 @@ import org.json.JSONObject
 import org.json.JSONException
 import android.widget.Toast
 import android.widget.Button
+import android.widget.TextView
 import java.util.Locale
 import android.widget.ImageView
 import java.io.IOException
@@ -41,6 +42,8 @@ class ChapterDetailActivity : AppCompatActivity() {
     private lateinit var sections: MutableList<ChapterSection>
     private lateinit var adapter: ChapterSectionAdapter
     private lateinit var startQuizButton: Button
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var noResultsTextView: TextView
     private lateinit var allSections: List<ChapterSection> // To hold the original, unfiltered list
     private var chapterLevelId: String? = null
     private var isQuizButtonActive = false
@@ -84,6 +87,9 @@ class ChapterDetailActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         startQuizButton = findViewById(R.id.start_quiz_button)
+        recyclerView = findViewById(R.id.chapter_recycler_view)
+        noResultsTextView = findViewById(R.id.no_results_in_page_text)
+
 
         if (contentFileName != null) {
             allSections = loadSectionsFromJson(contentFileName)
@@ -138,8 +144,7 @@ class ChapterDetailActivity : AppCompatActivity() {
             sections = updatedSections
             adapter.updateSections(sections)
             
-            val recyclerView: RecyclerView = findViewById(R.id.chapter_recycler_view)
-            recyclerView.post {
+            this.recyclerView.post {
                 (recyclerView.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(scrollPosition, 0)
             }
         }
@@ -240,7 +245,6 @@ class ChapterDetailActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val recyclerView: RecyclerView = findViewById(R.id.chapter_recycler_view)
         recyclerView.layoutManager = LinearLayoutManager(this)
         val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
 
@@ -392,6 +396,14 @@ class ChapterDetailActivity : AppCompatActivity() {
             resultList
         }
         adapter.updateSections(filteredList)
+
+        if (filteredList.isEmpty()) {
+            recyclerView.visibility = View.GONE
+            noResultsTextView.visibility = View.VISIBLE
+        } else {
+            recyclerView.visibility = View.VISIBLE
+            noResultsTextView.visibility = View.GONE
+        }
     }
 
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
@@ -435,8 +447,7 @@ class ChapterDetailActivity : AppCompatActivity() {
             }
 
             // If the content is not scrollable from the start, enable the button immediately.
-            val recyclerView: RecyclerView = findViewById(R.id.chapter_recycler_view)
-            recyclerView.post {
+            this.recyclerView.post {
                 val layoutManager = recyclerView.layoutManager as LinearLayoutManager
                 val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
                 val totalItemCount = recyclerView.adapter?.itemCount ?: 0
