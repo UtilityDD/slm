@@ -28,6 +28,7 @@ class ResourcesActivity : AppCompatActivity() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var noResultsTextView: TextView
     private val chapterContentMap = mutableMapOf<String, String>()
+    private var currentQuery: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -72,6 +73,12 @@ class ResourcesActivity : AppCompatActivity() {
         preloadChapterContent()
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Re-apply the filter when returning to the activity to preserve search results
+        filter(currentQuery)
+    }
+
     override fun onCreateOptionsMenu(menu: android.view.Menu): Boolean {
         menuInflater.inflate(R.menu.menu_search, menu)
         val searchItem = menu.findItem(R.id.action_search)
@@ -91,6 +98,7 @@ class ResourcesActivity : AppCompatActivity() {
     }
 
     private fun filter(query: String?) {
+        currentQuery = query
         val filteredList = if (query.isNullOrEmpty()) {
             allSections
         } else {

@@ -62,7 +62,10 @@ class ChapterDetailActivity : AppCompatActivity() {
         // This is called when we return from a chapter detail screen (after a quiz).
         // We need to reload the list to reflect the new "completed" status.
         val contentFileName = intent.getStringExtra(EXTRA_CONTENT_FILE_NAME)!!
-        allSections = loadSectionsFromJson(contentFileName)
+        // Re-load all sections to get completion status, but don't immediately update the adapter
+        allSections = loadSectionsFromJson(contentFileName, false)
+        // Re-apply the current filter to the newly loaded data
+        filter(currentSearchQuery)
         sections = allSections.toMutableList()
         adapter.updateSections(sections)
     }
@@ -447,7 +450,7 @@ class ChapterDetailActivity : AppCompatActivity() {
         return if (distance > 3) 99 else distance
     }
 
-    private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
+    private fun loadSectionsFromJson(fileName: String, updateUi: Boolean = true): List<ChapterSection> {
         val sectionList = mutableListOf<ChapterSection>()
         try {
             val jsonString = JsonHelper.loadJSON(this, fileName)
@@ -460,45 +463,49 @@ class ChapterDetailActivity : AppCompatActivity() {
             chapterLevelId = chapterJson.optString("level_id", null)
 
             // Check if a quiz exists for this chapter and set up the button
-            chapterLevelId?.let { levelId ->
-                if (hasQuizForLevel(levelId)) {
-                    startQuizButton.visibility = View.VISIBLE
-                    isQuizButtonActive = false
-                    // Set a distinct "disabled" look
-                    startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.disabled_gray)
-                    startQuizButton.alpha = 1.0f // Keep it fully opaque
+            if (updateUi) {
+                chapterLevelId?.let { levelId ->
+                    if (hasQuizForLevel(levelId)) {
+                        startQuizButton.visibility = View.VISIBLE
+                        isQuizButtonActive = false
+                        // Set a distinct "disabled" look
+                        startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.disabled_gray)
+                        startQuizButton.alpha = 1.0f // Keep it fully opaque
 
-                    startQuizButton.setOnClickListener {
-                        if (isQuizButtonActive) {
-                            val intent = Intent(this, ChapterQuizActivity::class.java).apply {
-                                putExtra(ChapterQuizActivity.EXTRA_LEVEL_ID, chapterLevelId)
+                        startQuizButton.setOnClickListener {
+                            if (isQuizButtonActive) {
+                                val intent = Intent(this, ChapterQuizActivity::class.java).apply {
+                                    putExtra(ChapterQuizActivity.EXTRA_LEVEL_ID, chapterLevelId)
+                                }
+                                chapterQuizResultLauncher.launch(intent)
+                            } else {
+                                Toast.makeText(this, "অধ্যায়টি শেষ পর্যন্ত পড়ে কুইজটি আনলক করুন!", Toast.LENGTH_SHORT).show()
+                                startQuizButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
                             }
-                            chapterQuizResultLauncher.launch(intent)
-                        } else {
-                            Toast.makeText(this, "অধ্যায়টি শেষ পর্যন্ত পড়ে কুইজটি আনলক করুন!", Toast.LENGTH_SHORT).show()
-                            startQuizButton.startAnimation(AnimationUtils.loadAnimation(this, R.anim.shake_animation))
                         }
+                    } else {
+                        startQuizButton.visibility = View.GONE
                     }
-                } else {
+                } ?: run {
+                    // If there's no level_id (e.g., it's a list of chapters), hide the button.
                     startQuizButton.visibility = View.GONE
                 }
-            } ?: run {
-                // If there's no level_id (e.g., it's a list of chapters), hide the button.
-                startQuizButton.visibility = View.GONE
             }
 
             // If the content is not scrollable from the start, enable the button immediately.
-            this.recyclerView.post {
-                val layoutManager = recyclerView.layoutManager as LinearLayoutManager
-                val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
-                val totalItemCount = recyclerView.adapter?.itemCount ?: 0
+            if (updateUi) {
+                this.recyclerView.post {
+                    val layoutManager = recyclerView.layoutManager as LinearLayoutManager
+                    val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                    val totalItemCount = recyclerView.adapter?.itemCount ?: 0
 
-                // Check if all items are visible (i.e., not scrollable)
-                if (totalItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1) {
-                    if (!isQuizButtonActive) {
-                        isQuizButtonActive = true
-                        startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.purple_500)
-                        startQuizButton.setTextColor(ContextCompat.getColor(this, R.color.white))
+                    // Check if all items are visible (i.e., not scrollable)
+                    if (totalItemCount > 0 && lastVisibleItemPosition == totalItemCount - 1) {
+                        if (!isQuizButtonActive) {
+                            isQuizButtonActive = true
+                            startQuizButton.backgroundTintList = ContextCompat.getColorStateList(this, R.color.purple_500)
+                            startQuizButton.setTextColor(ContextCompat.getColor(this, R.color.white))
+                        }
                     }
                 }
             }
