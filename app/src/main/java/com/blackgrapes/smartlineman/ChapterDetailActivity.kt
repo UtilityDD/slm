@@ -113,6 +113,12 @@ class ChapterDetailActivity : AppCompatActivity() {
         }
     }
 
+    override fun onResume() {
+        super.onResume()
+        // Re-apply the filter when returning to the activity to preserve search results.
+        filter(currentSearchQuery)
+    }
+
     private fun highlightAndScrollToQuery(query: String) {
         val lowerQuery = query.lowercase(Locale.getDefault())
         var scrollPosition = -1
