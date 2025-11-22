@@ -1,3 +1,4 @@
+
 package com.blackgrapes.smartlineman
 
 import android.view.LayoutInflater
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ResourceSectionAdapter(
     private val sections: List<ResourceSection>,
+    private val markwon: io.noties.markwon.Markwon,
     private val onItemClicked: (ResourceSection) -> Unit
 ) : RecyclerView.Adapter<ResourceSectionAdapter.ViewHolder>() {
 
@@ -23,6 +25,7 @@ class ResourceSectionAdapter(
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val title: TextView = view.findViewById(R.id.section_title)
+        val summary: TextView = view.findViewById(R.id.section_summary)
         val icon: ImageView = view.findViewById(R.id.section_icon)
         val cardView: CardView = view as CardView
     }
@@ -38,6 +41,13 @@ class ResourceSectionAdapter(
         val context = holder.itemView.context
         
         holder.title.text = section.title
+
+        if (!section.summary.isNullOrEmpty()) {
+            holder.summary.visibility = View.VISIBLE
+            markwon.setMarkdown(holder.summary, section.summary)
+        } else {
+            holder.summary.visibility = View.GONE
+        }
         
         val colorRes = pastelColors[position % pastelColors.size]
         holder.cardView.setCardBackgroundColor(ContextCompat.getColor(context, colorRes))
@@ -53,4 +63,10 @@ class ResourceSectionAdapter(
     }
 
     override fun getItemCount(): Int = sections.size
+    
+    fun updateSections(newSections: List<ResourceSection>) {
+        (sections as MutableList).clear()
+        sections.addAll(newSections)
+        notifyDataSetChanged()
+    }
 }
