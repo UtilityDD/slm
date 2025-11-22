@@ -12,7 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 
 class ResourceSectionAdapter(
-    private val sections: List<ResourceSection>,
+    private var sections: List<ResourceSection>,
     private val markwon: io.noties.markwon.Markwon,
     private val onItemClicked: (ResourceSection) -> Unit
 ) : RecyclerView.Adapter<ResourceSectionAdapter.ViewHolder>() {
@@ -65,8 +65,7 @@ class ResourceSectionAdapter(
     override fun getItemCount(): Int = sections.size
     
     fun updateSections(newSections: List<ResourceSection>) {
-        (sections as MutableList).clear()
-        sections.addAll(newSections)
+        sections = newSections
         notifyDataSetChanged()
     }
 }
