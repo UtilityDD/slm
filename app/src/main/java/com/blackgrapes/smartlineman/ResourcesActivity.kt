@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
+import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -23,6 +24,8 @@ class ResourcesActivity : AppCompatActivity() {
 
     private lateinit var adapter: ResourceSectionAdapter
     private lateinit var allSections: List<ResourceSection>
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var noResultsTextView: TextView
     private val chapterContentMap = mutableMapOf<String, String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -43,7 +46,9 @@ class ResourcesActivity : AppCompatActivity() {
         toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
-        val recyclerView: RecyclerView = findViewById(R.id.resources_recycler_view)
+        recyclerView = findViewById(R.id.resources_recycler_view)
+        noResultsTextView = findViewById(R.id.no_results_text)
+
         recyclerView.layoutManager = GridLayoutManager(this, 2) // 2 columns
 
         allSections = loadResourceSectionsFromJson()
@@ -152,6 +157,14 @@ class ResourcesActivity : AppCompatActivity() {
             filteredList
         }
         adapter.updateSections(displayList)
+
+        if (displayList.isEmpty()) {
+            recyclerView.visibility = android.view.View.GONE
+            noResultsTextView.visibility = android.view.View.VISIBLE
+        } else {
+            recyclerView.visibility = android.view.View.VISIBLE
+            noResultsTextView.visibility = android.view.View.GONE
+        }
     }
 
     private fun preloadChapterContent() {
