@@ -13,6 +13,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import kotlin.math.min
 import org.json.JSONArray
 import org.json.JSONException
 import java.io.IOException
@@ -101,14 +102,29 @@ class ResourcesActivity : AppCompatActivity() {
             val highlightRegex = query.toRegex(RegexOption.IGNORE_CASE)
 
             for (section in allSections) {
-                val titleMatch = section.title.lowercase(java.util.Locale.getDefault()).contains(searchQuery)
+                // Fuzzy search on title
+                val titleWords = section.title.split(Regex("\\s+"))
+                var titleMatch = false
+                for (word in titleWords) {
+                    val distance = levenshteinDistance(searchQuery, word.lowercase(java.util.Locale.getDefault()))
+                    // Allow more typos for longer words. Threshold: 1 for short words, 2 for longer.
+                    val threshold = if (searchQuery.length > 5) 2 else 1
+                    if (distance <= threshold) {
+                        titleMatch = true
+                        break
+                    }
+                }
                 
                 if (titleMatch) {
                     // Highlight the match in the title
                     val highlightedTitle = highlightRegex.replace(section.title) { "**${it.value}**" }
                     val newSection = section.copy(title = highlightedTitle, summary = null) // Clear summary for title matches
                     resultList.add(newSection)
-                } else {
+                }
+                
+                // Always search content, even if title matches, to provide context snippets.
+                // But avoid adding duplicates.
+                if (resultList.none { it.id == section.id }) {
                     // If no title match, search in the content
                     val contentFileName = section.contentFile
                     if (contentFileName != null && chapterContentMap.containsKey(contentFileName)) {
@@ -165,6 +181,33 @@ class ResourcesActivity : AppCompatActivity() {
             recyclerView.visibility = android.view.View.VISIBLE
             noResultsTextView.visibility = android.view.View.GONE
         }
+    }
+
+    private fun levenshteinDistance(s1: String, s2: String): Int {
+        val s1Len = s1.length
+        val s2Len = s2.length
+        val dp = Array(s1Len + 1) { IntArray(s2Len + 1) }
+
+        for (i in 0..s1Len) {
+            dp[i][0] = i
+        }
+        for (j in 0..s2Len) {
+            dp[0][j] = j
+        }
+
+        for (i in 1..s1Len) {
+            for (j in 1..s2Len) {
+                val cost = if (s1[i - 1].equals(s2[j - 1], ignoreCase = true)) 0 else 1
+                dp[i][j] = minOf(
+                    dp[i - 1][j] + 1,          // Deletion
+                    dp[i][j - 1] + 1,          // Insertion
+                    dp[i - 1][j - 1] + cost    // Substitution
+                )
+            }
+        }
+        // Return distance, but cap it to avoid overly dissimilar words matching
+        val distance = dp[s1Len][s2Len]
+        return if (distance > 3) 99 else distance
     }
 
     private fun preloadChapterContent() {

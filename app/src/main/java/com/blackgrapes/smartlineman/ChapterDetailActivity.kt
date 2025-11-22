@@ -26,6 +26,7 @@ import android.widget.Toast
 import android.widget.Button
 import android.widget.TextView
 import java.util.Locale
+import kotlin.math.min
 import android.widget.ImageView
 import java.io.IOException
 import com.blackgrapes.smartlineman.util.JsonHelper
@@ -331,13 +332,26 @@ class ChapterDetailActivity : AppCompatActivity() {
             val breakIterator = java.text.BreakIterator.getWordInstance(Locale("bn", "BD"))
 
             for (section in allSections) {
-                val titleMatch = section.title.lowercase(Locale.getDefault()).contains(searchQuery)
-                val summaryMatch = section.summary.lowercase(Locale.getDefault()).contains(searchQuery)
+                // Fuzzy search on title and summary
+                val titleWords = section.title.split(Regex("\\s+"))
+                val summaryWords = section.summary.split(Regex("\\s+"))
+                var matchFound = false
+                val threshold = if (searchQuery.length > 5) 2 else 1
+
+                for (word in titleWords + summaryWords) {
+                    val distance = levenshteinDistance(searchQuery, word.lowercase(Locale.getDefault()).trim(' ', ',', '.', '!', '?'))
+                    if (distance <= threshold) {
+                        matchFound = true
+                        break
+                    }
+                }
                 
-                if (titleMatch || summaryMatch) {
+                if (matchFound) {
                     // Direct match in title or summary, add as is
                     resultList.add(section)
-                } else {
+                }
+                
+                if (resultList.none { it.levelId == section.levelId && it.title == section.title }) {
                     // Check deep content
                     val contentFileName = section.contentFile
                     if (contentFileName != null && chapterContentMap.containsKey(contentFileName)) {
@@ -404,6 +418,33 @@ class ChapterDetailActivity : AppCompatActivity() {
             recyclerView.visibility = View.VISIBLE
             noResultsTextView.visibility = View.GONE
         }
+    }
+
+    private fun levenshteinDistance(s1: String, s2: String): Int {
+        val s1Len = s1.length
+        val s2Len = s2.length
+        val dp = Array(s1Len + 1) { IntArray(s2Len + 1) }
+
+        for (i in 0..s1Len) {
+            dp[i][0] = i
+        }
+        for (j in 0..s2Len) {
+            dp[0][j] = j
+        }
+
+        for (i in 1..s1Len) {
+            for (j in 1..s2Len) {
+                val cost = if (s1[i - 1].equals(s2[j - 1], ignoreCase = true)) 0 else 1
+                dp[i][j] = minOf(
+                    dp[i - 1][j] + 1,          // Deletion
+                    dp[i][j - 1] + 1,          // Insertion
+                    dp[i - 1][j - 1] + cost    // Substitution
+                )
+            }
+        }
+        // Return distance, but cap it to avoid overly dissimilar words matching
+        val distance = dp[s1Len][s2Len]
+        return if (distance > 3) 99 else distance
     }
 
     private fun loadSectionsFromJson(fileName: String): List<ChapterSection> {
