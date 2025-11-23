@@ -259,7 +259,11 @@ class ChapterDetailActivity : AppCompatActivity() {
         val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
 
         adapter = ChapterSectionAdapter(sections, markwon) { section ->
-            if (section.contentFile != null) {
+            if (section.emoji == "🔗") {
+                // This is the "Know More" button
+                val intent = Intent(this, DemoActivity::class.java)
+                startActivity(intent)
+            } else if (section.contentFile != null) {
                 val intent = Intent(this, ChapterDetailActivity::class.java).apply {
                     putExtra(EXTRA_TITLE, section.title)
                     putExtra(EXTRA_CONTENT_FILE_NAME, section.contentFile)
