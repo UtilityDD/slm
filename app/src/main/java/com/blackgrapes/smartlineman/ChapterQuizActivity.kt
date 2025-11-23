@@ -18,6 +18,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
@@ -29,7 +30,6 @@ import java.io.IOException
 import com.google.android.material.button.MaterialButton
 import android.os.Handler
 import android.os.Looper
-import androidx.appcompat.app.AlertDialog
 
 class ChapterQuizActivity : AppCompatActivity() {
 
@@ -319,11 +319,32 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     private fun showFailureDialog() {
-        com.blackgrapes.smartlineman.util.DialogHelper.showFailureDialog(this) {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_failure, null)
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .setCancelable(false)
+            .create()
+
+        // Make the dialog background transparent to show the card's rounded corners
+        dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
+
+        val goToResourcesButton = dialogView.findViewById<Button>(R.id.go_to_resources_button)
+        goToResourcesButton.setOnClickListener {
             val intent = Intent(this, ResourcesActivity::class.java)
             startActivity(intent)
+            dialog.dismiss()
             finish()
         }
+
+        dialog.setOnShowListener {
+            // Entry animation for the dialog
+            val card = dialogView.findViewById<View>(R.id.failure_icon).parent as View
+            card.alpha = 0f
+            card.scaleX = 0.8f
+            card.scaleY = 0.8f
+            card.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(400).setInterpolator(android.view.animation.OvershootInterpolator()).start()
+        }
+        dialog.show()
     }
 
     private fun navigateToScoreActivity() {
