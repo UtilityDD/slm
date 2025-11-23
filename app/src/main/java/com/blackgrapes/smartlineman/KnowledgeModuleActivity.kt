@@ -68,7 +68,7 @@ class KnowledgeModuleActivity : AppCompatActivity() {
             // Set main title and briefing
             val title = kmJson.getString("title")
             val briefing = kmJson.getString("briefing")
-            supportActionBar?.title = title
+            supportActionBar?.title = "আরও জানুন"
             findViewById<TextView>(R.id.km_title).text = title
             findViewById<TextView>(R.id.km_briefing).text = briefing
 
