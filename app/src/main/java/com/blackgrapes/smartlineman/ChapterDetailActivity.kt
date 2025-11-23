@@ -260,9 +260,16 @@ class ChapterDetailActivity : AppCompatActivity() {
 
         adapter = ChapterSectionAdapter(sections, markwon) { section ->
             if (section.emoji == "🔗") {
-                // This is the "Know More" button
-                val intent = Intent(this, DemoActivity::class.java)
-                startActivity(intent)
+                // This is the "Know More" button. Launch the KnowledgeModuleActivity.
+                val kmFileName = chapterLevelId?.let { "chapter_${it.replace('.', '_')}_km.json" }
+                if (kmFileName != null) {
+                    val intent = Intent(this, KnowledgeModuleActivity::class.java).apply {
+                        putExtra(KnowledgeModuleActivity.EXTRA_KM_FILE_NAME, kmFileName)
+                    }
+                    startActivity(intent)
+                } else {
+                    Toast.makeText(this, "Detailed information not available.", Toast.LENGTH_SHORT).show()
+                }
             } else if (section.contentFile != null) {
                 val intent = Intent(this, ChapterDetailActivity::class.java).apply {
                     putExtra(EXTRA_TITLE, section.title)

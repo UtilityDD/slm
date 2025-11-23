@@ -64,6 +64,9 @@
         <activity
             android:name=".MarketplaceDetailActivity"
             android:exported="false" />
+        <activity
+            android:name=".KnowledgeModuleActivity"
+            android:exported="false" />
         <activity android:name=".DemoActivity" />
         
     </application>
