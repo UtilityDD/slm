@@ -415,6 +415,7 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showFailureDialog() {
+        playSfx(levelFailedSoundId)
         val dialogView = layoutInflater.inflate(R.layout.dialog_failure, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)

@@ -68,6 +68,7 @@ class ChapterQuizActivity : AppCompatActivity() {
     // Sound effects
     private lateinit var soundPool: SoundPool
     private var buttonTapSoundId: Int = 0
+    private var levelFailedSoundId: Int = 0
     private var isSfxMuted = false
 
 
@@ -118,6 +119,7 @@ class ChapterQuizActivity : AppCompatActivity() {
             .build()
 
         buttonTapSoundId = soundPool.load(this, R.raw.button_tap, 1)
+        levelFailedSoundId = soundPool.load(this, R.raw.level_failed, 1)
 
 
         initializeViews()
@@ -321,6 +323,7 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     private fun showFailureDialog() {
+        playSfx(levelFailedSoundId)
         val dialogView = layoutInflater.inflate(R.layout.dialog_failure, null)
         val dialog = AlertDialog.Builder(this)
             .setView(dialogView)
