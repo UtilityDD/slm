@@ -74,7 +74,7 @@ class KnowledgeModuleActivity : AppCompatActivity() {
                 val sectionObject = sectionsArray.getJSONObject(i)
                 val sectionCard = inflater.inflate(R.layout.knowledge_module_section_card, sectionsContainer, false) as MaterialCardView
 
-                val sectionTitle = sectionObject.getString("section_title")
+                val sectionTitle = sectionObject.getString("title")
                 sectionCard.findViewById<TextView>(R.id.km_section_title).text = sectionTitle
 
                 val pointsContainer = sectionCard.findViewById<LinearLayout>(R.id.km_points_container)
@@ -87,13 +87,13 @@ class KnowledgeModuleActivity : AppCompatActivity() {
                     val subtitle = pointObject.getString("subtitle")
                     pointItemView.findViewById<TextView>(R.id.km_point_subtitle).text = subtitle
 
-                    val detailsObject = pointObject.getJSONObject("details")
+                    val detailsArray = pointObject.getJSONArray("details")
                     val detailsStringBuilder = StringBuilder()
-                    val keys = detailsObject.keys()
-                    while (keys.hasNext()) {
-                        val key = keys.next()
-                        val value = detailsObject.getString(key)
-                        detailsStringBuilder.append("• $key: $value\n")
+                    for (k in 0 until detailsArray.length()) {
+                        val detailObject = detailsArray.getJSONObject(k)
+                        val key = detailObject.getString("key")
+                        val value = detailObject.getString("value")
+                        detailsStringBuilder.append("• **$key:** $value\n")
                     }
                     pointItemView.findViewById<TextView>(R.id.km_point_details).text = detailsStringBuilder.toString().trim()
 
