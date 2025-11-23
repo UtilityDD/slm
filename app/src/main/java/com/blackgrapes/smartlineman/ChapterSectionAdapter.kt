@@ -10,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import android.util.Log
+import io.noties.markwon.LinkResolver
 import androidx.recyclerview.widget.RecyclerView
 import io.noties.markwon.Markwon
 import java.io.IOException
@@ -58,6 +59,8 @@ class ChapterSectionAdapter(
         fun bind(section: ChapterSection) {
             emojiTextView.text = section.emoji
             markwon.setMarkdown(titleTextView, section.title)
+            // Ensure the title TextView isn't clickable, so the card's listener is used.
+            titleTextView.movementMethod = null
 
             // Check if the emoji is a number (our serial number)
             if (section.emoji.all { it.isDigit() }) {
@@ -80,10 +83,8 @@ class ChapterSectionAdapter(
             if (section.summary.isNotBlank()) {
                 contentTextView.visibility = View.VISIBLE
                 markwon.setMarkdown(contentTextView, section.summary)
-                // Ensure the text view itself isn't clickable, so the card's listener is used.
-                contentTextView.setOnClickListener(null)
-                contentTextView.isClickable = false // Redundant but safe
-                contentTextView.movementMethod = null // Explicitly remove movement method
+                // Disable click handling on the TextView to allow the card's click listener to fire.
+                contentTextView.movementMethod = null
             } else {
                 contentTextView.visibility = View.GONE
             }
