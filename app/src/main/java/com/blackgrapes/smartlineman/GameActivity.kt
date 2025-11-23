@@ -237,14 +237,7 @@ class GameActivity : AppCompatActivity() {
 
                     // Delay to allow the sound to play before moving to the next screen
                     Handler(Looper.getMainLooper()).postDelayed({
-                        val scoreIntent = Intent(this, ScoreActivity::class.java).apply {
-                            putExtra(EXTRA_SCORE, score)
-                            putExtra(EXTRA_TOTAL_QUESTIONS, questions.size)
-                            putExtra(EXTRA_LEVEL, level)
-                            putExtra(EXTRA_LEVEL_ID, levelId)
-                            putExtra(EXTRA_TOTAL_TIME, totalTimeTakenInMillis)
-                        }
-                        scoreActivityResultLauncher.launch(scoreIntent)
+                        checkFailureAndProceed()
                     }, 1000) // 1-second delay
                 }
             }
@@ -307,7 +300,7 @@ class GameActivity : AppCompatActivity() {
             
             // Delay and then fail
             Handler(Looper.getMainLooper()).postDelayed({
-                navigateToScoreActivity()
+                checkFailureAndProceed()
             }, 1500)
         }
     }
@@ -380,8 +373,54 @@ class GameActivity : AppCompatActivity() {
         
         // Delay and then fail
         Handler(Looper.getMainLooper()).postDelayed({
-            navigateToScoreActivity()
+            checkFailureAndProceed()
         }, 1500)
+    }
+
+    private fun checkFailureAndProceed() {
+        val totalQuestions = questions.size
+        // In Ladder Game, usually you need to get all correct to pass the level? 
+        // Or is there a pass mark? 
+        // Looking at existing code: 
+        // if (score == questions.size) playSfx(levelPassedSoundId) else playSfx(levelFailedSoundId)
+        // So pass condition is score == questions.size (100%).
+        
+        val isPassed = score == totalQuestions
+        
+        val prefs = getSharedPreferences("LadderFailures", Context.MODE_PRIVATE)
+        // Use levelId if available, otherwise level number as fallback key
+        val keySuffix = levelId ?: level.toString()
+        val failureKey = "failures_$keySuffix"
+
+        if (!isPassed) {
+            val failures = prefs.getInt(failureKey, 0) + 1
+            prefs.edit().putInt(failureKey, failures).apply()
+
+            if (failures >= 3) {
+                showFailureDialog()
+                // Reset failures after showing dialog
+                prefs.edit().putInt(failureKey, 0).apply() 
+            } else {
+                navigateToScoreActivity()
+            }
+        } else {
+            // Passed
+            prefs.edit().remove(failureKey).apply()
+            navigateToScoreActivity()
+        }
+    }
+
+    private fun showFailureDialog() {
+        androidx.appcompat.app.AlertDialog.Builder(this)
+            .setTitle("Need Improvement")
+            .setMessage("You have failed this level 3 times. Please review the Knowledge Base to improve your understanding before trying again.")
+            .setCancelable(false)
+            .setPositiveButton("Go to Knowledge Base") { _, _ ->
+                val intent = Intent(this, ResourcesActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .show()
     }
 
     private fun navigateToScoreActivity() {
