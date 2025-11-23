@@ -19,7 +19,7 @@
             android:id="@+id/failure_icon"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:src="@android:drawable/ic_menu_revert"
+            android:src="@drawable/failed"
             app:tint="@color/incorrect_red"
             android:layout_marginBottom="16dp"/>
 
