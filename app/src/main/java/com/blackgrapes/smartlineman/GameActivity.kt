@@ -1,5 +1,7 @@
 package com.blackgrapes.smartlineman
 
+import android.animation.ObjectAnimator
+import android.animation.PropertyValuesHolder
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -432,11 +434,22 @@ class GameActivity : AppCompatActivity() {
 
         dialog.setOnShowListener {
             // Entry animation for the dialog
-            val card = dialogView.findViewById<View>(R.id.failure_icon).parent as View
+            val failureIcon = dialogView.findViewById<ImageView>(R.id.failure_icon)
+            val card = failureIcon.parent as View
             card.alpha = 0f
             card.scaleX = 0.8f
             card.scaleY = 0.8f
             card.animate().alpha(1f).scaleX(1f).scaleY(1f).setDuration(400).setInterpolator(OvershootInterpolator()).start()
+
+            // Pulsing animation for the icon
+            val scaleX = PropertyValuesHolder.ofFloat(View.SCALE_X, 1f, 1.05f)
+            val scaleY = PropertyValuesHolder.ofFloat(View.SCALE_Y, 1f, 1.05f)
+            val animator = ObjectAnimator.ofPropertyValuesHolder(failureIcon, scaleX, scaleY).apply {
+                duration = 800
+                repeatCount = ObjectAnimator.INFINITE
+                repeatMode = ObjectAnimator.REVERSE
+            }
+            animator.start()
         }
         dialog.show()
     }
