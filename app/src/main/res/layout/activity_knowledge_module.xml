@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
+                android:lineSpacingMultiplier="1.2"
                 android:textColor="@color/midnight_blue"
                 tools:text="This is the briefing text for the knowledge module, explaining what the user will learn." />
 

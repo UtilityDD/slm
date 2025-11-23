@@ -17,6 +17,8 @@ import com.blackgrapes.smartlineman.util.JsonHelper
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.card.MaterialCardView
 import org.json.JSONException
+import io.noties.markwon.Markwon
+import io.noties.markwon.html.HtmlPlugin
 import org.json.JSONObject
 import java.io.IOException
 
@@ -69,12 +71,15 @@ class KnowledgeModuleActivity : AppCompatActivity() {
             val title = kmJson.getString("title")
             val briefing = kmJson.getString("briefing")
             supportActionBar?.title = "আরও জানুন"
-            findViewById<TextView>(R.id.km_title).text = title
-            findViewById<TextView>(R.id.km_briefing).text = briefing
+            val kmTitleTextView = findViewById<TextView>(R.id.km_title)
+            val kmBriefingTextView = findViewById<TextView>(R.id.km_briefing)
+            kmTitleTextView.text = title
+            kmBriefingTextView.text = briefing
 
             // Inflate sections
             val sectionsContainer = findViewById<LinearLayout>(R.id.km_sections_container)
             val sectionsArray = kmJson.getJSONArray("sections")
+            val markwon = Markwon.builder(this).usePlugin(HtmlPlugin.create()).build()
             val inflater = LayoutInflater.from(this)
 
             for (i in 0 until sectionsArray.length()) {
@@ -102,7 +107,7 @@ class KnowledgeModuleActivity : AppCompatActivity() {
                         val value = detailObject.getString("value")
                         detailsStringBuilder.append("• **$key:** $value\n")
                     }
-                    pointItemView.findViewById<TextView>(R.id.km_point_details).text = detailsStringBuilder.toString().trim()
+                    markwon.setMarkdown(pointItemView.findViewById(R.id.km_point_details), detailsStringBuilder.toString().trim())
 
                     pointsContainer.addView(pointItemView)
                 }
