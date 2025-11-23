@@ -29,6 +29,7 @@ import java.io.IOException
 import com.google.android.material.button.MaterialButton
 import android.os.Handler
 import android.os.Looper
+import androidx.appcompat.app.AlertDialog
 
 class ChapterQuizActivity : AppCompatActivity() {
 
@@ -198,7 +199,7 @@ class ChapterQuizActivity : AppCompatActivity() {
                 if (currentQuestionIndex < questions.size) {
                     setupQuestion()
                 } else {
-                    navigateToScoreActivity()
+                    checkFailureAndProceed()
                 }
             }
         }
@@ -250,7 +251,7 @@ class ChapterQuizActivity : AppCompatActivity() {
             
             // Delay and then fail
             Handler(Looper.getMainLooper()).postDelayed({
-                navigateToScoreActivity()
+                checkFailureAndProceed()
             }, 1500)
         }
     }
@@ -286,8 +287,48 @@ class ChapterQuizActivity : AppCompatActivity() {
         
         // Delay and then fail
         Handler(Looper.getMainLooper()).postDelayed({
-            navigateToScoreActivity()
+            checkFailureAndProceed()
         }, 1500)
+    }
+
+    private fun checkFailureAndProceed() {
+        val totalQuestions = questions.size
+        // Based on ChapterScoreActivity, 100% is required to "master" the chapter.
+        // Anything less is considered a "Try Again" scenario (failure).
+        val percentage = if (totalQuestions > 0) (score * 100) / totalQuestions else 0
+        
+        val prefs = getSharedPreferences("QuizFailures", Context.MODE_PRIVATE)
+        val failureKey = "failures_$levelId"
+
+        if (percentage < 100) {
+            val failures = prefs.getInt(failureKey, 0) + 1
+            prefs.edit().putInt(failureKey, failures).apply()
+
+            if (failures >= 3) {
+                showFailureDialog()
+                // Reset failures after showing dialog so the user can try again later
+                prefs.edit().putInt(failureKey, 0).apply() 
+            } else {
+                navigateToScoreActivity()
+            }
+        } else {
+            // Passed (100% score)
+            prefs.edit().remove(failureKey).apply()
+            navigateToScoreActivity()
+        }
+    }
+
+    private fun showFailureDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Need Improvement")
+            .setMessage("You have failed this level 3 times. Please review the Knowledge Base to improve your understanding before trying again.")
+            .setCancelable(false)
+            .setPositiveButton("Go to Knowledge Base") { _, _ ->
+                val intent = Intent(this, ResourcesActivity::class.java)
+                startActivity(intent)
+                finish()
+            }
+            .show()
     }
 
     private fun navigateToScoreActivity() {
