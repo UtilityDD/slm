@@ -62,7 +62,6 @@
                 android:id="@+id/stat_box_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
                 android:visibility="gone"
                 app:cardBackgroundColor="@color/pastel_mint"
                 app:cardCornerRadius="8dp">
