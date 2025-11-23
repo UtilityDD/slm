@@ -10,9 +10,11 @@ import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.blackgrapes.smartlineman.util.JsonHelper
+import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.card.MaterialCardView
 import org.json.JSONException
 import org.json.JSONObject
@@ -29,15 +31,20 @@ class KnowledgeModuleActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_knowledge_module)
 
+        val appBarLayout: AppBarLayout = findViewById(R.id.appbar)
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main_km)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            // Apply padding to the root view for navigation bar, and to app bar for status bar
             v.setPadding(systemBars.left, 0, systemBars.right, systemBars.bottom)
+            appBarLayout.setPadding(0, systemBars.top, 0, 0)
             insets
         }
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        toolbar.navigationIcon?.setTint(ContextCompat.getColor(this, android.R.color.white))
         toolbar.setNavigationOnClickListener { onBackPressedDispatcher.onBackPressed() }
 
         val fileName = intent.getStringExtra(EXTRA_KM_FILE_NAME)
