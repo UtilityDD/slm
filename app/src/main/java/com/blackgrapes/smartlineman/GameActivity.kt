@@ -411,16 +411,11 @@ class GameActivity : AppCompatActivity() {
     }
 
     private fun showFailureDialog() {
-        androidx.appcompat.app.AlertDialog.Builder(this)
-            .setTitle("Need Improvement")
-            .setMessage("You have failed this level 3 times. Please review the Knowledge Base to improve your understanding before trying again.")
-            .setCancelable(false)
-            .setPositiveButton("Go to Knowledge Base") { _, _ ->
-                val intent = Intent(this, ResourcesActivity::class.java)
-                startActivity(intent)
-                finish()
-            }
-            .show()
+        com.blackgrapes.smartlineman.util.DialogHelper.showFailureDialog(this) {
+            val intent = Intent(this, ResourcesActivity::class.java)
+            startActivity(intent)
+            finish()
+        }
     }
 
     private fun navigateToScoreActivity() {
