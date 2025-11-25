@@ -594,22 +594,25 @@ class ChapterDetailActivity : AppCompatActivity() {
                             // To support a new field, just add it to this map.
                             val extraFieldLabels = mapOf(
                                 "daily_check" to "দৈনিক পরীক্ষা",
-                                "golden_rule" to "গোল্ডেন রুল",
-                                "safety_tip" to "নিরাপত্তা টিপ"
+                                "golden_rule" to "⭐ গোল্ডেন রুল",
+                                "safety_tip" to "⚠️ নিরাপত্তা টিপ"
                             )
 
                             // Format specifications to have line breaks instead of sub-bullets.
                             val specifications = point.optString("specifications").replace("\n", "<br>")
                             val importance = point.optString("importance").replace("\n", "<br>")
 
+                            // Using blockquotes (>) for a more structured, indented look.
+                            // Adding more vertical spacing with <br> for readability.
                             val pointContent = StringBuilder()
-                                .append("- **স্পেসিফিকেশন:** $specifications\n")
-                                .append("- **গুরুত্ব:** $importance\n")
+                                .append("> **স্পেসিফিকেশন:** $specifications\n\n")
+                                .append("> **গুরুত্ব:** $importance\n\n")
 
                             // Loop through the map to handle any extra fields generically.
                             extraFieldLabels.forEach { (key, label) ->
                                 point.optString(key).takeIf { it.isNotEmpty() }?.let {
-                                    pointContent.append("- **$label:** $it\n")
+                                    // Using bold and a new line for emphasis
+                                    pointContent.append("> **$label:**<br>> $it\n\n")
                                 }
                             }
 
@@ -626,7 +629,7 @@ class ChapterDetailActivity : AppCompatActivity() {
                     val sourceLink = proTipObject.optString("source_link", null)
                     val proTipContent = StringBuilder()
                     for (i in 0 until proTipContentArray.length()) {
-                        proTipContent.append("- ${proTipContentArray.getString(i)}\n")
+                        proTipContent.append("• ${proTipContentArray.getString(i)}\n\n")
                     }
                     sectionList.add(ChapterSection("💡", proTipTitle, proTipContent.toString(), false, null, null, null, sourceLink))
                 }
@@ -638,8 +641,8 @@ class ChapterDetailActivity : AppCompatActivity() {
                     val mythBusterContent = StringBuilder()
                     val sourceLink = mythBusterObject.optString("source_link", null)
                     for (i in 0 until mythsArray.length()) {
-                        val myth = mythsArray.getJSONObject(i)
-                        mythBusterContent.append("**মিথ:** ${myth.getString("myth")}\n")
+                        val myth = mythsArray.getJSONObject(i)                        
+                        mythBusterContent.append("#### ❌ মিথ: ${myth.getString("myth")}\n")
                         mythBusterContent.append("> **বাস্তবতা:** ${myth.getString("reality")}\n\n")
                     }
                     sectionList.add(ChapterSection("👻", mythBusterTitle, mythBusterContent.toString(), false, null, null, null, sourceLink))
