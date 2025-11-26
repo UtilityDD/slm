@@ -4,31 +4,63 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="16dp"
-    app:cardCornerRadius="8dp"
-    app:cardBackgroundColor="@color/white"
-    app:cardElevation="2dp">
+    android:layout_marginBottom="14dp"
+    app:cardCornerRadius="16dp"
+    app:cardBackgroundColor="@android:color/transparent"
+    app:cardElevation="6dp">
 
+    <!-- Gradient Background Layer -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:background="@drawable/card_shadow_layer"
+        android:padding="18dp">
 
-        <TextView
-            android:id="@+id/km_section_title"
-            android:layout_width="wrap_content"
+        <!-- Section Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
-            android:textColor="@color/purple_700"
-            tools:text="Section Title" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingBottom="4dp">
 
+            <!-- Accent Bar -->
+            <View
+                android:layout_width="4dp"
+                android:layout_height="28dp"
+                android:background="@drawable/accent_vertical_bar"
+                android:layout_marginEnd="12dp" />
+
+            <TextView
+                android:id="@+id/km_section_title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textAppearance="@style/TextAppearance.MaterialComponents.Headline6"
+                android:textColor="#283593"
+                android:textSize="17sp"
+                android:fontFamily="sans-serif-medium"
+                android:letterSpacing="0.01"
+                android:lineSpacingExtra="1dp"
+                tools:text="Section Title" />
+
+        </LinearLayout>
+
+        <!-- Subtle Divider -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginVertical="12dp"
+            android:background="@drawable/gradient_divider" />
+
+        <!-- Points Container -->
         <LinearLayout
             android:id="@+id/km_points_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
             android:orientation="vertical" />
 
     </LinearLayout>
+
 </com.google.android.material.card.MaterialCardView>
