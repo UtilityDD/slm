@@ -100,8 +100,14 @@ class ChapterQuizActivity : AppCompatActivity() {
             return
         }
 
-        val allQuestions = loadQuestionsFromJson(levelId!!).shuffled()
-        questions = allQuestions.take(10)
+        // Load chapter questions and take 8 random questions
+        val chapterQuestions = loadQuestionsFromJson(levelId!!).shuffled().take(8)
+        
+        // Load image questions and take 2 random questions
+        val imageQuestions = loadImageQuestionsFromJson().shuffled().take(2)
+        
+        // Combine and shuffle all questions for random order
+        questions = (chapterQuestions + imageQuestions).shuffled()
 
         // Load mute preferences
         val prefs = getSharedPreferences("GameSettings", Context.MODE_PRIVATE)
@@ -391,6 +397,31 @@ class ChapterQuizActivity : AppCompatActivity() {
             }
         } catch (e: IOException) {
             Log.e("ChapterQuizActivity", "IOException: Error reading $fileName", e)
+        } catch (e: JSONException) {
+            Log.e("ChapterQuizActivity", "JSONException: Error parsing $fileName", e)
+        }
+        return questionList
+    }
+
+    private fun loadImageQuestionsFromJson(): List<Question> {
+        val fileName = "image_questions.json"
+        val questionList = mutableListOf<Question>()
+        try {
+            val jsonString: String = application.assets.open(fileName).use { it.reader().readText() }
+            val jsonArray = JSONArray(jsonString)
+
+            for (i in 0 until jsonArray.length()) {
+                val questionObject = jsonArray.getJSONObject(i)
+                val questionText = questionObject.getString("questionText")
+                val imageName = questionObject.getString("imageName")
+                val optionsArray = questionObject.getJSONArray("options")
+                val options = (0 until optionsArray.length()).map { optionsArray.getString(it) }
+                val correctAnswerIndex = questionObject.getInt("correctAnswerIndex")
+
+                questionList.add(Question(questionText, options, correctAnswerIndex, imageName))
+            }
+        } catch (e: IOException) {
+            Log.e("ChapterQuizActivity", "IOException: Error reading $fileName - Make sure image_questions.json exists", e)
         } catch (e: JSONException) {
             Log.e("ChapterQuizActivity", "JSONException: Error parsing $fileName", e)
         }

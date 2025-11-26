@@ -1,0 +1,35 @@
+[
+    {
+        "questionText": "এই ছবিতে দেখানো টুলটি কী, যা কন্ডাক্টর টানার সময় ব্যবহার করা হয়?",
+        "imageName": "quiz_images/come_along_clamp.jpg",
+        "options": [
+            "কাম-অ্যালং ক্ল্যাম্প (Come-along Clamp)",
+            "টেনশন ক্ল্যাম্প (Tension Clamp)",
+            "সাসপেনশন ক্ল্যাম্প (Suspension Clamp)",
+            "বোল্টেড কানেক্টর (Bolted Connector)"
+        ],
+        "correctAnswerIndex": 0
+    },
+    {
+        "questionText": "এই ছবিতে দেখানো সুরক্ষা সরঞ্জামটির নাম কী?",
+        "imageName": "quiz_images/hot_stick.jpg",
+        "options": [
+            "ইনসুলেটেড স্ক্রু ড্রাইভার",
+            "হট লাইন টুল / হট স্টিক (Hot Line Tool)",
+            "গ্রাউন্ডিং রড",
+            "কেবল কাটার"
+        ],
+        "correctAnswerIndex": 1
+    },
+    {
+        "questionText": "এই টেস্টিং ইন্সট্রুমেন্টটি চিনুন:",
+        "imageName": "quiz_images/megger.webp",
+        "options": [
+            "মাল্টিমিটার (Multimeter)",
+            "ক্ল্যাম্প মিটার (Clamp Meter)",
+            "মেগার / ইনসুলেশন টেস্টার (Megger)",
+            "ভোল্টেজ ডিটেক্টর (Voltage Detector)"
+        ],
+        "correctAnswerIndex": 2
+    }
+]
