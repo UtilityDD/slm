@@ -46,6 +46,7 @@ class ChapterQuizActivity : AppCompatActivity() {
     private lateinit var questionText: TextView
     private lateinit var answerButtons: List<com.google.android.material.button.MaterialButton>
     private lateinit var submitButton: com.google.android.material.button.MaterialButton
+    private lateinit var answersContainer: android.widget.LinearLayout
     private lateinit var timerProgressBar: ProgressBar
     private lateinit var questionCard: View
     private lateinit var feedbackIcon: ImageView
@@ -154,7 +155,9 @@ class ChapterQuizActivity : AppCompatActivity() {
         levelText.text = "Chapter $levelId"
         questionText = findViewById(R.id.question_text)
         submitButton = findViewById(R.id.submit_button)
+        answersContainer = findViewById(R.id.answers_container)
         questionCard = findViewById(R.id.question_card)
+
         answerButtons = listOf(
             findViewById(R.id.answer_button_a),
             findViewById(R.id.answer_button_b),
@@ -170,6 +173,10 @@ class ChapterQuizActivity : AppCompatActivity() {
         isAnswerSubmitted = false
         selectedAnswerIndex = null
         val currentQuestion = questions[currentQuestionIndex]
+
+        // Determine which layout to show and set the active answerButtons
+        setupLayoutForQuestion(currentQuestion, answersContainer)
+
         questionCounterText.text = "${currentQuestionIndex + 1}/${questions.size}"
         questionText.text = currentQuestion.questionText
         submitButton.visibility = View.INVISIBLE
@@ -243,6 +250,45 @@ class ChapterQuizActivity : AppCompatActivity() {
         }
 
         startTimer()
+    }
+
+    private fun setupLayoutForQuestion(currentQuestion: Question, container: android.widget.LinearLayout) {
+        container.removeAllViews() // Clear previous buttons
+
+        if (currentQuestion.questionType == "image_options") {
+            // 2x2 Grid Layout
+            container.orientation = android.widget.LinearLayout.VERTICAL
+            val row1 = android.widget.LinearLayout(this).apply { orientation = android.widget.LinearLayout.HORIZONTAL }
+            val row2 = android.widget.LinearLayout(this).apply { orientation = android.widget.LinearLayout.HORIZONTAL }
+
+            val buttonParams = android.widget.LinearLayout.LayoutParams(0, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT, 1f).apply {
+                setMargins(4, 4, 4, 4)
+            }
+
+            // Set minHeight on the buttons directly, not on the LayoutParams
+            answerButtons.forEach {
+                it.minimumHeight = (150 * resources.displayMetrics.density).toInt()
+            }
+
+            row1.addView(answerButtons[0], buttonParams) // The view itself is added, not a new one
+            row1.addView(answerButtons[1], buttonParams)
+            row2.addView(answerButtons[2], buttonParams)
+            row2.addView(answerButtons[3], buttonParams)
+
+            container.addView(row1)
+            container.addView(row2)
+        } else {
+            // Vertical List Layout
+            container.orientation = android.widget.LinearLayout.VERTICAL
+            val buttonParams = android.widget.LinearLayout.LayoutParams(android.widget.LinearLayout.LayoutParams.MATCH_PARENT, android.widget.LinearLayout.LayoutParams.WRAP_CONTENT)
+
+            answerButtons.forEach { button ->
+                // Reset minHeight for text buttons
+                button.minimumHeight = (48 * resources.displayMetrics.density).toInt() // Default MaterialButton height
+                container.addView(button, buttonParams)
+            }
+        }
+        // Re-apply click listeners to the new set of buttons
     }
 
     private fun setupClickListeners() {

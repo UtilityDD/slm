@@ -3,8 +3,8 @@
         "questionText": "Identify the safety helmet from the images below.",
         "questionType": "image_options",
         "options": [
-            "digital-tong-tester.webp",
-            "hot_stick.jpg",
+            "digital-tong-tester.png",
+            "hot_stick.png",
             "boots.png",
             "goggles.png"
         ],
@@ -23,7 +23,7 @@
     },
     {
         "questionText": "এই ছবিতে দেখানো সুরক্ষা সরঞ্জামটির নাম কী?",
-        "imageName": "quiz_images/hot_stick.jpg",
+        "imageName": "quiz_images/hot_stick.png",
         "options": [
             "ইনসুলেটেড স্ক্রু ড্রাইভার",
             "হট লাইন টুল / হট স্টিক (Hot Line Tool)",
@@ -34,7 +34,7 @@
     },
     {
         "questionText": "এই টেস্টিং ইন্সট্রুমেন্টটি চিনুন:",
-        "imageName": "quiz_images/meggar.webp",
+        "imageName": "quiz_images/meggar.png",
         "options": [
             "মাল্টিমিটার (Multimeter)",
             "ক্ল্যাম্প মিটার (Clamp Meter)",
