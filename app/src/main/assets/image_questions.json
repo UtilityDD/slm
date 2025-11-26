@@ -23,7 +23,7 @@
     },
     {
         "questionText": "এই টেস্টিং ইন্সট্রুমেন্টটি চিনুন:",
-        "imageName": "quiz_images/megger.webp",
+        "imageName": "quiz_images/meggar.webp",
         "options": [
             "মাল্টিমিটার (Multimeter)",
             "ক্ল্যাম্প মিটার (Clamp Meter)",
