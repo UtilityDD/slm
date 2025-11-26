@@ -27,6 +27,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import org.json.JSONArray
 import android.graphics.BitmapFactory
+import android.graphics.Bitmap
 import org.json.JSONException
 import java.io.IOException
 import com.google.android.material.button.MaterialButton
@@ -207,11 +208,26 @@ class ChapterQuizActivity : AppCompatActivity() {
                 if (option is Option.Image) {
                     try {
                         val inputStream = assets.open("quiz_images/${option.imageName}")
-                        val bitmap = BitmapFactory.decodeStream(inputStream)
-                        val drawable = android.graphics.drawable.BitmapDrawable(resources, bitmap)
-                        button.icon = drawable
-                        button.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_TOP
+                        val originalBitmap = BitmapFactory.decodeStream(inputStream)
                         inputStream.close()
+
+                        // Define an even larger target size for the icon, e.g., 160dp
+                        val targetSizeInPixels = (160 * resources.displayMetrics.density).toInt()
+                        val scaledBitmap = Bitmap.createScaledBitmap(originalBitmap, targetSizeInPixels, targetSizeInPixels, true)
+                        val drawable = android.graphics.drawable.BitmapDrawable(resources, scaledBitmap)
+
+                        button.icon = drawable
+                        // Center the icon since there is no text
+                        button.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_TOP
+                        // Remove internal padding to make the icon larger within the button
+                        button.iconPadding = 0
+                        button.setPadding(0,0,0,0) // Explicitly remove all padding
+                        button.insetTop = 0
+                        // This is the key fix: Set the button's iconSize to match our scaled bitmap.
+                        button.iconSize = targetSizeInPixels
+                        button.insetBottom = 0
+                        // Ensure the icon is not tinted by the button's text color
+                        button.iconTint = null
                     } catch (e: IOException) {
                         Log.e("ChapterQuizActivity", "Error loading option image: ${option.imageName}", e)
                         button.icon = null
@@ -258,6 +274,8 @@ class ChapterQuizActivity : AppCompatActivity() {
         isAnswerSubmitted = true
         selectedAnswerIndex = index
         val selectedButton = answerButtons[selectedAnswerIndex!!]
+        
+        val currentQuestion = questions[currentQuestionIndex]
 
         val progress = timerProgressBar.progress
         val timeRemaining = (progress.toLong() * questionTimeInMillis) / 100L
@@ -275,6 +293,12 @@ class ChapterQuizActivity : AppCompatActivity() {
             }
             
             submitButton.text = "" // Remove text
+            // For image options, we don't want to show the "next" icon inside the button
+            // as it can overlap with the answer feedback. The button will be clickable but visually empty.
+            if (currentQuestion.questionType == "image_options") {
+                submitButton.setCompoundDrawablesWithIntrinsicBounds(null, null, null, null)
+                return@handleAnswerSelection
+            }
             val nextDrawable = ContextCompat.getDrawable(this, R.drawable.next)
             submitButton.setCompoundDrawablesWithIntrinsicBounds(nextDrawable, null, null, null)
             // Post a runnable to calculate padding after the button is laid out
@@ -530,16 +554,40 @@ class ChapterQuizActivity : AppCompatActivity() {
     }
 
     private fun resetButtonState(button: com.google.android.material.button.MaterialButton) {
-        // Default state: Outlined, Midnight Blue text/stroke, Transparent background
-        button.backgroundTintList = ContextCompat.getColorStateList(this, android.R.color.transparent)
-        button.strokeColor = ContextCompat.getColorStateList(this, R.color.midnight_blue)
-        button.strokeWidth = (1 * resources.displayMetrics.density).toInt() // 1dp
-        button.setTextColor(ContextCompat.getColor(this, R.color.midnight_blue))
         button.isEnabled = true
-        button.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START // Reset icon gravity
+
+        val currentQuestion = questions[currentQuestionIndex]
+        if (currentQuestion.questionType == "image_options") {
+            // For image questions, make the button completely transparent with no stroke.
+            button.backgroundTintList = ContextCompat.getColorStateList(this, android.R.color.transparent)
+            button.strokeWidth = 0
+            button.iconPadding = 0 // Ensure padding is removed on reset
+            button.setPadding(0,0,0,0) // Explicitly remove all padding on reset
+            button.iconSize = (160 * resources.displayMetrics.density).toInt() // Ensure icon size is set for image questions
+            button.rippleColor = ContextCompat.getColorStateList(this, R.color.purple_200)
+        } else {
+            // Default state for text questions: Outlined, Midnight Blue text/stroke, Transparent background
+            button.backgroundTintList = ContextCompat.getColorStateList(this, android.R.color.transparent)
+            button.strokeColor = ContextCompat.getColorStateList(this, R.color.midnight_blue)
+            button.strokeWidth = (1 * resources.displayMetrics.density).toInt() // 1dp
+            button.setTextColor(ContextCompat.getColor(this, R.color.midnight_blue))
+            button.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START
+            button.iconPadding = (8 * resources.displayMetrics.density).toInt() // Restore default padding
+            button.iconSize = (24 * resources.displayMetrics.density).toInt() // Restore default icon size for text buttons
+            // Restore default padding for text buttons
+            val defaultPadding = (16 * resources.displayMetrics.density).toInt()
+            button.setPadding(defaultPadding, defaultPadding, defaultPadding, defaultPadding)
+
+        }
     }
 
     private fun setButtonState(button: com.google.android.material.button.MaterialButton, backgroundColorRes: Int, textColorRes: Int, strokeColorRes: Int) {
+        // For image options, we only want to tint the background on selection, not add a stroke back.
+        if (questions[currentQuestionIndex].questionType == "image_options") {
+            button.backgroundTintList = ContextCompat.getColorStateList(this, backgroundColorRes)
+            button.strokeWidth = 0 // Ensure stroke remains zero
+            return
+        }
         button.backgroundTintList = ContextCompat.getColorStateList(this, backgroundColorRes)
         button.strokeColor = ContextCompat.getColorStateList(this, strokeColorRes)
         button.setTextColor(ContextCompat.getColor(this, textColorRes))

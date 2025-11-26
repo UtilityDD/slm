@@ -3,8 +3,8 @@
         "questionText": "Identify the safety helmet from the images below.",
         "questionType": "image_options",
         "options": [
-            "helmet.png",
-            "gloves.png",
+            "digital-tong-tester.webp",
+            "hot_stick.jpg",
             "boots.png",
             "goggles.png"
         ],
