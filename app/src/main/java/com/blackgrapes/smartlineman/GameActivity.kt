@@ -33,11 +33,17 @@ import android.graphics.BitmapFactory
 import org.json.JSONException
 import java.io.IOException
 
+sealed class Option {
+    data class Text(val text: String) : Option()
+    data class Image(val imageName: String) : Option()
+}
+
 data class Question(
     val questionText: String,
-    val options: List<String>,
+    var options: List<Option>,
     val correctAnswerIndex: Int,
-    val imageName: String? = null
+    val imageName: String? = null,
+    val questionType: String = "text" // "text" or "image_options"
 )
 
 class GameActivity : AppCompatActivity() {
@@ -189,7 +195,14 @@ class GameActivity : AppCompatActivity() {
         animateQuestionIn()
 
         answerButtons.forEachIndexed { index, button ->
-            button.text = shuffledOptions[index]
+            when (val option = shuffledOptions[index]) {
+                is Option.Text -> button.text = option.text
+                is Option.Image -> {
+                    // GameActivity uses standard Buttons which don't support images well.
+                    // Displaying the image name as a fallback.
+                    button.text = option.imageName
+                }
+            }
             resetButtonState(button)
         }
 
@@ -505,15 +518,19 @@ class GameActivity : AppCompatActivity() {
             for (i in 0 until jsonArray.length()) {
                 val questionObject = jsonArray.getJSONObject(i)
                 val questionText = questionObject.getString("questionText")
+                val questionType = questionObject.optString("questionType", "text")
                 val optionsArray = questionObject.getJSONArray("options")
-                val options = mutableListOf<String>()
-                for (j in 0 until optionsArray.length()) {
-                    options.add(optionsArray.getString(j))
+                val options = mutableListOf<Option>()
+                // GameActivity only supports text options. If image options are found, their filenames are used as text.
+                if (questionType == "image_options") {
+                    (0 until optionsArray.length()).mapTo(options) { Option.Text(optionsArray.getString(it)) }
+                } else {
+                    (0 until optionsArray.length()).mapTo(options) { Option.Text(optionsArray.getString(it)) }
                 }
                 val correctAnswerIndex = questionObject.getInt("correctAnswerIndex")
                 val imageName = questionObject.optString("imageName", null)
 
-                questionList.add(Question(questionText, options, correctAnswerIndex, imageName))
+                questionList.add(Question(questionText, options, correctAnswerIndex, imageName, questionType))
             }
         } catch (e: IOException) {
             Log.e("GameActivity", "IOException: Error reading $fileName", e)

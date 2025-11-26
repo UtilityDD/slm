@@ -100,14 +100,22 @@ class ChapterQuizActivity : AppCompatActivity() {
             return
         }
 
-        // Load chapter questions and take 8 random questions
+        // 1. Load chapter questions and take 8 random questions
         val chapterQuestions = loadQuestionsFromJson(levelId!!).shuffled().take(8)
         
-        // Load image questions and take 2 random questions
-        val imageQuestions = loadImageQuestionsFromJson().shuffled().take(2)
+        // 2. Load all image questions and separate them by type
+        val allImageQuestions = loadImageQuestionsFromJson()
+        val imageAsQuestionList = allImageQuestions.filter { it.questionType == "text" && it.imageName != null }
+        val imageAsOptionsList = allImageQuestions.filter { it.questionType == "image_options" }
+
+        // 3. Take one random question from each image question type
+        val finalImageQuestions = mutableListOf<Question>()
+        imageAsQuestionList.shuffled().firstOrNull()?.let { finalImageQuestions.add(it) }
+        imageAsOptionsList.shuffled().firstOrNull()?.let { finalImageQuestions.add(it) }
         
-        // Combine and shuffle all questions for random order
-        questions = (chapterQuestions + imageQuestions).shuffled()
+        // 4. Combine and shuffle all questions for the quiz
+        // This will result in 8 chapter questions + up to 2 image questions.
+        questions = (chapterQuestions + finalImageQuestions).shuffled()
 
         // Load mute preferences
         val prefs = getSharedPreferences("GameSettings", Context.MODE_PRIVATE)
@@ -186,10 +194,36 @@ class ChapterQuizActivity : AppCompatActivity() {
         currentCorrectAnswerIndex = shuffledOptions.indexOf(correctAnswerText)
 
         animateQuestionIn()
+        
+        // Reset icon and text for all buttons
+        answerButtons.forEach {
+            it.icon = null
+            it.text = ""
+        }
 
-        answerButtons.forEachIndexed { index, button ->
-            button.text = shuffledOptions[index]
-            resetButtonState(button)
+        if (currentQuestion.questionType == "image_options") {
+            answerButtons.forEachIndexed { index, button ->
+                val option = shuffledOptions[index]
+                if (option is Option.Image) {
+                    try {
+                        val inputStream = assets.open("quiz_images/${option.imageName}")
+                        val bitmap = BitmapFactory.decodeStream(inputStream)
+                        val drawable = android.graphics.drawable.BitmapDrawable(resources, bitmap)
+                        button.icon = drawable
+                        button.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_TOP
+                        inputStream.close()
+                    } catch (e: IOException) {
+                        Log.e("ChapterQuizActivity", "Error loading option image: ${option.imageName}", e)
+                        button.icon = null
+                    }
+                }
+                resetButtonState(button)
+            }
+        } else {
+            answerButtons.forEachIndexed { index, button ->
+                button.text = (shuffledOptions[index] as Option.Text).text
+                resetButtonState(button)
+            }
         }
 
         startTimer()
@@ -388,10 +422,24 @@ class ChapterQuizActivity : AppCompatActivity() {
             for (i in 0 until jsonArray.length()) {
                 val questionObject = jsonArray.getJSONObject(i)
                 val questionText = questionObject.getString("questionText")
+                val questionType = questionObject.optString("questionType", "text")
                 val optionsArray = questionObject.getJSONArray("options")
-                val options = (0 until optionsArray.length()).map { optionsArray.getString(it) }
+                val options = mutableListOf<Option>()
+                if (questionType == "image_options") {
+                    // Options are image file names
+                    (0 until optionsArray.length()).mapTo(options) {
+                        Option.Image(optionsArray.getString(it))
+                    }
+                } else {
+                    // Options are text
+                    (0 until optionsArray.length()).mapTo(options) {
+                        Option.Text(optionsArray.getString(it))
+                    }
+                }
+
                 val correctAnswerIndex = questionObject.getInt("correctAnswerIndex")
                 val imageName = questionObject.optString("imageName", null)
+
 
                 questionList.add(Question(questionText, options, correctAnswerIndex, imageName))
             }
@@ -413,12 +461,23 @@ class ChapterQuizActivity : AppCompatActivity() {
             for (i in 0 until jsonArray.length()) {
                 val questionObject = jsonArray.getJSONObject(i)
                 val questionText = questionObject.getString("questionText")
-                val imageName = questionObject.getString("imageName")
+                val questionType = questionObject.optString("questionType", "text")
+                val imageName = questionObject.optString("imageName", null) // Can be null for image_options questions
                 val optionsArray = questionObject.getJSONArray("options")
-                val options = (0 until optionsArray.length()).map { optionsArray.getString(it) }
+                val options = mutableListOf<Option>()
+                if (questionType == "image_options") {
+                    (0 until optionsArray.length()).mapTo(options) {
+                        Option.Image(optionsArray.getString(it))
+                    }
+                } else {
+                    (0 until optionsArray.length()).mapTo(options) {
+                        Option.Text(optionsArray.getString(it))
+                    }
+                }
+
                 val correctAnswerIndex = questionObject.getInt("correctAnswerIndex")
 
-                questionList.add(Question(questionText, options, correctAnswerIndex, imageName))
+                questionList.add(Question(questionText, options, correctAnswerIndex, imageName, questionType))
             }
         } catch (e: IOException) {
             Log.e("ChapterQuizActivity", "IOException: Error reading $fileName - Make sure image_questions.json exists", e)
@@ -477,6 +536,7 @@ class ChapterQuizActivity : AppCompatActivity() {
         button.strokeWidth = (1 * resources.displayMetrics.density).toInt() // 1dp
         button.setTextColor(ContextCompat.getColor(this, R.color.midnight_blue))
         button.isEnabled = true
+        button.iconGravity = MaterialButton.ICON_GRAVITY_TEXT_START // Reset icon gravity
     }
 
     private fun setButtonState(button: com.google.android.material.button.MaterialButton, backgroundColorRes: Int, textColorRes: Int, strokeColorRes: Int) {

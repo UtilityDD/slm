@@ -1,5 +1,16 @@
 [
     {
+        "questionText": "Identify the safety helmet from the images below.",
+        "questionType": "image_options",
+        "options": [
+            "helmet.png",
+            "gloves.png",
+            "boots.png",
+            "goggles.png"
+        ],
+        "correctAnswerIndex": 0
+    },
+    {
         "questionText": "এই ছবিতে দেখানো টুলটি কী, যা কন্ডাক্টর টানার সময় ব্যবহার করা হয়?",
         "imageName": "quiz_images/come_along_clamp.png",
         "options": [
